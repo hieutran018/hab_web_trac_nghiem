@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Models\User;
 use Auth;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Hash;
 
 class AdminAuthController extends Controller
 {
@@ -25,8 +26,10 @@ class AdminAuthController extends Controller
         $data = $request->all();
         $arr = ['email'=>$data['email'],'password'=>$data['password']];
         $account = User::WHERE('email',$data['email'])->first();
+        // dd(Hash::check($data['password'],$account->password),$data['password'],$account->password);
         if(!empty($account)){
-            if($account->password == $data['password']){
+            if(Hash::check($data['password'],$account->password)){
+                
                 if($account->isAdmin == 1){
                     if($account->status == 1){
                         if($account->isAdmin == 1)

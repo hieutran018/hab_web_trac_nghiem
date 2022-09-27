@@ -6,7 +6,7 @@
             <span class="app-brand-logo demo">
               <img src="{{URL('admin/assets/img/logo/ic_logo_hab.png')}}" alt="" width="40">
             </span>
-            <span class="app-brand-text demo menu-text fw-bolder ms-2">Sneat</span>
+            <span class="app-brand-text demo menu-text fw-bolder ms-2">HAB</span>
           </a>
 
           <a href="javascript:void(0);" class="layout-menu-toggle menu-link text-large ms-auto d-block d-xl-none">
@@ -18,7 +18,7 @@
 
         <ul class="menu-inner py-1">
           <!-- Dashboard -->
-          <li class="menu-item active">
+          <li class="menu-item">
             <a href="index.html" class="menu-link">
               <i class="menu-icon tf-icons bx bx-home-circle"></i>
               <div data-i18n="Analytics">Trang chủ</div>
@@ -39,7 +39,7 @@
                 </a>
               </li>
               <li class="menu-item">
-                <a href="layouts-without-navbar.html" class="menu-link">
+                <a href="{{Route('page-account-user')}}" class="menu-link">
                   <div data-i18n="Without navbar">Tài khoản người dùng</div>
                 </a>
               </li>

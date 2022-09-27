@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AdminAuthController;
 use App\Http\Controllers\Admin\AdminAccountController;
+use App\Http\Controllers\Admin\AdminAccountUserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -25,6 +26,9 @@ Route::POST('/admin/login-post',[AdminAuthController::class,'login'])->name('log
 Route::GET('/admin/logout',[AdminAuthController::class,'logout'])->name('logout-admin');
 
 //* Trang quản lý tài khoản admin
-Route::GET('/admin/account',[AdminAccountController::class,'getPageAccountAdmin'])->name('page-account-admin');
-Route::GET('/admin/account/list-account-admin',[AdminAccountController::class,'getListAccountAdmin'])->name('get-list-account-admin');
-Route::POST('/admin/account/create-account-admin',[AdminAccountController::class,'createAccountAdmin'])->name('create-account-admin');
+Route::GET('/admin/account-admin',[AdminAccountController::class,'getPageAccountAdmin'])->name('page-account-admin');
+Route::GET('/admin/account-admin/list-account-admin',[AdminAccountController::class,'getListAccountAdmin'])->name('get-list-account-admin');
+Route::POST('/admin/account-admin/create-account-admin',[AdminAccountController::class,'createAccountAdmin'])->name('create-account-admin');
+
+//* Trang quản lý tài khoản user
+Route::GET('/admin/account-user',[AdminAccountUserController::class,'getPageAccountUser'])->name('page-account-user');

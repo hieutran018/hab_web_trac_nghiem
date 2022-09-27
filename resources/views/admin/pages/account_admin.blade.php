@@ -1,8 +1,8 @@
 @extends('admin.layout')
-@section('title','HAB Trắc Nghiệm - Admin | Quản lý tài khoản' )
+@section('title','HAB Trắc Nghiệm - Admin | Quản lý tài khoản quản trị viên' )
 @section('content')
     <div class="container-xxl flex-grow-1 container-p-y">
-              <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Tài khoản /</span> Quản lý tài khoản</h4>
+              <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Tài khoản /</span> Quản lý tài khoản quản trị viên</h4>
             <div class="fw-bold py-1 mb-2"><button data-bs-toggle="modal"
                             data-bs-target="#addAdmin" type="button" class="btn btn-outline-primary">
                               <span class="tf-icons bx bx-user-plus"></span>&nbsp; Thêm tài khoản
