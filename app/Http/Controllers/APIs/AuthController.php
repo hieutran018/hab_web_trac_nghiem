@@ -19,7 +19,7 @@ class AuthController extends Controller
                 'last_name'=>'required',
                 'email' => 'required|email|unique:users',
                 'password' => 'required',
-                'confirm_password'=> 'required',
+                
             ],
             [
                 'first_name.required' =>'Họ tên không được bỏ trống!',
@@ -28,21 +28,18 @@ class AuthController extends Controller
                 'email.email' => 'Email này không hợp lệ!',
                 'email.unique' => 'Email này đã được sử dụng ở một tài khoản khác!',
                 'password.required' => 'Mật khẩu không được bỏ trống!',
-                'confirm_password.required' => 'Xác nhận mật khẩu không được bỏ trống!',
+                
             ]);
-        
+        if($validator->fails()){
+                return response()->json(['message'=>$validator->errors()->toArray()],400);
+            }else{
         $data = $request->all();
         // dd($data);
         $acc = new User();
         $acc->first_name = $data['first_name'];
         $acc->last_name = $data['last_name'];
         $acc->email = $data['email'];
-        if($data['password'] == $data['confirm_password']){
-            $acc->password =Hash::make($data['password']);
-        }
-        else{
-            return response()->json(['status'=>400,'error_password'=>'Mật khẩu và xác nhận mật khẩu không giống nhau!']);
-        }
+        $acc->password =Hash::make($data['password']);
         $acc->status = 1;
         $acc->isAdmin = 0;
         $acc->isSubAdmin = 0;
@@ -51,7 +48,8 @@ class AuthController extends Controller
         $acc->created_at = Carbon::now('Asia/Ho_Chi_Minh');
         $acc->updated_at = null;
         $acc->save();
-        return response()->json(['status'=>200,'msg'=>$data]);
+        return response()->json(['msg'=>'Successful account registration!'],200);
+        }
     }
 
     public function login(Request $request){
@@ -69,6 +67,7 @@ class AuthController extends Controller
             $data = $request->all();
 
             $account = User::WHERE('email',$data['email'])->first();
+            
             if(!empty($account)){
                 if(Hash::check($data['password'],$account->password)){
                     if($account->status == 1){
@@ -79,10 +78,18 @@ class AuthController extends Controller
                         $token->last_used_at = Carbon::now('Asia/Ho_Chi_Minh')->addWeeks(1);
                         $token->save();
                         return response()->json(['status'=>200,
-                                                'user'=>Auth::user(),
-                                                'token_type'=>'Bearer',
-                                                'access_token'=>$tokenResult->accessToken->token,
-                                                'last_used_at'=>$token->last_used_at
+                                                'user'=>['access_token'=>$tokenResult->accessToken->token,
+                                                        'id'=>Auth::user()->id,
+                                                        'avatar'=>Auth::user()->avatar,
+                                                        'first_name'=>Auth::user()->first_name,
+                                                        'last_name'=>Auth::user()->last_name,
+                                                        'email'=>Auth::user()->email,
+                                                        'password'=>Auth::user()->password,
+                                                        'phone_number'=>Auth::user()->phone_number,
+                                                        'address'=>Auth::user()->address,
+                                                        'date_of_birth'=>Auth::user()->dateOfBirth,
+                                                        'status'=>Auth::user()->status,
+                                                    ],
                                             ]);
                     }
                     else{

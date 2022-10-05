@@ -32,3 +32,7 @@ Route::POST('/admin/account-admin/create-account-admin',[AdminAccountController:
 
 //* Trang quản lý tài khoản user
 Route::GET('/admin/account-user',[AdminAccountUserController::class,'getPageAccountUser'])->name('page-account-user');
+
+Route::get('/layout',function(){
+    return view('admin.pages.login');
+});

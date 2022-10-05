@@ -1,151 +1,191 @@
 @extends('admin.layout')
 @section('title','HAB Trắc Nghiệm - Admin | Quản lý tài khoản quản trị viên' )
 @section('content')
-    <div class="container-xxl flex-grow-1 container-p-y">
-              <h4 class="fw-bold py-3 mb-4"><span class="text-muted fw-light">Tài khoản /</span> Quản lý tài khoản quản trị viên</h4>
-            <div class="fw-bold py-1 mb-2"><button data-bs-toggle="modal"
-                            data-bs-target="#addAdmin" type="button" class="btn btn-outline-primary">
-                              <span class="tf-icons bx bx-user-plus"></span>&nbsp; Thêm tài khoản
-                            </button></div>
-              <!-- Basic Bootstrap Table -->
-              <div class="card">
-                <h5 class="card-header">Table Basic</h5>
-                <div class="table-responsive text-nowrap">
-                  <table class="table">
-                    <thead>
-                      <tr>
-                        <th>Project</th>
-                        <th>Client</th>
-                        <th>Users</th>
-                        <th>Status</th>
-                        <th>Actions</th>
-                      </tr>
-                    </thead>
-                    <tbody class="table-border-bottom-0">
-                      <tr>
-                        <td><i class="fab fa-angular fa-lg text-danger me-3"></i> <strong>Angular Project</strong></td>
-                        <td>Albert Cook</td>
-                        <td>
-                          <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
-                            <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" title="" data-bs-original-title="Lilian Fuller">
-                              <img src="{{URL('admin/assets/img/avatars/5.png')}}" alt="Avatar" class="rounded-circle">
-                            </li>
-                            <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" title="" data-bs-original-title="Sophia Wilkerson">
-                              <img src="{{URL('admin/assets/img/avatars/6.png')}}" alt="Avatar" class="rounded-circle">
-                            </li>
-                            <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" title="" data-bs-original-title="Christina Parker">
-                              <img src="{{URL('admin/assets/img/avatars/7.png')}}" alt="Avatar" class="rounded-circle">
-                            </li>
-                          </ul>
-                        </td>
-                        <td><span class="badge bg-label-primary me-1">Active</span></td>
-                        <td>
-                          <div class="dropdown">
-                            <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                              <i class="bx bx-dots-vertical-rounded"></i>
-                            </button>
-                            <div class="dropdown-menu">
-                              <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-edit-alt me-1"></i> Edit</a>
-                              <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-trash me-1"></i> Delete</a>
-                            </div>
-                          </div>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td><i class="fab fa-react fa-lg text-info me-3"></i> <strong>React Project</strong></td>
-                        <td>Barry Hunter</td>
-                        <td>
-                          <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
-                            <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" title="" data-bs-original-title="Lilian Fuller">
-                              <img src="{{URL('admin/assets/img/avatars/5.png')}}" alt="Avatar" class="rounded-circle">
-                            </li>
-                            <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" title="" data-bs-original-title="Sophia Wilkerson">
-                              <img src="{{URL('admin/assets/img/avatars/6.png')}}" alt="Avatar" class="rounded-circle">
-                            </li>
-                            <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" title="" data-bs-original-title="Christina Parker">
-                              <img src="{{URL('admin/assets/img/avatars/7.png')}}" alt="Avatar" class="rounded-circle">
-                            </li>
-                          </ul>
-                        </td>
-                        <td><span class="badge bg-label-success me-1">Completed</span></td>
-                        <td>
-                          <div class="dropdown">
-                            <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                              <i class="bx bx-dots-vertical-rounded"></i>
-                            </button>
-                            <div class="dropdown-menu">
-                              <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-edit-alt me-2"></i> Edit</a>
-                              <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-trash me-2"></i> Delete</a>
-                            </div>
-                          </div>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td><i class="fab fa-vuejs fa-lg text-success me-3"></i> <strong>VueJs Project</strong></td>
-                        <td>Trevor Baker</td>
-                        <td>
-                          <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
-                            <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" title="" data-bs-original-title="Lilian Fuller">
-                              <img src="{{URL('admin/assets/img/avatars/5.png')}}" alt="Avatar" class="rounded-circle">
-                            </li>
-                            <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" title="" data-bs-original-title="Sophia Wilkerson">
-                              <img src="{{URL('admin/assets/img/avatars/6.png')}}" alt="Avatar" class="rounded-circle">
-                            </li>
-                            <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" title="" data-bs-original-title="Christina Parker">
-                              <img src="{{URL('admin/assets/img/avatars/7.png')}}" alt="Avatar" class="rounded-circle">
-                            </li>
-                          </ul>
-                        </td>
-                        <td><span class="badge bg-label-info me-1">Scheduled</span></td>
-                        <td>
-                          <div class="dropdown">
-                            <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                              <i class="bx bx-dots-vertical-rounded"></i>
-                            </button>
-                            <div class="dropdown-menu">
-                              <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-edit-alt me-2"></i> Edit</a>
-                              <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-trash me-2"></i> Delete</a>
-                            </div>
-                          </div>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td>
-                          <i class="fab fa-bootstrap fa-lg text-primary me-3"></i> <strong>Bootstrap Project</strong>
-                        </td>
-                        <td>Jerry Milton</td>
-                        <td>
-                          <ul class="list-unstyled users-list m-0 avatar-group d-flex align-items-center">
-                            <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" title="" data-bs-original-title="Lilian Fuller">
-                              <img src="{{URL('admin/assets/img/avatars/5.png')}}" alt="Avatar" class="rounded-circle">
-                            </li>
-                            <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" title="" data-bs-original-title="Sophia Wilkerson">
-                              <img src="{{URL('admin/assets/img/avatars/6.png')}}" alt="Avatar" class="rounded-circle">
-                            </li>
-                            <li data-bs-toggle="tooltip" data-popup="tooltip-custom" data-bs-placement="top" class="avatar avatar-xs pull-up" title="" data-bs-original-title="Christina Parker">
-                              <img src="{{URL('admin/assets/img/avatars/7.png')}}" alt="Avatar" class="rounded-circle">
-                            </li>
-                          </ul>
-                        </td>
-                        <td><span class="badge bg-label-warning me-1">Pending</span></td>
-                        <td>
-                          <div class="dropdown">
-                            <button type="button" class="btn p-0 dropdown-toggle hide-arrow" data-bs-toggle="dropdown">
-                              <i class="bx bx-dots-vertical-rounded"></i>
-                            </button>
-                            <div class="dropdown-menu">
-                              <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-edit-alt me-2"></i> Edit</a>
-                              <a class="dropdown-item" href="javascript:void(0);"><i class="bx bx-trash me-2"></i> Delete</a>
-                            </div>
-                          </div>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-              <!--/ Basic Bootstrap Table -->
+             <div class="pagetitle">
+            <h1>Trang chủ</h1>
+            
+         </div>
+         <section class="section dashboard">
+            <div class="row">
+               <div class="col-lg">
+                  <div class="row">
+                     <div class="col-xxl-4 col-md-6">
+                        <div class="card info-card sales-card">
+                           <div class="filter">
+                              <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                              <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                 <li class="dropdown-header text-start">
+                                    <h6>Filter</h6>
+                                 </li>
+                                 <li><a class="dropdown-item" href="#">Today</a></li>
+                                 <li><a class="dropdown-item" href="#">This Month</a></li>
+                                 <li><a class="dropdown-item" href="#">This Year</a></li>
+                              </ul>
+                           </div>
+                           <div class="card-body">
+                              <h5 class="card-title">Sales <span>| Today</span></h5>
+                              <div class="d-flex align-items-center">
+                                 <div class="card-icon rounded-circle d-flex align-items-center justify-content-center"> <i class="bi bi-cart"></i></div>
+                                 <div class="ps-3">
+                                    <h6>145</h6>
+                                    <span class="text-success small pt-1 fw-bold">12%</span> <span class="text-muted small pt-2 ps-1">increase</span>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="col-xxl-4 col-md-6">
+                        <div class="card info-card revenue-card">
+                           <div class="filter">
+                              <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                              <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                 <li class="dropdown-header text-start">
+                                    <h6>Filter</h6>
+                                 </li>
+                                 <li><a class="dropdown-item" href="#">Today</a></li>
+                                 <li><a class="dropdown-item" href="#">This Month</a></li>
+                                 <li><a class="dropdown-item" href="#">This Year</a></li>
+                              </ul>
+                           </div>
+                           <div class="card-body">
+                              <h5 class="card-title">Revenue <span>| This Month</span></h5>
+                              <div class="d-flex align-items-center">
+                                 <div class="card-icon rounded-circle d-flex align-items-center justify-content-center"> <i class="bi bi-currency-dollar"></i></div>
+                                 <div class="ps-3">
+                                    <h6>$3,264</h6>
+                                    <span class="text-success small pt-1 fw-bold">8%</span> <span class="text-muted small pt-2 ps-1">increase</span>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                     <div class="col-xxl-4 col-xl-12">
+                        <div class="card info-card customers-card">
+                           <div class="filter">
+                              <a class="icon" href="#" data-bs-toggle="dropdown"><i class="bi bi-three-dots"></i></a>
+                              <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow">
+                                 <li class="dropdown-header text-start">
+                                    <h6>Filter</h6>
+                                 </li>
+                                 <li><a class="dropdown-item" href="#">Today</a></li>
+                                 <li><a class="dropdown-item" href="#">This Month</a></li>
+                                 <li><a class="dropdown-item" href="#">This Year</a></li>
+                              </ul>
+                           </div>
+                           <div class="card-body">
+                              <h5 class="card-title">Customers <span>| This Year</span></h5>
+                              <div class="d-flex align-items-center">
+                                 <div class="card-icon rounded-circle d-flex align-items-center justify-content-center"> <i class="bi bi-people"></i></div>
+                                 <div class="ps-3">
+                                    <h6>1244</h6>
+                                    <span class="text-danger small pt-1 fw-bold">12%</span> <span class="text-muted small pt-2 ps-1">decrease</span>
+                                 </div>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+               </div>
             </div>
+            <div class="row">
+                <div class="col-lg">
+                    <div class="card">
+                     <div class="card-body">
+                        <h5 class="card-title">Danh sách tài khoản Quản trị viên</h5>
+                        <table class="table">
+                           <thead>
+                              <tr>
+                                 <th scope="col">ID</th>
+                                 <th scope="col">Họ</th>
+                                 <th scope="col">Tên</th>
+                                 <th scope="col">Email</th>
+                                 <th scope="col">Số điện thoại</th>
+                                 <th scope="col">Vị trí</th>
+                                 <th scope="col">Trạng thái</th>
+                                 <th scope="col">Thao tác</th>
+                              </tr>
+                           </thead>
+                           <tbody>
+                              <tr>
+                                 <th scope="row">1</th>
+                                 <td>Brandon</td>
+                                 <td>Jacob</td>
+                                 <td>BrandonJacob@gmail.com</td>
+                                 <td>028234521</td>
+                                 <td>Quản trị viên</td>
+                                 <td>Hoạt động</td>
+                                 <td>
+                                    <button type="button" class="btn btn-info"><i style="color:white" class="bi bi-info-circle"></i></button> 
+                                    <button type="button" class="btn btn-danger"><i class="bi bi-person-x"></i></button> 
+                                    <button type="button" class="btn btn-success"><i class="bi bi-pencil-square"></i></button></td>
+                              </tr>
+                              <tr>
+                                 <th scope="row">1</th>
+                                 <td>Brandon</td>
+                                 <td>Jacob</td>
+                                 <td>BrandonJacob@gmail.com</td>
+                                 <td>028234521</td>
+                                 <td>Quản trị viên</td>
+                                 <td>Hoạt động</td>
+                                 <td><button type="button" class="btn btn-info"><i style="color:white" class="bi bi-info-circle"></i></button> 
+                                    <button type="button" class="btn btn-danger"><i class="bi bi-person-x"></i></button> 
+                                    <button type="button" class="btn btn-success"><i class="bi bi-pencil-square"></i></button></td></td>
+                              </tr>
+                              <tr>
+                                 <th scope="row">1</th>
+                                 <td>Brandon</td>
+                                 <td>Jacob</td>
+                                 <td>BrandonJacob@gmail.com</td>
+                                 <td>028234521</td>
+                                 <td>Quản trị viên</td>
+                                 <td>Hoạt động</td>
+                                 <td><button type="button" class="btn btn-info"><i style="color:white" class="bi bi-info-circle"></i></button> 
+                                    <button type="button" class="btn btn-danger"><i class="bi bi-person-x"></i></button> 
+                                    <button type="button" class="btn btn-success"><i class="bi bi-pencil-square"></i></button></td></td>
+                              </tr>
+                              <tr>
+                                 <th scope="row">1</th>
+                                 <td>Brandon</td>
+                                 <td>Jacob</td>
+                                 <td>BrandonJacob@gmail.com</td>
+                                 <td>028234521</td>
+                                 <td>Quản trị viên</td>
+                                 <td>Hoạt động</td>
+                                 <td><button type="button" class="btn btn-info"><i style="color:white" class="bi bi-info-circle"></i></button> 
+                                    <button type="button" class="btn btn-danger"><i class="bi bi-person-x"></i></button> 
+                                    <button type="button" class="btn btn-success"><i class="bi bi-pencil-square"></i></button></td></td>
+                              </tr>
+                              <tr>
+                                 <th scope="row">1</th>
+                                 <td>Brandon</td>
+                                 <td>Jacob</td>
+                                 <td>BrandonJacob@gmail.com</td>
+                                 <td>028234521</td>
+                                 <td>Quản trị viên</td>
+                                 <td>Hoạt động</td>
+                                 <td><button type="button" class="btn btn-info"><i style="color:white" class="bi bi-info-circle"></i></button> 
+                                    <button type="button" class="btn btn-danger"><i class="bi bi-person-x"></i></button> 
+                                    <button type="button" class="btn btn-success"><i class="bi bi-pencil-square"></i></button></td></td>
+                              </tr>
+                              <tr>
+                                 <th scope="row">1</th>
+                                 <td>Brandon</td>
+                                 <td>Jacob</td>
+                                 <td>BrandonJacob@gmail.com</td>
+                                 <td>028234521</td>
+                                 <td>Quản trị viên</td>
+                                 <td>Hoạt động</td>
+                                 <td><button type="button" class="btn btn-info"><i style="color:white" class="bi bi-info-circle"></i></button> 
+                                    <button type="button" class="btn btn-danger"><i class="bi bi-person-x"></i></button> 
+                                    <button type="button" class="btn btn-success"><i class="bi bi-pencil-square"></i></button></td></td>
+                              </tr>
+                           </tbody>
+                        </table>
+                     </div>
+                  </div>
+                </div>
+            </div>
+         </section>
             @include('admin.modal.add_admin')
          <script src="{{URL('admin/ajax/account_admin.js')}}"></script>
 @stop
