@@ -89,7 +89,7 @@
             </div>
             <div class="row">
                 <div class="col-lg">
-                    <div class="card">
+                    <div class="card" style="height: 220%">
                      <div class="card-body">
                         <h5 class="card-title">Danh sách tài khoản Quản trị viên</h5>
                         <table class="table">
@@ -105,80 +105,8 @@
                                  <th scope="col">Thao tác</th>
                               </tr>
                            </thead>
-                           <tbody>
-                              <tr>
-                                 <th scope="row">1</th>
-                                 <td>Brandon</td>
-                                 <td>Jacob</td>
-                                 <td>BrandonJacob@gmail.com</td>
-                                 <td>028234521</td>
-                                 <td>Quản trị viên</td>
-                                 <td>Hoạt động</td>
-                                 <td>
-                                    <button type="button" class="btn btn-info"><i style="color:white" class="bi bi-info-circle"></i></button> 
-                                    <button type="button" class="btn btn-danger"><i class="bi bi-person-x"></i></button> 
-                                    <button type="button" class="btn btn-success"><i class="bi bi-pencil-square"></i></button></td>
-                              </tr>
-                              <tr>
-                                 <th scope="row">1</th>
-                                 <td>Brandon</td>
-                                 <td>Jacob</td>
-                                 <td>BrandonJacob@gmail.com</td>
-                                 <td>028234521</td>
-                                 <td>Quản trị viên</td>
-                                 <td>Hoạt động</td>
-                                 <td><button type="button" class="btn btn-info"><i style="color:white" class="bi bi-info-circle"></i></button> 
-                                    <button type="button" class="btn btn-danger"><i class="bi bi-person-x"></i></button> 
-                                    <button type="button" class="btn btn-success"><i class="bi bi-pencil-square"></i></button></td></td>
-                              </tr>
-                              <tr>
-                                 <th scope="row">1</th>
-                                 <td>Brandon</td>
-                                 <td>Jacob</td>
-                                 <td>BrandonJacob@gmail.com</td>
-                                 <td>028234521</td>
-                                 <td>Quản trị viên</td>
-                                 <td>Hoạt động</td>
-                                 <td><button type="button" class="btn btn-info"><i style="color:white" class="bi bi-info-circle"></i></button> 
-                                    <button type="button" class="btn btn-danger"><i class="bi bi-person-x"></i></button> 
-                                    <button type="button" class="btn btn-success"><i class="bi bi-pencil-square"></i></button></td></td>
-                              </tr>
-                              <tr>
-                                 <th scope="row">1</th>
-                                 <td>Brandon</td>
-                                 <td>Jacob</td>
-                                 <td>BrandonJacob@gmail.com</td>
-                                 <td>028234521</td>
-                                 <td>Quản trị viên</td>
-                                 <td>Hoạt động</td>
-                                 <td><button type="button" class="btn btn-info"><i style="color:white" class="bi bi-info-circle"></i></button> 
-                                    <button type="button" class="btn btn-danger"><i class="bi bi-person-x"></i></button> 
-                                    <button type="button" class="btn btn-success"><i class="bi bi-pencil-square"></i></button></td></td>
-                              </tr>
-                              <tr>
-                                 <th scope="row">1</th>
-                                 <td>Brandon</td>
-                                 <td>Jacob</td>
-                                 <td>BrandonJacob@gmail.com</td>
-                                 <td>028234521</td>
-                                 <td>Quản trị viên</td>
-                                 <td>Hoạt động</td>
-                                 <td><button type="button" class="btn btn-info"><i style="color:white" class="bi bi-info-circle"></i></button> 
-                                    <button type="button" class="btn btn-danger"><i class="bi bi-person-x"></i></button> 
-                                    <button type="button" class="btn btn-success"><i class="bi bi-pencil-square"></i></button></td></td>
-                              </tr>
-                              <tr>
-                                 <th scope="row">1</th>
-                                 <td>Brandon</td>
-                                 <td>Jacob</td>
-                                 <td>BrandonJacob@gmail.com</td>
-                                 <td>028234521</td>
-                                 <td>Quản trị viên</td>
-                                 <td>Hoạt động</td>
-                                 <td><button type="button" class="btn btn-info"><i style="color:white" class="bi bi-info-circle"></i></button> 
-                                    <button type="button" class="btn btn-danger"><i class="bi bi-person-x"></i></button> 
-                                    <button type="button" class="btn btn-success"><i class="bi bi-pencil-square"></i></button></td></td>
-                              </tr>
+                           <tbody id="tableAccountAdmin">
+                              
                            </tbody>
                         </table>
                      </div>
@@ -186,6 +114,44 @@
                 </div>
             </div>
          </section>
-            @include('admin.modal.add_admin')
+            @include('admin.modal.info_account_admin')
          <script src="{{URL('admin/ajax/account_admin.js')}}"></script>
+         $(document).on('click', '#btn-info-account-admin', function (e) {
+    e.preventDefault();
+    $('#infoAccountAdmin').modal('show');
+    var id_account = $(this).val();
+    // console.log(id_account);
+    $.ajax({
+        type: 'GET',
+        url: '/admin/account-admin/info-account-admin/id=' + id_account,
+        success: function (response) {
+            if (response.status == 200) {
+                console.log(response.account);
+                // document.getElementById("id_account").textContent = response.account_admin.id;
+                document.getElementById("info-fName").value = response.account.first_name;
+                document.getElementById("info-lName").value = response.account.last_name;
+                document.getElementById("info-email").value = response.account.email;
+                document.getElementById("info-phoneNumber").value = response.account.phone_number;
+                document.getElementById("info-address").value = response.account.address;
+                document.getElementById("info-dateOfBirth").value = response.account.dateOfBirth;
+                if (response.account.isAdmin == 1 && response.account.isSubAdmin == 0) {
+                    document.getElementById("info-position").value = 1;
+                } else if (response.account.isAdmin == 0 && response.account.isSubAdmin == 1) {
+                    document.getElementById("info-position").value = 2;
+                }
+                if (response.account.avatar == null) {
+                    $(".info-avatar").src = 'http://127.0.0.1:8000/admin/assets/img/no_avatar.png';
+
+                } else {
+                    $(".info-avatar").src = 'http://127.0.0.1:8000/admin/assets/img/no_avatar.png';
+                }
+                // document.getElementById('edit-account-admin').value = response.account_admin.id;
+            }
+            else if (response.status == 400) {
+                console.log(response);
+                $('#infoAccountAdmin').modal('hide');
+            }
+        }
+    });
+});
 @stop

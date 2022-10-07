@@ -16,12 +16,29 @@ class AdminAccountController extends Controller
     }
 
     public function getPageAccountUser(){
-        return view();
+        return view('admin.pages.account_user');
     }
 
     public function getListAccountAdmin(){
-        $lst = User::WHERE('isAdmin',1);
-        return response()->json(['lst'=>$lst]);
+        $lst = User::WHERE('isAdmin',1)->orWHERE('isSubAdmin',1)->get();
+        // dd($lst);
+        return response()->json(['status'=>200,'lst'=>$lst]);
+    }
+
+    public function infoAccountAdmin($id){
+        $account = User::WHERE('id',$id)->first();
+        return response()->json(['status'=>200,'account'=>$account]);
+    }
+
+    public function getListAccountUser(){
+    $lst = User::WHERE('isAdmin',0)->WHERE('isSubAdmin',0)->get();
+    // dd($lst);
+    foreach($lst as $user){
+        if($user->phone_number == null){
+            $user->phone_number ='Chưa có thông tin';
+        }
+    }
+    return response()->json(['status'=>200,'lst'=>$lst]);
     }
 
     public function createAccountAdmin(Request $request){

@@ -6,7 +6,7 @@ use Closure;
 use Illuminate\Http\Request;
 use Auth;
 
-class CheckLogin
+class CheckAdmin
 {
     /**
      * Handle an incoming request.
@@ -17,13 +17,12 @@ class CheckLogin
      */
     public function handle(Request $request, Closure $next)
     {
-        if(Auth::check() && (Auth::user()->isAdmin == 1 || Auth::user()->isSubAdmin == 1))
+        if(Auth::check() && Auth::user()->isAdmin == 1 )
         {
             return $next($request);
         }
         else{
-            return \redirect("/admin/login");
+            return \response()->json(['status'=>400,'message'=>"Bạn không có quyền truy cập vào trang này!"]);
         }
-        
     }
 }

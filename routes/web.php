@@ -16,19 +16,26 @@ use App\Http\Controllers\Admin\AdminAccountUserController;
 |
 */
 
-Route::GET('/', function () {
-    return redirect("/admin/login");
-})->middleware('checklogin::class');
+// Route::GET('/', function () {
+//     return redirect("/admin/login");
+// });
 
 Route::GET('/admin/login',[AdminAuthController::class,'getPageLogin'])->name('page-login');
 Route::POST('/admin/login-post',[AdminAuthController::class,'login'])->name('login-admin');
 
 Route::GET('/admin/logout',[AdminAuthController::class,'logout'])->name('logout-admin');
 
+
+Route::group(['middleware'=>'checklogin'],function(){
+    Route::GET('/admin/account-admin',[AdminAccountController::class,'getPageAccountAdmin'])->name('page-account-admin');
+    Route::GET('/admin/account-user',[AdminAccountController::class,'getPageAccountUser'])->name('page-account-user');
+    Route::GET('/admin/account-admin/list-account-admin',[AdminAccountController::class,'getListAccountAdmin'])->name('get-list-account-admin');
+    Route::GET('/admin/account-admin/list-account-user',[AdminAccountController::class,'getListAccountUser'])->name('get-list-account-admin');
+    Route::POST('/admin/account-admin/create-account-admin',[AdminAccountController::class,'createAccountAdmin'])->name('create-account-admin');
+    Route::GET('/admin/account-admin/info-account-admin/id={id}',[AdminAccountController::class,'infoAccountAdmin'])->name('info-account-admin')->middleware('checkadmin::class');
+});
+
 //* Trang quản lý tài khoản admin
-Route::GET('/admin/account-admin',[AdminAccountController::class,'getPageAccountAdmin'])->name('page-account-admin');
-Route::GET('/admin/account-admin/list-account-admin',[AdminAccountController::class,'getListAccountAdmin'])->name('get-list-account-admin');
-Route::POST('/admin/account-admin/create-account-admin',[AdminAccountController::class,'createAccountAdmin'])->name('create-account-admin');
 
 //* Trang quản lý tài khoản user
 Route::GET('/admin/account-user',[AdminAccountUserController::class,'getPageAccountUser'])->name('page-account-user');

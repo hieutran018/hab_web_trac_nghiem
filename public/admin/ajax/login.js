@@ -8,15 +8,24 @@ $(document).ready(function () {
             url: '/admin/login-post',
             type: 'POST',
             data: formData,
-            success: function (data) {
-                window.location.href = data.redirect_url;
-                console.log(formData);
-                console.log(data);
+            beforeSend: function () {
+                $(document).find('span.error-message-login').text("");
             },
-            error: function (data) {
-                console.log(formData);
-                console.log(data);
-            }
+            success: function (data) {
+                if (data.status == 200) {
+                    window.location.href = data.redirect_url;
+                    console.log(formData);
+                    console.log(data);
+                } else if (data.status == 400) {
+                    console.log(formData);
+                    console.log(data.message);
+                    $.each(data.message, function (key, val) {
+                        $('#error-' + key + '-login').text(val[0]);
+                    });
+                }
+
+            },
+
         });
     });
 });
