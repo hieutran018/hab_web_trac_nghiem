@@ -75,6 +75,99 @@ $(document).ready(function () {
     }
 });
 
+$(document).on('click', '#btn-edit-account-admin', function (e) {
+    e.preventDefault();
+
+    var id_account = $(this).val();
+    console.log('ID EDIT ACCOUNT', id_account);
+    $.ajax({
+        type: 'GET',
+        url: '/admin/checkisAdmin',
+        success: function (response) {
+            if (response.status != 400) {
+                $('#editAccountAdmin').modal('show');
+                $.ajax({
+                    type: 'GET',
+                    url: '/admin/account-admin/edit-account-admin/id=' + id_account,
+                    success: function (response) {
+                        if (response.status == 200) {
+                            console.log(response.account);
+                            document.getElementById("edit-id").value = response.account.id;
+                            document.getElementById("edit-fName").value = response.account.first_name;
+                            document.getElementById("edit-lName").value = response.account.last_name;
+                            document.getElementById("edit-email").value = response.account.email;
+                            document.getElementById("edit-phoneNumber").value = response.account.phone_number;
+                            document.getElementById("edit-address").value = response.account.address;
+                            document.getElementById("edit-dateOfBirth").value = response.account.dateOfBirth;
+                            if (response.account.isAdmin == 1 && response.account.isSubAdmin == 0) {
+                                document.getElementById("info-position").value = 1;
+                            } else if (response.account.isAdmin == 0 && response.account.isSubAdmin == 1) {
+                                document.getElementById("edit-position").value = 1;
+                            }
+                            if (response.account.avatar == null) {
+                                document.getElementById('edit-avatar').src = 'http://127.0.0.1:8000/admin/assets/img/no_avatar.png';
+
+                            } else {
+                                document.getElementById('edit-avatar').src = 'http://127.0.0.1:8000/admin/assets/img/card.jpg';
+                            }
+                            // document.getElementById('edit-account-admin').value = response.account_admin.id;
+                        }
+                    }
+                });
+            }
+            else {
+                alert(response.message);
+
+            }
+        }
+    });
+});
+
+$(document).ready(function () {
+    var createAccountAdminForm = $('#edit-account-admin');
+    createAccountAdminForm.submit(function (e) {
+        e.preventDefault();
+        // var formData = createAccountAdminForm.serialize();
+        var formData = new FormData($('#edit-account-admin')[0]);
+        // formData.append('imgs', $('#upload')[0].files[0]);
+        console.log('formData', formData);
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            url: '/admin/account-admin/update-account-admin',
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            beforeSend: function () {
+                $(document).find('span.error-message').text("");
+            },
+            success: function (data) {
+                if (data.status == 400) {
+                    console.log(data.message);
+                    $.each(data.message, function (key, val) {
+                        $('#error-add-' + key).text(val[0]);
+                    });
+                    if (data.error_password != null) {
+                        $('#error-add-error-password').text(data.error_password);
+                    }
+
+                }
+                else if (data.status == 200) {
+                    console.log(data);
+                    $('#editAccountAdmin').modal('hide');
+                    alert(data.message);
+                }
+
+            },
+
+        });
+    });
+});
+
 $(document).on('click', '#btn-info-account-admin', function (e) {
     e.preventDefault();
     var id_account = $(this).val();
@@ -86,22 +179,22 @@ $(document).on('click', '#btn-info-account-admin', function (e) {
             if (response.status == 200) {
                 console.log(response.account);
                 // document.getElementById("id_account").textContent = response.account_admin.id;
-                document.getElementById("info-fName").value = response.account.first_name;
-                document.getElementById("info-lName").value = response.account.last_name;
-                document.getElementById("info-email").value = response.account.email;
-                document.getElementById("info-phoneNumber").value = response.account.phone_number;
-                document.getElementById("info-address").value = response.account.address;
-                document.getElementById("info-dateOfBirth").value = response.account.dateOfBirth;
+                document.getElementById("info-fName").textContent = response.account.first_name;
+                document.getElementById("info-lName").textContent = response.account.last_name;
+                document.getElementById("info-email").textContent = response.account.email;
+                document.getElementById("info-phoneNumber").textContent = response.account.phone_number;
+                document.getElementById("info-address").textContent = response.account.address;
+                document.getElementById("info-dateOfBirth").textContent = response.account.dateOfBirth;
                 if (response.account.isAdmin == 1 && response.account.isSubAdmin == 0) {
-                    document.getElementById("info-position").value = 1;
+                    document.getElementById("info-position").textContent = 'Quản trị viên';
                 } else if (response.account.isAdmin == 0 && response.account.isSubAdmin == 1) {
-                    document.getElementById("info-position").value = 2;
+                    document.getElementById("info-position").textContent = 'Cộng tác viên';
                 }
                 if (response.account.avatar == null) {
-                    $(".info-avatar").src = 'http://127.0.0.1:8000/admin/assets/img/no_avatar.png';
+                    document.getElementById('info-avatar').src = 'http://127.0.0.1:8000/admin/assets/img/no_avatar.png';
 
                 } else {
-                    $(".info-avatar").src = 'http://127.0.0.1:8000/admin/assets/img/no_avatar.png';
+                    document.getElementById('info-avatar').src = 'http://127.0.0.1:8000/admin/assets/img/card.jpg';
                 }
                 // document.getElementById('edit-account-admin').value = response.account_admin.id;
             }
@@ -116,7 +209,7 @@ $(document).on('click', '#btn-info-account-admin', function (e) {
                 // $('body').removeClass('modal-open');
                 // $('body').css('padding-right', '');
                 // $("#infoAccountAdmin").hide();
-                alert(response.message);
+
             }
         }
     });

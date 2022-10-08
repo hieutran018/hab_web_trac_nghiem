@@ -30,6 +30,37 @@ class AdminAccountController extends Controller
         return response()->json(['status'=>200,'account'=>$account]);
     }
 
+    public function editAccountAdmin($id){
+       
+        $account = User::WHERE('id',$id)->first();
+        return response()->json(['status'=>200,'account'=>$account]);
+    }
+
+    public function updateAccountAdmin(Request $request){
+        $data = $request->all();
+        $account = user::WHERE('id',$data['id'])->first();
+        // dd(!empty($account),$account);
+        if(!empty($account)){
+            $account->first_name = $data['first_name'];
+            $account->last_name = $data['last_name'];
+            $account->phone_number = $data['phone_number'];
+            $account->address = $data['address'];
+            $account->dateOfBirth = $data['date_of_birth'];
+            if($data['position'] == 1){
+                $account->isAdmin = 1;
+                $account->isSubAdmin = 0;
+            }else{
+                $account->isAdmin = 0;
+                $account->isSubAdmin = 1;
+            }
+            $account->update();
+            return response()->json(['status'=>200,'message'=>'Cập nhật tài khoản thành công!']);
+        }
+        else{
+            return response()->json(['status'=>400,'message'=>'Không tìm thấy tài khoản!']);
+        }
+    }
+
     public function getListAccountUser(){
     $lst = User::WHERE('isAdmin',0)->WHERE('isSubAdmin',0)->get();
     // dd($lst);
@@ -103,4 +134,8 @@ class AdminAccountController extends Controller
         
     }
     
+
+    public function checkIsAdmin(){
+        return response()->json(['status'=>200]);
+    }
 }
