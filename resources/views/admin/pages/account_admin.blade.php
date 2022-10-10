@@ -92,6 +92,11 @@
                     <div class="card" style="height: 220%">
                      <div class="card-body">
                         <h5 class="card-title">Danh sách tài khoản Quản trị viên</h5>
+                        <div class="row">
+                           <div class="col-3">
+                              <button id="btn-create-account-admin" type="button" style="width: 80%" class="btn btn-outline-primary">Thêm tài khoản</button>
+                           </div>
+                        </div>
                         <table class="table">
                            <thead>
                               <tr>
@@ -116,5 +121,6 @@
          </section>
          @include('admin.modal.info_account_admin')
          @include('admin.modal.edit_account_admin')
+         @include('admin.modal.create_account_admin')
          <script src="{{URL('admin/ajax/account_admin.js')}}"></script>
 @stop

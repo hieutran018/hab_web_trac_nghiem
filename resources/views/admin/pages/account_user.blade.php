@@ -112,6 +112,5 @@
                   </div>
                 </div>
             </div>
-            @include('admin.modal.add_admin')
          <script src="{{URL('admin/ajax/account_user.js')}}"></script>
 @stop

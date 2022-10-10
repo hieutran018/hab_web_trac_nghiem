@@ -7,6 +7,7 @@
       <meta name="robots" content="noindex, nofollow">
       <meta content="" name="description">
       <meta content="" name="keywords">
+      <meta name="csrf-token" content="{{ csrf_token() }}">
       <link href="{{URL('admin/assets/img/ic_logo_hab.png')}}" rel="icon">
       <link href="{{URL('admin/assets/img/ic_logo_hab.png')}}" rel="icon">
       <link href="https://fonts.gstatic.com" rel="preconnect">

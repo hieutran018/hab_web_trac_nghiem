@@ -8,6 +8,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
+use Image;
 
 class AdminAccountController extends Controller
 {
@@ -38,8 +39,9 @@ class AdminAccountController extends Controller
 
     public function updateAccountAdmin(Request $request){
         $data = $request->all();
-        $account = user::WHERE('id',$data['id'])->first();
-        // dd(!empty($account),$account);
+        // dd($data);
+        // return response()->json(['status'=>200,'account'=>$request->all()]);
+        $account = User::WHERE('id',$request->id)->first();
         if(!empty($account)){
             $account->first_name = $data['first_name'];
             $account->last_name = $data['last_name'];
@@ -53,8 +55,22 @@ class AdminAccountController extends Controller
                 $account->isAdmin = 0;
                 $account->isSubAdmin = 1;
             }
+            //Cập nhật ảnh đại diện
+        if ($request->hasFile('avatar')) {
+        $fileExtentsion = $request->file('avatar')->getClientOriginalExtension();
+        $fileName = time().'.'.$fileExtentsion;
+        $request->file('avatar')->storeAs('account/'.$account->id.'/avatar/', $fileName);
+        $file = Image::make(storage_path('app/public/account/'.$account->id.'/avatar/' . $fileName));
+        $file->resize(100, 100, function ($constraint) {
+            $constraint->aspectRatio();
+        });
+        $file->save(storage_path('app/public/account/'.$account->id.'/avatar/' . $fileName));
+            $account->avatar = $fileName;
+        }
+
+
             $account->update();
-            return response()->json(['status'=>200,'message'=>'Cập nhật tài khoản thành công!']);
+            return response()->json(['status'=>200,'message'=>'Cập nhật tài khoản thành công!','data'=>$data]);
         }
         else{
             return response()->json(['status'=>400,'message'=>'Không tìm thấy tài khoản!']);
@@ -114,6 +130,9 @@ class AdminAccountController extends Controller
                 else{
                     return response()->json(['status'=>400,'error_password'=>'Mật khẩu và xác nhận mật khẩu không giống nhau!']);
                 }
+                
+
+
                 $acc->status = 1;
                 $acc->isAdmin = 1;
                 $acc->isSubAdmin = 1;
@@ -122,13 +141,20 @@ class AdminAccountController extends Controller
                 $acc->created_at = Carbon::now('Asia/Ho_Chi_Minh');
                 $acc->updated_at = null;
                 $acc->save();
-                // if($request->hasFile('avatar'))
-                // {
-                //     return response()->json(['check file'=> 'CO FILE','data'=>$data]);
-                // }
-                // else{
-                //     return response()->json(['check file'=> 'KHONG CO FILE','data'=>$data]);
-                // }
+                //Thêm ảnh đại diện
+                if ($request->hasFile('avatar')) {
+                $fileExtentsion = $request->file('avatar')->getClientOriginalExtension();
+                $fileName = time().'.'.$fileExtentsion;
+                $request->file('avatar')->storeAs('account/'.$acc->id.'/avatar/', $fileName);
+                $file = Image::make(storage_path('app/public/account/'.$acc->id.'/avatar/' . $fileName));
+                $file->resize(100, 100, function ($constraint) {
+                    $constraint->aspectRatio();
+                });
+                $file->save(storage_path('app/public/account/'.$acc->id.'/avatar/' . $fileName));
+                    $acc->avatar = $fileName;
+                }
+                $acc->save();
+                
                 return response()->json(['status'=>200,'msg'=>$data]);
             }
         

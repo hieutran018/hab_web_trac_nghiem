@@ -1,52 +1,119 @@
 
+
+
 $(document).ready(function () {
-    var createAccountAdminForm = $('#formCreateAccount');
-    createAccountAdminForm.submit(function (e) {
+    // Thêm tài khoản admin
+    $(document).on('click', '#btn-create-account-admin', function (e) {
         e.preventDefault();
-        // var formData = createAccountAdminForm.serialize();
-        var formData = new FormData($('#formCreateAccount')[0]);
-        // formData.append('imgs', $('#upload')[0].files[0]);
-        console.log('formData', formData);
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        $.ajax({
+            type: 'GET',
+            url: '/admin/checkisAdmin',
+            success: function (data) {
+                if (data.status != 400) {
+                    $('#createAccountAdmin').modal('show');
+                    var createAccountAdminForm = $('#create-account-admin');
+                    createAccountAdminForm.submit(function (e) {
+                        e.preventDefault();
+                        // var formData = createAccountAdminForm.serialize();
+                        var formData = new FormData($('#create-account-admin')[0]);
+                        // formData.append('imgs', $('#upload')[0].files[0]);
+                        console.log('formData', formData);
+                        $.ajaxSetup({
+                            headers: {
+                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                            }
+                        });
+
+                        $.ajax({
+                            url: '/admin/account-admin/create-account-admin',
+                            type: 'POST',
+                            data: formData,
+                            processData: false,
+                            contentType: false,
+                            beforeSend: function () {
+                                $(document).find('span.error-message').text("");
+                            },
+                            success: function (data) {
+                                if (data.status == 400) {
+                                    console.log(data.message);
+                                    $.each(data.message, function (key, val) {
+                                        $('#error-add-' + key).text(val[0]);
+                                    });
+                                    if (data.error_password != null) {
+                                        $('#error-add-error-password').text(data.error_password);
+                                    }
+
+                                }
+                                else if (data.status == 200) {
+                                    console.log(data);
+                                    fetchsAccountAdmin();
+                                    $('#createAccountAdmin').modal('hide');
+                                }
+
+                            },
+
+                        });
+                    });
+                } else {
+                    alert(data.message)
+                }
             }
         });
+    });
 
-        $.ajax({
-            url: '/admin/account-admin/create-account-admin',
-            type: 'POST',
-            data: formData,
-            processData: false,
-            contentType: false,
-            beforeSend: function () {
-                $(document).find('span.error-message').text("");
-            },
-            success: function (data) {
-                if (data.status == 400) {
-                    console.log(data.message);
-                    $.each(data.message, function (key, val) {
-                        $('#error-add-' + key).text(val[0]);
-                    });
-                    if (data.error_password != null) {
-                        $('#error-add-error-password').text(data.error_password);
+    //Cập nhật thông tin tài khoản admin
+    $(document).ready(function () {
+        var editAccountAdminForm = $('#edit-account-admin');
+        editAccountAdminForm.submit(function (e) {
+            e.preventDefault();
+            // var formData = editAccountAdminForm.serialize();
+            var formData = new FormData($('#edit-account-admin')[0]);
+            formData.append('avatar', $('#edit-upload')[0].files[0]);
+            console.log('formData', formData);
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                url: '/admin/account-admin/update-account-admin',
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                // dataType: 'json',
+                beforeSend: function () {
+                    $(document).find('span.error-message').text("");
+                },
+                success: function (data) {
+                    if (data.status == 400) {
+                        console.log(data.message);
+                        $.each(data.message, function (key, val) {
+                            $('#error-add-' + key).text(val[0]);
+                        });
+                        if (data.error_password != null) {
+                            $('#error-add-error-password').text(data.error_password);
+                        }
+
+                    }
+                    else if (data.status == 200) {
+                        console.log(data);
+                        fetchsAccountAdmin();
+                        $('#editAccountAdmin').modal('hide');
+
+
                     }
 
-                }
-                else if (data.status == 200) {
-                    console.log(data);
-                    $('#addAdmin').modal('hide');
-                    $('#formCreateAccount')[0].reset();
-                }
+                },
 
-            },
-
+            });
         });
     });
-});
 
-$(document).ready(function () {
+
     fetchsAccountAdmin();
+
+    //Lấy danh sách tài khoản admin
     function fetchsAccountAdmin() {
 
         $.ajax({
@@ -93,7 +160,7 @@ $(document).on('click', '#btn-edit-account-admin', function (e) {
                         if (response.status == 200) {
                             console.log(response.account);
                             document.getElementById("edit-id").value = response.account.id;
-                            document.getElementById("edit-fName").value = response.account.first_name;
+                            $("#edit-fName").val(response.account.first_name);
                             document.getElementById("edit-lName").value = response.account.last_name;
                             document.getElementById("edit-email").value = response.account.email;
                             document.getElementById("edit-phoneNumber").value = response.account.phone_number;
@@ -108,7 +175,7 @@ $(document).on('click', '#btn-edit-account-admin', function (e) {
                                 document.getElementById('edit-avatar').src = 'http://127.0.0.1:8000/admin/assets/img/no_avatar.png';
 
                             } else {
-                                document.getElementById('edit-avatar').src = 'http://127.0.0.1:8000/admin/assets/img/card.jpg';
+                                document.getElementById('edit-avatar').src = 'http://127.0.0.1:8000/storage/account/' + response.account.id + '/avatar/' + response.account.avatar;
                             }
                             // document.getElementById('edit-account-admin').value = response.account_admin.id;
                         }
@@ -123,50 +190,6 @@ $(document).on('click', '#btn-edit-account-admin', function (e) {
     });
 });
 
-$(document).ready(function () {
-    var createAccountAdminForm = $('#edit-account-admin');
-    createAccountAdminForm.submit(function (e) {
-        e.preventDefault();
-        // var formData = createAccountAdminForm.serialize();
-        var formData = new FormData($('#edit-account-admin')[0]);
-        // formData.append('imgs', $('#upload')[0].files[0]);
-        console.log('formData', formData);
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-        $.ajax({
-            url: '/admin/account-admin/update-account-admin',
-            type: 'POST',
-            data: formData,
-            processData: false,
-            contentType: false,
-            beforeSend: function () {
-                $(document).find('span.error-message').text("");
-            },
-            success: function (data) {
-                if (data.status == 400) {
-                    console.log(data.message);
-                    $.each(data.message, function (key, val) {
-                        $('#error-add-' + key).text(val[0]);
-                    });
-                    if (data.error_password != null) {
-                        $('#error-add-error-password').text(data.error_password);
-                    }
-
-                }
-                else if (data.status == 200) {
-                    console.log(data);
-                    $('#editAccountAdmin').modal('hide');
-                    alert(data.message);
-                }
-
-            },
-
-        });
-    });
-});
 
 $(document).on('click', '#btn-info-account-admin', function (e) {
     e.preventDefault();
@@ -194,7 +217,7 @@ $(document).on('click', '#btn-info-account-admin', function (e) {
                     document.getElementById('info-avatar').src = 'http://127.0.0.1:8000/admin/assets/img/no_avatar.png';
 
                 } else {
-                    document.getElementById('info-avatar').src = 'http://127.0.0.1:8000/admin/assets/img/card.jpg';
+                    document.getElementById('info-avatar').src = 'http://127.0.0.1:8000/storage/account/' + response.account.id + '/avatar/' + response.account.avatar;
                 }
                 // document.getElementById('edit-account-admin').value = response.account_admin.id;
             }
