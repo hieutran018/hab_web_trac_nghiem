@@ -20,7 +20,7 @@
                             <label for="create-upload" class="btn btn-primary me-2 mb-4" tabindex="0">
                               <span class="d-none d-sm-block">Tải hình ảnh lên</span>
                               <i class="bx bx-upload d-block d-sm-none"></i>
-                              <input name="avatar" type="file" id="create-upload" class="account-file-input" hidden="">
+                              <input onchange="loadFile(event)" name="avatar" type="file" id="create-upload" class="account-file-input" hidden="">
                             </label>
                             <button type="reset" class="btn btn-outline-secondary account-image-reset mb-4">
                               <i class="bx bx-reset d-block d-sm-none"></i>
@@ -99,3 +99,10 @@
     </div>
               
 </div>
+
+<script>
+var loadFile = function(event){
+  var crAvatar = document.getElementById('create-avatar');
+  crAvatar.src = URL.createObjectURL(event.target.files[0]);
+}
+</script>
