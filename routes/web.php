@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Admin\AdminAuthController;
 use App\Http\Controllers\Admin\AdminAccountController;
 use App\Http\Controllers\Admin\AdminAccountUserController;
+use App\Http\Controllers\Admin\AdminNewsCategoryController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,10 +39,10 @@ Route::group(['middleware'=>'checklogin'],function(){
     Route::POST('/admin/account-admin/update-account-admin',[AdminAccountController::class,'updateAccountAdmin'])->name('update-account-admin')->middleware('checkadmin::class');
 });
 
-//* Trang quản lý tài khoản admin
-
 //* Trang quản lý tài khoản user
 Route::GET('/admin/account-user',[AdminAccountUserController::class,'getPageAccountUser'])->name('page-account-user');
+
+Route::GET('/admin/news/news-categories',[AdminNewsCategoryController::class,'getPageNewsCategories'])->name('get-page-news-category');
 
 Route::get('/layout',function(){
     return view('admin.pages.login');
