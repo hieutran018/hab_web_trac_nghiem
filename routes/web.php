@@ -43,6 +43,7 @@ Route::group(['middleware'=>'checklogin'],function(){
 Route::GET('/admin/account-user',[AdminAccountUserController::class,'getPageAccountUser'])->name('page-account-user');
 
 Route::GET('/admin/news/news-categories',[AdminNewsCategoryController::class,'getPageNewsCategories'])->name('get-page-news-category');
+Route::GET('/admin/news/news-categories/fetch-news-category',[AdminNewsCategoryController::class,'getNewsCategory'])->name('fetch-news-category');
 
 Route::get('/layout',function(){
     return view('admin.pages.login');

@@ -112,7 +112,7 @@
                                  <th scope="col">Thao tác</th>
                               </tr>
                            </thead>
-                           <tbody id="tableAccountAdmin">
+                           <tbody id="tableNewsCategory">
                               
                            </tbody>
                         </table>
@@ -121,4 +121,5 @@
                 </div>
             </div>
          </section>
+         <script src="{{URL('admin/ajax/news_category.js')}}"></script>
 @stop
