@@ -10,6 +10,7 @@ class NewsCategoryController extends Controller
 {
     public function getlstNewsCategory(){
         $lstNewsCategory = NewsCategories::WHERE('status',1)->get();
-        return response()->json(['lstNewsCategory'=>$lstNewsCategory],200);
+        return response( $lstNewsCategory, 200)
+                  ->header('Content-Type', 'application/json');
     }
 }
