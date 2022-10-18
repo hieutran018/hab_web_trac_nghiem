@@ -44,6 +44,9 @@ Route::GET('/admin/account-user',[AdminAccountUserController::class,'getPageAcco
 
 Route::GET('/admin/news/news-categories',[AdminNewsCategoryController::class,'getPageNewsCategories'])->name('get-page-news-category');
 Route::GET('/admin/news/news-categories/fetch-news-category',[AdminNewsCategoryController::class,'getNewsCategory'])->name('fetch-news-category');
+Route::POST('/admin/news/news-categories/create-news-category',[AdminNewsCategoryController::class,'createNewsCatetogy'])->name('create-news-category');
+Route::GET('/admin/news/news-categories/edit-news-category/id={id}',[AdminNewsCategoryController::class,'editNewsCategory'])->name('edit-news-category');
+Route::POST('/admin/news/news-categories/update-news-category',[AdminNewsCategoryController::class,'updateNewsCategory'])->name('update-news-category');
 
 Route::get('/layout',function(){
     return view('admin.pages.login');
