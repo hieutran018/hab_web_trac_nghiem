@@ -12,7 +12,7 @@
                     
                     <div class="card-body">
                       <form id="edit-account-admin" method="POST" enctype="multipart/form-data">
-                        {{-- @method('PUT') --}}
+                        @method('PUT')
                         @csrf
                         <div class="d-flex align-items-start align-items-sm-center gap-4">
                           <img src="" alt="user-avatar" class="info-avatar d-block rounded" height="50" width="50" id="edit-avatar">
@@ -37,32 +37,32 @@
                             <div class="mb-3 col-md-6">
                               <label for="first-name" class="form-label">Họ:</label>
                               <input class="form-control" type="text" id="edit-fName" name="first_name">
-                              <span clas s="error-message" style="color: red;" id="error-add-first_name" value></span>
+                              <span class="error-message" style="color: red;" id="error-edit-first_name" value></span>
                             </div>
                             <div class="mb-3 col-md-6">
                               <label for="last-name" class="form-label">Tên:</label>
                               <input class="form-control" type="text" name="last_name" id="edit-lName">
-                              <span class="error-message" style="color: red;" id="error-add-last_name"></span>
+                              <span class="error-message" style="color: red;" id="error-edit-last_name"></span>
                             </div>
                             <div class="mb-3 col-md-6">
                               <label for="email" class="form-label">E-mail</label>
                               <input class="form-control" type="text" id="edit-email" name="email">
-                              <span class="error-message" style="color: red;" id="error-add-email"></span>
+                              <span class="error-message" style="color: red;" id="error-edit-email"></span>
                             </div>
                             <div class="mb-3 col-md-6">
                               <label class="form-label" for="phoneNumber">Số điện thoại</label>
                               <input type="text" id="edit-phoneNumber" name="phone_number" class="form-control">
-                              <span class="error-message" style="color: red;" id="error-add-phone_number"></span>
+                              <span class="error-message" style="color: red;" id="error-edit-phone_number"></span>
                             </div>
                             <div class="mb-3 col-md-6">
                               <label for="address" class="form-label">Địa chỉ:</label>
                               <input type="text" class="form-control" id="edit-address" name="address">
-                              <span class="error-message" style="color: red;" id="error-add-address"></span>
+                              <span class="error-message" style="color: red;" id="error-edit-address"></span>
                             </div>
                             <div class="mb-3 col-md-6">
                               <label for="date-of-birth" class="form-label">Ngày sinh:</label>
                               <input type="date" class="form-control" id="edit-dateOfBirth" name="date_of_birth">
-                              <span class="error-message" style="color: red;" id="error-add-date-of-birth"></span>
+                              <span class="error-message" style="color: red;" id="error-edit-date-of-birth"></span>
                             </div>
                             <div class="mb-3 col-md-6">
                             <label class="form-label" for="country">Vị trí</label>

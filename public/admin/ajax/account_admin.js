@@ -92,7 +92,7 @@ $(document).ready(function () {
                             $('#error-add-' + key).text(val[0]);
                         });
                         if (data.error_password != null) {
-                            $('#error-add-error-password').text(data.error_password);
+                            $('#error-edit-error-password').text(data.error_password);
                         }
 
                     }

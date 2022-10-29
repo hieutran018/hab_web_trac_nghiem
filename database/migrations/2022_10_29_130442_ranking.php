@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class News extends Migration
+class Ranking extends Migration
 {
     /**
      * Run the migrations.
@@ -13,15 +13,13 @@ class News extends Migration
      */
     public function up()
     {
-        Schema::create('news', function (Blueprint $table) {
+        Schema::create('ranking', function (Blueprint $table) {
             $table->id();
-            $table->text('title');
-            $table->text('news_content');
             $table->foreignId('user_id');
-            $table->foreignId('news_category_id');
+            $table->integer('score_single');
+            $table->integer('score_challenge');
             $table->timestamps();
             $table->softDeletes();
-            $table->boolean('status');
         });
     }
 
@@ -32,6 +30,6 @@ class News extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('news');
+        Schema::dropIfExists('ranking');
     }
 }

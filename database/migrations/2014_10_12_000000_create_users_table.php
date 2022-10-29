@@ -27,6 +27,7 @@ class CreateUsersTable extends Migration
             $table->string('token')->nullable();
             $table->boolean('isAdmin');
             $table->boolean('isSubAdmin');
+            $table->integer('life_heart');
             $table->timestamps();
             $table->softDeletes();
             $table->boolean('status');

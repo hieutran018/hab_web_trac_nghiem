@@ -39,9 +39,9 @@ class AdminAccountController extends Controller
 
     public function updateAccountAdmin(Request $request){
         $data = $request->all();
-        // dd($data);
-        // return response()->json(['status'=>200,'account'=>$request->all()]);
+        
         $account = User::WHERE('id',$request->id)->first();
+        // dd($account, !empty($account));
         if(!empty($account)){
             $account->first_name = $data['first_name'];
             $account->last_name = $data['last_name'];
@@ -132,10 +132,16 @@ class AdminAccountController extends Controller
                 }
                 
 
-
+                if($data['position'] == 1){
+                    $acc->isAdmin = 1;
+                    $acc->isSubAdmin = 0;
+                }
+                elseif($data['position'] == 2){
+                    $acc->isAdmin = 0;
+                    $acc->isSubAdmin = 1;
+                }
                 $acc->status = 1;
-                $acc->isAdmin = 1;
-                $acc->isSubAdmin = 1;
+                
                 $acc->address = $data['address'];
                 $acc->dateOfBirth = $data['date_of_birth'];
                 $acc->created_at = Carbon::now('Asia/Ho_Chi_Minh');
