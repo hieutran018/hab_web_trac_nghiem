@@ -22,5 +22,14 @@ Route::POST('/login',[AuthController::class,'login']);
 Route::get('/news/news-category',[NewsCategoryController::class,'getlstNewsCategory']);
 
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+    return response()->json(['id'=>$request->user()->id,
+                            'first_name'=>$request->user()->first_name,
+                            'last_name'=>$request->user()->last_name,
+                            'avatar'=>$request->user()->avatar,
+                            'email'=>$request->user()->email,
+                            'phone'=>$request->user()->phone_number,
+                            'address'=>$request->user()->address,
+                            'date_of_birth'=>$request->user()->dateOfBirth,
+                            'life_heart'=>$request->user()->life_heart,
+                        ],200);
 });

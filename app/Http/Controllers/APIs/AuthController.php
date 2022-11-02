@@ -9,6 +9,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
 use Auth;
+use Laravel\Sanctum\PersonalAccessToken;
 
 class AuthController extends Controller
 {
@@ -65,45 +66,23 @@ class AuthController extends Controller
             ]);
 
             $data = $request->all();
-
-            $account = User::WHERE('email',$data['email'])->first();
             
-            if(!empty($account)){
-                if(Hash::check($data['password'],$account->password)){
-                    if($account->status == 1){
-                        Auth::login($account);
-                        $tokenResult = $account->createToken('Personal Access Token');
-                        $token = $tokenResult->accessToken;
-                        $token->created_at =  Carbon::now('Asia/Ho_Chi_Minh');
-                        $token->last_used_at = Carbon::now('Asia/Ho_Chi_Minh')->addWeeks(1);
-                        $token->save();
-                        return response()->json(['status'=>200,
-                                                'user'=>['access_token'=>$tokenResult->accessToken->token,
-                                                        'id'=>Auth::user()->id,
-                                                        'avatar'=>Auth::user()->avatar,
-                                                        'first_name'=>Auth::user()->first_name,
-                                                        'last_name'=>Auth::user()->last_name,
-                                                        'email'=>Auth::user()->email,
-                                                        'password'=>Auth::user()->password,
-                                                        'phone_number'=>Auth::user()->phone_number,
-                                                        'address'=>Auth::user()->address,
-                                                        'date_of_birth'=>Auth::user()->dateOfBirth,
-                                                        'status'=>Auth::user()->status,
-                                                    ],
-                                            ]);
-                    }
-                    else{
-                        return response()->json(['status'=>400,'error'=>'Tài khoản bị khóa hoặc chưa kích hoạt.']);
-                    }
-                }
-                else{
-                    return response()->json(['status'=>400,'error'=>'Mật khẩu không chính xác.']);
-                }
+            if(Auth::attempt(['email'=>$data['email'],'password'=>$data['password'],'status'=>1,'isAdmin'=>0,'isSubAdmin'=>0])){
+                $user = User::where('email', $data['email'])->firstOrFail();
+                
+                $token = $user->createToken('authToken')->plainTextToken;
+            
+                return response()->json([
+                                        'access_token' => $token,
+                                        'token_type' => 'Bearer',],200);
+                        
             }
             else{
-                return response()->json(['status'=>400,'user'=>'Tài khoản này không tồn tại']);
+                return response()->json(['error'=>'Tài khoản này không tồn tại'],400);
             }
                 
 
     }
+
+
 }
