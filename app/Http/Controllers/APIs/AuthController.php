@@ -109,7 +109,7 @@ class AuthController extends Controller
                                 'email'=>$request->user()->email,
                                 'phone'=>$request->user()->phone_number,
                                 'address'=>$request->user()->address,
-                                'date_of_birth'=>$request->user()->dateOfBirth,
+                                'date_of_birth'=>date('d-m-Y', strtotime($request->user()->dateOfBirth)),
                                 'life_heart'=>$request->user()->life_heart,
                                 'score_single'=>$request->user()->ranking->score_single,
                                 'score_challenge'=>$request->user()->ranking->score_challenge,
