@@ -8,6 +8,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\Ranking;
 
 class User extends Authenticatable
 {
@@ -34,4 +35,9 @@ class User extends Authenticatable
     ];
     protected $primaryKey = 'id';
     protected $table = 'users';
+
+    public function ranking()
+    {
+        return $this->hasOne(Ranking::class, 'user_id');
+    }
 }

@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
 use Auth;
 use Laravel\Sanctum\PersonalAccessToken;
+use DB;
 
 class AuthController extends Controller
 {
@@ -82,6 +83,39 @@ class AuthController extends Controller
             }
                 
 
+    }
+    public function getUser(Request $request){
+        $ranking_single =DB::select('SELECT *,  
+        DENSE_RANK() OVER (ORDER BY score_single) dens_rank  
+        FROM ranking;');
+
+        $ranking_challenge =DB::select('SELECT *,  
+        DENSE_RANK() OVER (ORDER BY score_challenge) dens_rank  
+        FROM ranking;');
+        foreach($ranking_single as $rank){
+            if($rank->user_id == $request->user()->id){
+                $ranking_single = $rank->dens_rank;
+            }
+        }
+        foreach($ranking_challenge as $rank){
+            if($rank->user_id == $request->user()->id){
+                $ranking_challenge = $rank->dens_rank;
+            }
+        }
+        return response()->json(['id'=>$request->user()->id,
+                                'first_name'=>$request->user()->first_name,
+                                'last_name'=>$request->user()->last_name,
+                                'avatar'=>$request->user()->avatar,
+                                'email'=>$request->user()->email,
+                                'phone'=>$request->user()->phone_number,
+                                'address'=>$request->user()->address,
+                                'date_of_birth'=>$request->user()->dateOfBirth,
+                                'life_heart'=>$request->user()->life_heart,
+                                'score_single'=>$request->user()->ranking->score_single,
+                                'score_challenge'=>$request->user()->ranking->score_challenge,
+                                'ranking_single'=>$ranking_single,
+                                'ranking_challenge'=>$ranking_challenge
+                            ],200);
     }
 
 
