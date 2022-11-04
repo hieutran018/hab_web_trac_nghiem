@@ -4,6 +4,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\APIs\AuthController;
 use App\Http\Controllers\APIs\NewsCategoryController;
+use App\Http\Controllers\APIs\RankingController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -16,8 +17,12 @@ use App\Http\Controllers\APIs\NewsCategoryController;
 */
 Route::POST('/register-account',[AuthController::class,'register']);
 Route::POST('/login',[AuthController::class,'login']);
+Route::POST('/change-password',[AuthController::class,'changePassword'])->middleware('auth:sanctum');
 
 
 Route::get('/news/news-category',[NewsCategoryController::class,'getlstNewsCategory']);
+
+Route::get('/ranking-challenge',[RankingController::class,'getListRankingChallenge']);
+Route::get('/ranking-single',[RankingController::class,'getListRankingSingle']);
 
 Route::middleware('auth:sanctum')->get('/user', [AuthController::class,'getUser']);

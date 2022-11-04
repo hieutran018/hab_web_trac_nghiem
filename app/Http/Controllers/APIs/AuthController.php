@@ -117,6 +117,23 @@ class AuthController extends Controller
                                 'ranking_challenge'=>$ranking_challenge
                             ],200);
     }
+    public function changePassword(Request $request){
+        $data = $request->all();
+        $user = $request->user();
+        if(empty($user)){
+            return response()->json('Có lỗi xảy ra!',400);
+        }else{
+            if(Hash::check($data['old_password'],$user->password)){
+                if($data['new_password']== $data['confirm_new_password']){
+                    $update = User::where('id',$user->id)->update(['password'=>Hash::make($data['new_password']),'updated_at'=>Carbon::now('Asia/Ho_Chi_Minh')]);
+                }
+            }
+            else{
+                return response()->json('Mật khẩu không khớp!',400);
+            }
+       return response()->json(['data'=>$data,'user'=>$user],200);
+    }
+    }
 
 
 }

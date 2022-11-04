@@ -16,6 +16,7 @@ class User extends Authenticatable
     use SoftDeletes;
 
     public $timestamps = true;
+    // protected $hidden = array('password');
 
     protected $fillable = [
         'first_name',
