@@ -11,7 +11,7 @@
                 <div class="card mb-4">
                     
                     <div class="card-body">
-                      <form id="create-account-admin" method="POST" enctype="multipart/form-data">
+                      <form id="create-account-admin" enctype="multipart/form-data">
                         {{-- @method('PUT') --}}
                         @csrf
                         <div class="d-flex align-items-start align-items-sm-center gap-4">

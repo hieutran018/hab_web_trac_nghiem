@@ -131,8 +131,14 @@ class AuthController extends Controller
             else{
                 return response()->json('Mật khẩu không khớp!',400);
             }
-       return response()->json(['Đổi mật khẩu thành công!'],200);
+       return response()->json(['message'=>'Đổi mật khẩu thành công!'],200);
+        }
     }
+
+    public function logout(Request $request){
+        auth()->user()->tokens()->delete();
+        return response()->json(['message'=>'Đăng xuất thành công!'],200);
+
     }
 
 

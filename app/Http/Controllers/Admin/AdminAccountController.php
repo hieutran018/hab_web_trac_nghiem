@@ -124,6 +124,7 @@ class AdminAccountController extends Controller
                 $acc->last_name = $data['last_name'];
                 $acc->email = $data['email'];
                 $acc->phone_number = $data['phone_number'];
+                $acc->life_heart = 0;
                 if($data['password'] == $data['confirm_password']){
                     $acc->password =Hash::make($data['password']);
                 }
