@@ -3,7 +3,12 @@
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
+              
                 <h5 class="modal-title" id="createAccountAdminModalLabel">Thêm tài khoản quản trị viên</h5>
+             
+              
+                
+                
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -85,7 +90,7 @@
                             </div>
                           </div>
                           <div class="mt-2">
-                            <button type="submit" id="submit-create-account-admin" class="btn btn-primary me-2">Hoàn tất</button>
+                            <button type="submit" class="btn btn-primary me-2">Hoàn tất</button>
                             <span data-bs-dismiss="modal" aria-label="Close" class="btn btn-outline-secondary">Hủy</span>
                           </div>
                         </div>

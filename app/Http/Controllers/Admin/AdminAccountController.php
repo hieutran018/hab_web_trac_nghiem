@@ -38,42 +38,63 @@ class AdminAccountController extends Controller
     }
 
     public function updateAccountAdmin(Request $request){
-        $data = $request->all();
-        
-        $account = User::WHERE('id',$request->id)->first();
-        // dd($account, !empty($account));
-        if(!empty($account)){
-            $account->first_name = $data['first_name'];
-            $account->last_name = $data['last_name'];
-            $account->phone_number = $data['phone_number'];
-            $account->address = $data['address'];
-            $account->dateOfBirth = $data['date_of_birth'];
-            if($data['position'] == 1){
-                $account->isAdmin = 1;
-                $account->isSubAdmin = 0;
+
+        $validator = Validator::make($request->all(),
+            [
+                'first_name'=>'required',
+                'last_name'=>'required',
+                'phone_number' => 'required',
+                'address'=>'required',
+                
+            ],
+            [
+                'first_name.required' =>'Họ tên không được bỏ trống!',
+                'last_name.required' =>'Tên không được bỏ trống!',
+                'phone_number.required' => 'Số điện thoại không được bỏ trống!',
+                'address.required' => 'Địa chỉ không được bỏ trống!'
+                
+            ]);
+
+        if($validator->fails()){
+                return response()->json(['status'=>400,'message'=>$validator->errors()->toArray()]);
             }else{
-                $account->isAdmin = 0;
-                $account->isSubAdmin = 1;
+            $data = $request->all();
+            
+            $account = User::WHERE('id',$request->id)->first();
+            // dd($account, !empty($account));
+            if(!empty($account)){
+                $account->first_name = $data['first_name'];
+                $account->last_name = $data['last_name'];
+                $account->phone_number = $data['phone_number'];
+                $account->address = $data['address'];
+                $account->dateOfBirth = $data['date_of_birth'];
+                if($data['position'] == 1){
+                    $account->isAdmin = 1;
+                    $account->isSubAdmin = 0;
+                }else{
+                    $account->isAdmin = 0;
+                    $account->isSubAdmin = 1;
+                }
+                //Cập nhật ảnh đại diện
+            if ($request->hasFile('avatar')) {
+            $fileExtentsion = $request->file('avatar')->getClientOriginalExtension();
+            $fileName = time().'.'.$fileExtentsion;
+            $request->file('avatar')->storeAs('account/'.$account->id.'/avatar/', $fileName);
+            $file = Image::make(storage_path('app/public/account/'.$account->id.'/avatar/' . $fileName));
+            $file->resize(100, 100, function ($constraint) {
+                $constraint->aspectRatio();
+            });
+            $file->save(storage_path('app/public/account/'.$account->id.'/avatar/' . $fileName));
+                $account->avatar = $fileName;
             }
-            //Cập nhật ảnh đại diện
-        if ($request->hasFile('avatar')) {
-        $fileExtentsion = $request->file('avatar')->getClientOriginalExtension();
-        $fileName = time().'.'.$fileExtentsion;
-        $request->file('avatar')->storeAs('account/'.$account->id.'/avatar/', $fileName);
-        $file = Image::make(storage_path('app/public/account/'.$account->id.'/avatar/' . $fileName));
-        $file->resize(100, 100, function ($constraint) {
-            $constraint->aspectRatio();
-        });
-        $file->save(storage_path('app/public/account/'.$account->id.'/avatar/' . $fileName));
-            $account->avatar = $fileName;
-        }
 
 
-            $account->update();
-            return response()->json(['status'=>200,'message'=>'Cập nhật tài khoản thành công!','data'=>$data]);
-        }
-        else{
-            return response()->json(['status'=>400,'message'=>'Không tìm thấy tài khoản!']);
+                $account->update();
+                return response()->json(['status'=>200,'message'=>'Cập nhật tài khoản thành công!','data'=>$data]);
+            }
+            else{
+                return response()->json(['status'=>400,'message'=>'Không tìm thấy tài khoản!']);
+            }
         }
     }
 
@@ -116,53 +137,58 @@ class AdminAccountController extends Controller
             if($validator->fails()){
                 return response()->json(['status'=>400,'message'=>$validator->errors()->toArray()]);
             }else{
-                $data = $request->all();
+                    $data = $request->all();
 
-                $acc = new User();
+                              
+                    $acc = new User();
 
-                $acc->first_name = $data['first_name'];
-                $acc->last_name = $data['last_name'];
-                $acc->email = $data['email'];
-                $acc->phone_number = $data['phone_number'];
-                $acc->life_heart = 0;
-                if($data['password'] == $data['confirm_password']){
-                    $acc->password =Hash::make($data['password']);
-                }
-                else{
-                    return response()->json(['status'=>400,'error_password'=>'Mật khẩu và xác nhận mật khẩu không giống nhau!']);
-                }
-                
+                    $acc->first_name = $data['first_name'];
+                    $acc->last_name = $data['last_name'];
+                    $acc->email = $data['email'];
+                    $acc->phone_number = $data['phone_number'];
+                    $acc->life_heart = 0;
+                    if($data['password'] == $data['confirm_password']){
+                        $acc->password =Hash::make($data['password']);
+                    }
+                    else{
+                        return response()->json(['status'=>400,'error_password'=>'Mật khẩu và xác nhận mật khẩu không giống nhau!']);
+                    }
+                    if($data['position'] == 1){
+                        $acc->isAdmin = 1;
+                        $acc->isSubAdmin = 0;
+                    }
+                    elseif($data['position'] == 2){
+                        $acc->isAdmin = 0;
+                        $acc->isSubAdmin = 1;
+                    }
+                    $acc->status = 1;
+                    
+                    $acc->address = $data['address'];
+                    $acc->dateOfBirth = $data['date_of_birth'];
+                    $acc->created_at = Carbon::now('Asia/Ho_Chi_Minh');
+                    $acc->updated_at = null;
+                    $acc->save();
 
-                if($data['position'] == 1){
-                    $acc->isAdmin = 1;
-                    $acc->isSubAdmin = 0;
-                }
-                elseif($data['position'] == 2){
-                    $acc->isAdmin = 0;
-                    $acc->isSubAdmin = 1;
-                }
-                $acc->status = 1;
+                    //Thêm ảnh đại diện
+                    if ($request->hasFile('avatar')) {
+                    $fileExtentsion = $request->file('avatar')->getClientOriginalExtension();
+                    $fileName = time().'.'.$fileExtentsion;
+                    $request->file('avatar')->storeAs('account/'.$acc->id.'/avatar/', $fileName);
+                    $file = Image::make(storage_path('app/public/account/'.$acc->id.'/avatar/' . $fileName));
+                    $file->resize(360, 360, function ($constraint) {
+                        $constraint->aspectRatio();
+                    });
+                    $file->save(storage_path('app/public/account/'.$acc->id.'/avatar/' . $fileName));
+                        $acc->avatar = $fileName;
+                        $acc->save();
+                    }
+
+                    
+                    
+                    return response()->json(['status'=>200,'msg'=>$data]);
+
                 
-                $acc->address = $data['address'];
-                $acc->dateOfBirth = $data['date_of_birth'];
-                $acc->created_at = Carbon::now('Asia/Ho_Chi_Minh');
-                $acc->updated_at = null;
-                $acc->save();
-                //Thêm ảnh đại diện
-                if ($request->hasFile('avatar')) {
-                $fileExtentsion = $request->file('avatar')->getClientOriginalExtension();
-                $fileName = time().'.'.$fileExtentsion;
-                $request->file('avatar')->storeAs('account/'.$acc->id.'/avatar/', $fileName);
-                $file = Image::make(storage_path('app/public/account/'.$acc->id.'/avatar/' . $fileName));
-                $file->resize(100, 100, function ($constraint) {
-                    $constraint->aspectRatio();
-                });
-                $file->save(storage_path('app/public/account/'.$acc->id.'/avatar/' . $fileName));
-                    $acc->avatar = $fileName;
-                }
-                $acc->save();
                 
-                return response()->json(['status'=>200,'msg'=>$data]);
             }
         
     }

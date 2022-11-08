@@ -47,6 +47,7 @@ class AuthController extends Controller
         $acc->isSubAdmin = 0;
         $acc->address = null;
         $acc->dateOfBirth = null;
+        $acc->life_heart = 3;
         $acc->created_at = Carbon::now('Asia/Ho_Chi_Minh');
         $acc->updated_at = null;
         $acc->save();

@@ -1,65 +1,101 @@
 
 
+$(document).on('click', '#btn-create-account-admin', function (e) {
+    e.preventDefault();
+
+    $('#createAccountAdmin').modal('show');
+    var createAccountAdminForm = $('#create-account-admin');
+    createAccountAdminForm.submit(function (e) {
+        e.preventDefault();
+        // var formData = createAccountAdminForm.serialize();
+        var formData = new FormData($('#create-account-admin')[0]);
+        // formData.append('imgs', $('#upload')[0].files[0]);
+        console.log('formData', formData);
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        $.ajax({
+            url: '/admin/account-admin/create-account-admin',
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            beforeSend: function () {
+                $(document).find('span.error-message').text("");
+            },
+            success: function (data) {
+                if (data.status === 400) {
+                    console.log(data.message);
+                    $.each(data.message, function (key, val) {
+                        $('#error-add-' + key).text(val[0]);
+                    });
+                    if (data.error_password != null) {
+                        $('#error-add-error-password').text(data.error_password);
+                    }
+                    // $('#createAccountAdmin').find('input').val('');
+                    $('#create-account-admin')[0].reset();
+                }
+                else if (data.status === 200) {
+                    console.log(data);
+                    // $('#createAccountAdmin').modal('hide');
+                    // $('#createAccountAdmin').find('input').val('');
+
+                    $('#create-account-admin')[0].reset();
+                    // $('#createAccountAdmin').modal('toggle');
+                    // Swal.fire({
+                    //     position: 'center',
+                    //     icon: 'success',
+                    //     title: 'Thêm tài khoản thành công!',
+                    //     showConfirmButton: true,
+                    //     confirmButtonText: 'Xác nhận',
+
+                    // });
+                    fetchsAccountAdmin();
+
+                }
+
+            },
+
+        });
+    });
+
+
+});
+
+function fetchsAccountAdmin() {
+
+    $.ajax({
+        type: "GET",
+        url: "/admin/account-admin/list-account-admin",
+        dataType: "json",
+        success: function (response) {
+            // console.log(response.lst);
+            $("#tableAccountAdmin").html("");
+            $.each(response.lst, function (key, item) {
+                $("#tableAccountAdmin").append('<tr>\
+                        <td>' + item.id + '</td>\
+                        <td>' + item.first_name + '</td>\
+                        <td>' + item.last_name + '</td>\
+                        <td>' + item.email + '</td>\
+                        <td>' + item.phone_number + '</td>\
+                        <td>' + (item.isAdmin == 1 && item.isSubAdmin == 0 ? 'Quản trị viên' : item.isAdmin == 0 && item.isSubAdmin == 1 ? 'Cộng tác viên' : 'Chưa cấp quyền') + '</td>\
+                        <td>' + (item.status == 1 ? 'Hoạt động' : 'Bị khóa') + '</td>\
+                        <td><button id="btn-info-account-admin" value="'+ item.id + '" type="button" data-bs-toggle="modal" data-bs-target="#infoAccountAdmin" class="btn btn-info"><i style="color:white" class="bi bi-info-circle"></i></button>\
+                        <button id="btn-delete-account-admin" type ="button" value="'+ item.id + '" class= "btn btn-danger" > <i class="bi bi-person-x"></i></button >\
+                    <button id="btn-edit-account-admin" type="button" value="'+ item.id + '" class="btn btn-success"><i class="bi bi-pencil-square"></i></button></td >\
+                        \</tr > ');
+            });
+        }
+    });
+}
+
 
 $(document).ready(function () {
     // Thêm tài khoản admin
-    $(document).on('click', '#btn-create-account-admin', function (e) {
-        e.preventDefault();
-        $.ajax({
-            type: 'GET',
-            url: '/admin/checkisAdmin',
-            success: function (data) {
-                if (data.status != 400) {
-                    $('#createAccountAdmin').modal('show');
-                    var createAccountAdminForm = $('#create-account-admin');
-                    createAccountAdminForm.submit(function (e) {
-                        e.preventDefault();
-                        // var formData = createAccountAdminForm.serialize();
-                        var formData = new FormData($('#create-account-admin')[0]);
-                        // formData.append('imgs', $('#upload')[0].files[0]);
-                        console.log('formData', formData);
-                        $.ajaxSetup({
-                            headers: {
-                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                            }
-                        });
 
-                        $.ajax({
-                            url: '/admin/account-admin/create-account-admin',
-                            type: 'POST',
-                            data: formData,
-                            processData: false,
-                            contentType: false,
-                            beforeSend: function () {
-                                $(document).find('span.error-message').text("");
-                            },
-                            success: function (data) {
-                                if (data.status == 400) {
-                                    console.log(data.message);
-                                    $.each(data.message, function (key, val) {
-                                        $('#error-add-' + key).text(val[0]);
-                                    });
-                                    if (data.error_password != null) {
-                                        $('#error-add-error-password').text(data.error_password);
-                                    }
-
-                                }
-                                else if (data.status == 200) {
-                                    console.log(data);
-                                    fetchsAccountAdmin();
-                                    $('#createAccountAdmin').modal('hide');
-                                }
-
-                            },
-
-                        });
-                    });
-                } else {
-                    alert(data.message)
-                }
-            }
-        });
-    });
 
     //Cập nhật thông tin tài khoản admin
     $(document).ready(function () {
@@ -89,18 +125,25 @@ $(document).ready(function () {
                     if (data.status == 400) {
                         console.log(data.message);
                         $.each(data.message, function (key, val) {
-                            $('#error-add-' + key).text(val[0]);
+                            $('#error-edit-' + key).text(val[0]);
                         });
                         if (data.error_password != null) {
                             $('#error-edit-error-password').text(data.error_password);
                         }
 
                     }
-                    else if (data.status == 200) {
+                    else if (data.status === 200) {
                         console.log(data);
                         fetchsAccountAdmin();
                         $('#editAccountAdmin').modal('hide');
+                        Swal.fire({
+                            position: 'center',
+                            icon: 'success',
+                            title: 'Cập nhật thành công!',
+                            showConfirmButton: true,
+                            confirmButtonText: 'Xác nhận',
 
+                        })
 
                     }
 
