@@ -16,7 +16,7 @@ class User extends Authenticatable
     use SoftDeletes;
 
     public $timestamps = true;
-    // protected $hidden = array('password');
+    
 
     protected $fillable = [
         'first_name',
@@ -36,9 +36,9 @@ class User extends Authenticatable
     ];
     protected $primaryKey = 'id';
     protected $table = 'users';
-
+    // protected $hidden = array('password');
     public function ranking()
     {
-        return $this->hasOne(Ranking::class, 'user_id');
+        return $this->hasOne(Ranking::class, 'user_id','id');
     }
 }

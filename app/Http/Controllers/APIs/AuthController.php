@@ -87,11 +87,11 @@ class AuthController extends Controller
     }
     public function getUser(Request $request){
         $ranking_single =DB::select('SELECT *,  
-        DENSE_RANK() OVER (ORDER BY score_single) dens_rank  
+        DENSE_RANK() OVER (ORDER BY score_single DESC) dens_rank  
         FROM ranking;');
 
         $ranking_challenge =DB::select('SELECT *,  
-        DENSE_RANK() OVER (ORDER BY score_challenge) dens_rank  
+        DENSE_RANK() OVER (ORDER BY score_challenge DESC) dens_rank  
         FROM ranking;');
         foreach($ranking_single as $rank){
             if($rank->user_id == $request->user()->id){

@@ -16,4 +16,6 @@ class NewsCategories extends Model
     protected $fillable = ['news_category_name','description','status'];
     protected $primaryKey = 'id';
     protected $table = 'news_categories';
+
+    // protected $hidden = array('created_at', 'updated_at ','deleted_at','status');
 }
