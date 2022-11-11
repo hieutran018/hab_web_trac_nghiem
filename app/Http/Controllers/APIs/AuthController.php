@@ -86,7 +86,7 @@ class AuthController extends Controller
 
     }
     public function getUser(Request $request){
-        $ranking_single =DB::select('SELECT *,  
+        $ranking_single = DB::select('SELECT *,  
         DENSE_RANK() OVER (ORDER BY score_single DESC) dens_rank  
         FROM ranking;');
 
