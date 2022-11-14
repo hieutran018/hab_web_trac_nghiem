@@ -6,11 +6,14 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\User;
+use App\Models\Ranking;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
 use Auth;
 use Laravel\Sanctum\PersonalAccessToken;
 use DB;
+use Illuminate\Support\Facades\Storage;
+use Image;
 
 class AuthController extends Controller
 {
@@ -50,7 +53,26 @@ class AuthController extends Controller
         $acc->life_heart = 3;
         $acc->created_at = Carbon::now('Asia/Ho_Chi_Minh');
         $acc->updated_at = null;
+
+
         $acc->save();
+        $rank = new Ranking();
+        $rank->user_id = $acc->id;
+        $rank->score_single = 0;
+        $rank->score_challenge = 0;
+        $rank->save();
+        $files = Storage::files('app/public/assets/no_avatar.png');
+
+        
+
+        Storage::copy('assets/no_avatar.png', 'account/'.$acc->id.'/avatar/no_avatar.png' );
+        $file = Image::make(storage_path('app/public/assets/no_avatar.png'));
+            $file->resize(360, 360, function ($constraint) {
+                $constraint->aspectRatio();
+            });
+            $file->save(storage_path('app/public/account/'.$acc->id.'/avatar/no_avatar.png' ));
+            $acc->avatar = 'no_avatar.png';
+            $acc->save();
         return response()->json(['msg'=>'Successful account registration!'],200);
         }
     }
@@ -106,7 +128,7 @@ class AuthController extends Controller
         return response()->json(['id'=>$request->user()->id,
                                 'first_name'=>$request->user()->first_name,
                                 'last_name'=>$request->user()->last_name,
-                                'avatar'=>$request->user()->avatar,
+                                'avatar'=>$request->user()->avatar == null ? 'no_avatar.png' : $request->user()->avatar == null,
                                 'email'=>$request->user()->email,
                                 'phone'=>$request->user()->phone_number,
                                 'address'=>$request->user()->address,

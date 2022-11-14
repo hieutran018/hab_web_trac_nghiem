@@ -1,10 +1,10 @@
 @extends('admin.layout')
 @section('title','HAB Trắc Nghiệm - Admin | Quản lý thể loại bài viết' )
 @section('content')
-             <div class="pagetitle">
-            <h1>Trang chủ</h1>
+         <div class="pagetitle">
             <nav>
-               <ol class="breadcrumb">
+               <ol style="color:black; font-size:120%" class="breadcrumb">
+                  <li class="breadcrumb-item">Trang chủ</li>
                   <li class="breadcrumb-item">Bài viết</li>
                   <li class="breadcrumb-item">Quản lý thể loại</li>
                </ol>

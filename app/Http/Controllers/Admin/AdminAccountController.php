@@ -81,7 +81,7 @@ class AdminAccountController extends Controller
             $fileName = time().'.'.$fileExtentsion;
             $request->file('avatar')->storeAs('account/'.$account->id.'/avatar/', $fileName);
             $file = Image::make(storage_path('app/public/account/'.$account->id.'/avatar/' . $fileName));
-            $file->resize(100, 100, function ($constraint) {
+            $file->resize(360, 360, function ($constraint) {
                 $constraint->aspectRatio();
             });
             $file->save(storage_path('app/public/account/'.$account->id.'/avatar/' . $fileName));

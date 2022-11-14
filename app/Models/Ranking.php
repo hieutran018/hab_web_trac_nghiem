@@ -17,8 +17,7 @@ class Ranking extends Model
     protected $fillable = ['user_id','score_single','score_challenge'];
     protected $primaryKey = 'id';
     protected $table = 'ranking';
-    protected $hidden = array('avatar','first_name',
-        'last_name','phone_number',
+    protected $hidden = array('phone_number',
         'email',
         'password',
         'address',
@@ -33,6 +32,6 @@ class Ranking extends Model
 
     public function user()
     {
-        return  $this->belongsTo(User::class,'user_id','id')->select('fist_name','last_name','avatar');
+        return  $this->belongsTo(User::class,'user_id','id');
     }
 }
