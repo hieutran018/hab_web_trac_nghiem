@@ -50,7 +50,7 @@ Route::GET('/admin/news/news-categories/edit-news-category/id={id}',[AdminNewsCa
 Route::POST('/admin/news/news-categories/update-news-category',[AdminNewsCategoryController::class,'updateNewsCategory'])->name('update-news-category');
 Route::GET('/admin/games/topic-questions',[AdminTopicQuestionController::class,'getPageTopicQuestion'])->name('get-page-topic-question');
 Route::GET('/admin/games/topic-questions/fetch-topic-questions',[AdminTopicQuestionController::class,'getToipicQuestion']);
-Route::POST('/admin/games/topic-questions/create-topic-question',[AdminTopicQuestionController::class,'getToipicQuestion']);
+Route::POST('/admin/games/topic-questions/create-topic-questions',[AdminTopicQuestionController::class,'createTopicQuestion']);
 // Route::get('/layout',function(){
 //     return view('admin.pages.login');
 // });
