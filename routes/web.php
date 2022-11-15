@@ -6,6 +6,7 @@ use App\Http\Controllers\Admin\AdminAccountController;
 use App\Http\Controllers\Admin\AdminAccountUserController;
 use App\Http\Controllers\Admin\AdminNewsCategoryController;
 use App\Http\Controllers\Admin\AdminTopicQuestionController;
+use App\Http\Controllers\Admin\AdminLevelController;
 
 /*
 |--------------------------------------------------------------------------
@@ -48,16 +49,23 @@ Route::GET('/admin/news/news-categories/fetch-news-category',[AdminNewsCategoryC
 Route::POST('/admin/news/news-categories/create-news-category',[AdminNewsCategoryController::class,'createNewsCatetogy'])->name('create-news-category');
 Route::GET('/admin/news/news-categories/edit-news-category/id={id}',[AdminNewsCategoryController::class,'editNewsCategory'])->name('edit-news-category');
 Route::POST('/admin/news/news-categories/update-news-category',[AdminNewsCategoryController::class,'updateNewsCategory'])->name('update-news-category');
-Route::GET('/admin/games/topic-questions',[AdminTopicQuestionController::class,'getPageTopicQuestion'])->name('get-page-topic-question');
+
 
 //* Topic Question -------------------------------------------------------------------------------------------------------------------------------
+Route::GET('/admin/games/topic-questions',[AdminTopicQuestionController::class,'getPageTopicQuestion'])->name('get-page-topic-question');
 Route::GET('/admin/games/topic-questions/fetch-topic-questions',[AdminTopicQuestionController::class,'getToipicQuestion']);
 Route::POST('/admin/games/topic-questions/create-topic-questions',[AdminTopicQuestionController::class,'createTopicQuestion']);
 Route::GET('/admin/games/topic-questions/edit-topic-questions/id={id}',[AdminTopicQuestionController::class,'editTopicQuestion']);
 Route::POST('/admin/games/topic-questions/update-topic-questions',[AdminTopicQuestionController::class,'updateTopicQuestion']);
 Route::GET('/admin/games/topic-questions/delete-topic-questions/id={id}',[AdminTopicQuestionController::class,'deleteTopicQuestion']);
 
-//* -----------------------------------------------------------------------------------------------------------------------------------------------
+//* LevelQuestion -----------------------------------------------------------------------------------------------------------------------------------------------
+Route::GET('/admin/games/level-questions',[AdminLevelController::class,'getPageLevelQuestion'])->name('get-page-level-question');
+Route::GET('/admin/games/level-questions/fetch-level-questions',[AdminLevelController::class,'getLevelQuestion']);
+Route::POST('/admin/games/level-questions/create-level-questions',[AdminLevelController::class,'createLevelQuestion']);
+Route::GET('/admin/games/level-questions/edit-level-questions/id={id}',[AdminLevelController::class,'editLevelQuestion']);
+Route::POST('/admin/games/level-questions/update-level-questions',[AdminLevelController::class,'updateTopicQuestion']);
+Route::GET('/admin/games/level-questions/delete-level-questions/id={id}',[AdminLevelController::class,'deleteTopicQuestion']);
 // Route::get('/layout',function(){
 //     return view('admin.pages.login');
 // });
