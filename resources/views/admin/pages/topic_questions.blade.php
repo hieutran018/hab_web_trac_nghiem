@@ -44,5 +44,6 @@
             </div>
          </section>
          @include('admin.modal.create_topic_question')
+         @include('admin.modal.edit_topic_question')
          <script src="{{URL('admin/ajax/topic_question.js')}}"></script>
 @stop

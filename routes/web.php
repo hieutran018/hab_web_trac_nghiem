@@ -49,8 +49,15 @@ Route::POST('/admin/news/news-categories/create-news-category',[AdminNewsCategor
 Route::GET('/admin/news/news-categories/edit-news-category/id={id}',[AdminNewsCategoryController::class,'editNewsCategory'])->name('edit-news-category');
 Route::POST('/admin/news/news-categories/update-news-category',[AdminNewsCategoryController::class,'updateNewsCategory'])->name('update-news-category');
 Route::GET('/admin/games/topic-questions',[AdminTopicQuestionController::class,'getPageTopicQuestion'])->name('get-page-topic-question');
+
+//* Topic Question -------------------------------------------------------------------------------------------------------------------------------
 Route::GET('/admin/games/topic-questions/fetch-topic-questions',[AdminTopicQuestionController::class,'getToipicQuestion']);
 Route::POST('/admin/games/topic-questions/create-topic-questions',[AdminTopicQuestionController::class,'createTopicQuestion']);
+Route::GET('/admin/games/topic-questions/edit-topic-questions/id={id}',[AdminTopicQuestionController::class,'editTopicQuestion']);
+Route::POST('/admin/games/topic-questions/update-topic-questions',[AdminTopicQuestionController::class,'updateTopicQuestion']);
+Route::GET('/admin/games/topic-questions/delete-topic-questions/id={id}',[AdminTopicQuestionController::class,'deleteTopicQuestion']);
+
+//* -----------------------------------------------------------------------------------------------------------------------------------------------
 // Route::get('/layout',function(){
 //     return view('admin.pages.login');
 // });
