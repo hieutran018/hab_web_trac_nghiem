@@ -128,7 +128,7 @@ class AuthController extends Controller
         return response()->json(['id'=>$request->user()->id,
                                 'first_name'=>$request->user()->first_name,
                                 'last_name'=>$request->user()->last_name,
-                                'avatar'=>$request->user()->avatar == null ? 'no_avatar.png' : $request->user()->avatar == null,
+                                'avatar'=>URL('storage/account/'.$request->user()->id.'/avatar/'.$request->user()->avatar),
                                 'email'=>$request->user()->email,
                                 'phone'=>$request->user()->phone_number,
                                 'address'=>$request->user()->address,
