@@ -17,7 +17,7 @@
                             <div class="mb-6 col-md">
                               <label for="first-name" class="form-label">Tên chủ đề:</label>
                               <input class="form-control" type="text" id="create-topic-question-name" name="topic_question_name">
-                              <span class="error-message" style="color: red;" id="error-add-news_category_name" value></span>
+                              <span class="error-message" style="color: red;" id="error-add-topic_question_name" value></span>
                             </div>
                             <br>
                             <div class="mb-6 col-md">
@@ -28,12 +28,12 @@
                             <br>
                             <div class="mb-6 col-md">
                               <label for="last-name" class="form-label">Ảnh minh họa:</label>
-                              <input onchange="loadFile(event)" class="form-control" type="file" name="image" id="create-topic-image">
-                              <span class="error-message" style="color: red;" id="error-add-description"></span>
+                              <input onchange="loadFileCreateTopic(event)" class="form-control" type="file" name="image" id="create-topic-image">
+                              <span class="error-message" style="color: red;" id="error-add-image"></span>
                             </div>
                             <br>
                             <div class="mb-6 col-md">
-                              <img class="info-avatar d-block rounded" height="100" width="100" id="preview-image" src="{{URL('admin/assets/img/no_avatar.png')}}" alt="image-topic-question">
+                              <img class="info-avatar d-block rounded" height="100" width="100" id="preview-image-create-topic" src="{{URL('admin/assets/img/no_avatar.png')}}" alt="image-topic-question">
                             </div>
                             <br>
                           <div class="mt-2">
@@ -53,8 +53,8 @@
 </div>
 
 <script>
-var loadFile = function(event){
-  var crAvatar = document.getElementById('preview-image');
-  crAvatar.src = URL.createObjectURL(event.target.files[0]);
+var loadFileCreateTopic = function(event){
+  var crTopicQuestion = document.getElementById('preview-image-create-topic');
+  crTopicQuestion.src = URL.createObjectURL(event.target.files[0]);
 }
 </script>

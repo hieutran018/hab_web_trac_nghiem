@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
 use Image;
+use Auth;
 
 class AdminAccountController extends Controller
 {
@@ -32,8 +33,7 @@ class AdminAccountController extends Controller
     }
 
     public function editAccountAdmin($id){
-       
-        $account = User::WHERE('id',$id)->first();
+        $account = User::find($id);
         return response()->json(['status'=>200,'account'=>$account]);
     }
 
@@ -193,8 +193,27 @@ class AdminAccountController extends Controller
         
     }
     
+    public function deleteAccountAdmin($id){
+        if(Auth::user()->isAdmin == 1){
+            $acc = User::find($id);
+            if(empty($acc)){
+                return response()->json(['status'=>400,'message'=>'Có lỗi xảy ra, vui lòng thử lại sau!']);
+            }
+            else{
+                if($acc->isAdmin == 1 && $acc->isSubAdmin == 0){
+                        return response()->json(['status'=>400,'message'=>'Có lỗi xảy ra, vui lòng thử lại sau!']);
+                }elseif($acc->isAdmin == 0 && $acc->isSubAdmin == 1){
+                    $acc->delete();
+                    return response()->json(['status'=>200,'message'=>'Xóa tài khoản thành công!']);
+                }
+            }
+        }else{
+            return response()->json(['status'=>400,'message'=>'Bạn không có quyền thực hiện thao tác này!']);
+        }
+        
+    }
 
     public function checkIsAdmin(){
-        return response()->json(['status'=>200]);
+        return response()->json(['status'=>200,'message'=>'Xóa tài khoản thành công!']);
     }
 }

@@ -21,7 +21,7 @@
                <ul id="tables-nav-game" class="nav-content collapse" data-bs-parent="#sidebar-nav" style="">
                   <li> <a href="{{Route('get-page-topic-question')}}"> <i class="bi bi-circle"></i><span>Thể loại câu hỏi</span> </a></li>
                   <li> <a href="{{Route('get-page-level-question')}}"> <i class="bi bi-circle"></i><span>Độ khó</span> </a></li>
-                  <li> <a href="tables-data.html"> <i class="bi bi-circle"></i><span>Câu hỏi</span> </a></li>
+                  <li> <a href="{{Route('get-page-question')}}"> <i class="bi bi-circle"></i><span>Câu hỏi</span> </a></li>
                </ul>
             </li>
          </ul>

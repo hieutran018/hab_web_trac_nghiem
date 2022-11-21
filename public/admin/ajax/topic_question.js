@@ -30,66 +30,60 @@ $(document).ready(function () {
     //* Thêm chủ đề câu hỏi
     $(document).on('click', '#btn-create-topic-question', function (e) {
         e.preventDefault();
-
         $('#createTopicQuestion').modal('show');
-        var createAccountAdminForm = $('#create-topic-question');
-        createAccountAdminForm.submit(function (e) {
-            e.preventDefault();
-            // var formData = createAccountAdminForm.serialize();
-            var formData = new FormData($('#create-topic-question')[0]);
-            formData.append('image', $('#create-topic-image')[0].files[0]);
-            console.log('formData', formData);
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    });
+    //* Submit form thêm chủ đề câu hỏi
+    $('#create-topic-question').submit(function (e) {
+        e.preventDefault();
+        console.log(2);
+        var formData = new FormData($('#create-topic-question')[0]);
+        // formData.append('image', $('#create-topic-image')[0].files[0]);
+        console.log('formData', formData);
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            url: '/admin/games/topic-questions/create-topic-questions',
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            beforeSend: function () {
+                $(document).find('span.error-message').text("");
+            },
+            success: function (data) {
+                if (data.status === 400) {
+                    console.log(data.message);
+
+                    $.each(data.message, function (key, val) {
+                        $('#error-add-' + key).text(val[0]);
+                    });
+
+                    document.getElementById('preview-image-create-topic').src = 'http://127.0.0.1:8000/admin/assets/img/no_avatar.png';
+                    $('#create-topic-question')[0].reset();
                 }
-            });
+                else if (data.status === 200) {
+                    $('#create-topic-question')[0].reset();
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: 'Thêm chủ đề câu hỏi thành công!',
+                        showConfirmButton: true,
+                        confirmButtonText: 'Xác nhận',
 
-            $.ajax({
-                url: '/admin/games/topic-questions/create-topic-questions',
-                type: 'POST',
-                data: formData,
-                processData: false,
-                contentType: false,
-                beforeSend: function () {
-                    $(document).find('span.error-message').text("");
-                },
-                success: function (data) {
-                    if (data.status === 400) {
-                        console.log(data.message);
-                        $.each(data.message, function (key, val) {
-                            $('#error-add-' + key).text(val[0]);
-                        });
-                        if (data.error_password != null) {
-                            $('#error-add-error-password').text(data.error_password);
-                        }
-                        // $('#createAccountAdmin').find('input').val('');
-                        $('#create-account-admin')[0].reset();
-                    }
-                    else if (data.status === 200) {
-                        console.log(data);
-                        // $('#createAccountAdmin').modal('hide');
-                        // $('#createAccountAdmin').find('input').val('');
+                    });
+                    fetchTopicQuestion();
+                    document.getElementById('preview-image-create-topic').src = 'http://127.0.0.1:8000/admin/assets/img/no_avatar.png';
+                    $('#createTopicQuestion').modal('hide');
+                }
 
-                        $('#create-topic-question')[0].reset();
-                        // $('#createAccountAdmin').modal('toggle');
-                        // Swal.fire({
-                        //     position: 'center',
-                        //     icon: 'success',
-                        //     title: 'Thêm tài khoản thành công!',
-                        //     showConfirmButton: true,
-                        //     confirmButtonText: 'Xác nhận',
+            },
 
-                        // });
-                        fetchTopicQuestion();
-
-                    }
-
-                },
-
-            });
         });
     });
+
 
     //* Chi tiết chủ đề câu hỏi
     $(document).on('click', '#btn-edit-topic-question', function (e) {
@@ -150,14 +144,11 @@ $(document).ready(function () {
                         $.each(data.message, function (key, val) {
                             $('#error-edit-' + key).text(val[0]);
                         });
-                        if (data.error_password != null) {
-                            $('#error-edit-error-password').text(data.error_password);
-                        }
-
                     }
                     else if (data.status === 200) {
                         console.log(data);
-                        fetchsAccountAdmin();
+                        document.getElementById("edit-topic-image").value = "";
+                        fetchTopicQuestion();
                         $('#editTopicQuestion').modal('hide');
                         Swal.fire({
                             position: 'center',
@@ -166,7 +157,7 @@ $(document).ready(function () {
                             showConfirmButton: true,
                             confirmButtonText: 'Xác nhận',
 
-                        })
+                        });
 
                     }
 
@@ -182,7 +173,7 @@ $(document).ready(function () {
         var id_tpq = $(this).val();
         swal({
             title: "Hệ thống",
-            text: "Bạn có chắc chắn muốn xóa chủ đề câu hỏi này!",
+            text: "Bạn có chắc chắn muốn xóa chủ đề câu hỏi này?",
             icon: "warning",
             buttons: true,
             dangerMode: true,
@@ -193,7 +184,7 @@ $(document).ready(function () {
                     console.log(willDelete);
                     $.ajax({
                         type: "GET",
-                        url: "/admin/games/topic-questions/delete-topic-questions/id=10",
+                        url: "/admin/games/topic-questions/delete-topic-questions/id=" + id_tpq,
                         dataType: "json",
                         success: function (data) {
                             if (data.status == 400) {
@@ -205,6 +196,7 @@ $(document).ready(function () {
                                 swal(data.message, {
                                     icon: "success",
                                 });
+                                fetchTopicQuestion();
                             }
                         }
                     });

@@ -25,11 +25,15 @@ class AdminTopicQuestionController extends Controller
             [
                 'topic_question_name'=>'required',
                 'description'=>'required',
-                // 'image' => 'image|mimes:jpeg,png,jpg|max:2048',
+                'image' => 'required|image|mimes:jpeg,png,jpg|max:2048',
             ],
             [
                 'topic_question_name.required' =>'Tên chủ đề không được bỏ trống!',
                 'description.required' => 'Ghi chú không được bỏ trống!',
+                'image.required' => 'Ảnh chủ đề câu hỏi bị thiếu!',
+                'image.image' => 'Tệp phải là một ảnh!',
+                'image.mimes' => 'Phần mở rộng của tệp phải là jpeg, png, hoặc jpg',
+                'image.max' => 'Kích cỡ tệp quá giới hạn 2 MB!'
                 
             ]);
 
@@ -79,11 +83,15 @@ class AdminTopicQuestionController extends Controller
             [
                 'topic_question_name'=>'required',
                 'description'=>'required',
-                // 'image' => 'image|mimes:jpeg,png,jpg|max:2048',
+                'image' => 'required|image|mimes:jpeg,png,jpg|max:2048',
             ],
             [
                 'topic_question_name.required' =>'Tên chủ đề không được bỏ trống!',
                 'description.required' => 'Ghi chú không được bỏ trống!',
+                'image.required' => 'Ảnh chủ đề câu hỏi bị thiếu!',
+                'image.image' => 'Tệp phải là một ảnh!',
+                'image.mimes' => 'Phần mở rộng của tệp phải là jpeg, png, hoặc jpg',
+                'image.max' => 'Kích cỡ tệp quá giới hạn 2 MB!'
                 
             ]);
             if($validator->fails()){
@@ -119,10 +127,12 @@ class AdminTopicQuestionController extends Controller
 
     public function deleteTopicQuestion($id){
         $tpq = TopicQuestion::find($id);
+        // dd($tpq);
         if(empty($tpq)){
             return response()->json(['status'=>400,'message'=>'Có lỗi xảy ra, vui lòng thử lại sau!']);
         }
         else{
+            // dd($tpq);
             $tpq->delete();
             return response()->json(['status'=>200,'message'=>'Xóa chủ đề câu hỏi thành công!']);
         }

@@ -18,19 +18,19 @@
                             <div class="mb-6 col-md">
                               <label for="first-name" class="form-label">Tên chủ đề:</label>
                               <input class="form-control" type="text" id="edit-topic-question-name" name="topic_question_name">
-                              <span class="error-message" style="color: red;" id="error-add-news_category_name" value></span>
+                              <span class="error-message" style="color: red;" id="error-edit-topic_question_name" value></span>
                             </div>
                             <br>
                             <div class="mb-6 col-md">
                               <label for="last-name" class="form-label">Ghi chú:</label>
                               <input class="form-control" type="text" name="description" id="edit-topic-description">
-                              <span class="error-message" style="color: red;" id="error-add-description"></span>
+                              <span class="error-message" style="color: red;" id="error-edit-description"></span>
                             </div>
                             <br>
                             <div class="mb-6 col-md">
                               <label for="last-name" class="form-label">Ảnh minh họa:</label>
                               <input onchange="loadFile(event)" class="form-control" type="file" name="image" id="edit-topic-image">
-                              <span class="error-message" style="color: red;" id="error-add-description"></span>
+                              <span class="error-message" style="color: red;" id="error-edit-image"></span>
                             </div>
                             <br>
                             <div class="mb-6 col-md">

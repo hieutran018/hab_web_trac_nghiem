@@ -81,12 +81,12 @@
                             <div class="mb-3 col-md-6">
                               <label for="address" class="form-label">Mật khẩu:</label>
                               <input type="password" class="form-control" id="create-password" name="password">
-                              <span class="error-message" style="color: red;" id="error-add-address"></span>
+                              <span class="error-message" style="color: red;" id="error-add-password"></span>
                             </div>
                             <div class="mb-3 col-md-6">
                               <label for="address" class="form-label">Xác nhận mật khẩu:</label>
                               <input type="password" class="form-control" id="create-confirm-password" name="confirm_password">
-                              <span class="error-message" style="color: red;" id="error-add-address"></span>
+                              <span class="error-message" style="color: red;" id="error-add-confirm_password"></span>
                             </div>
                           </div>
                           <div class="mt-2">

@@ -28,15 +28,101 @@ $(document).ready(function () {
         });
     }
 
+    //* Thêm độ khó câu hỏi
     $(document).on('click', '#btn-create-level-question', function (e) {
         e.preventDefault();
-
         $('#createLevelQuestion').modal('show');
-        var createAccountAdminForm = $('#create-level-question');
-        createAccountAdminForm.submit(function (e) {
+    });
+    //* Submit form Thêm độ khó câu hỏi
+    $('#create-level-question').submit(function (e) {
+        e.preventDefault();
+        // var formData = createAccountAdminForm.serialize();
+        var formData = new FormData($('#create-level-question')[0]);
+
+        console.log('formData', formData);
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        $.ajax({
+            url: '/admin/games/level-questions/create-level-questions',
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            beforeSend: function () {
+                $(document).find('span.error-message').text("");
+            },
+            success: function (data) {
+                if (data.status === 400) {
+                    console.log(data.message);
+                    $.each(data.message, function (key, val) {
+                        $('#error-add-' + key).text(val[0]);
+                    });
+                    if (data.error_password != null) {
+                        $('#error-add-error-password').text(data.error_password);
+                    }
+                    $('#create-account-admin')[0].reset();
+                    $('#createLevelQuestion').modal('hide');
+                }
+                else if (data.status == 200) {
+                    console.log(data);
+                    // $('#createAccountAdmin').modal('hide');
+                    // $('#createAccountAdmin').find('input').val('');
+
+                    $('#create-level-question')[0].reset();
+                    $('#createLevelQuestion').modal('hide');
+                    Swal.fire({
+                        position: 'center',
+                        icon: 'success',
+                        title: 'Thêm độ khó thành công!',
+                        showConfirmButton: true,
+                        confirmButtonText: 'Xác nhận',
+
+                    })
+                    fetchLevelQuestion();
+
+                }
+
+            },
+
+        });
+    });
+
+
+    //* Chi tiết độ khó câu hỏi
+    $(document).on('click', '#btn-edit-level', function (e) {
+        e.preventDefault();
+        var id_lv = $(this).val();
+        $('#editLevelQuestion').modal('show');
+        $.ajax({
+            type: 'GET',
+            url: '/admin/games/level-questions/edit-level-questions/id=' + id_lv,
+            dataType: 'json',
+            success: function (data) {
+                if (data.status == 200) {
+                    $("#edit-level-question-id").val(data.lv.id);
+                    $("#edit-level-question-name").val(data.lv.level_name);
+                    $("#edit-level-description").val(data.lv.description);
+                    $("#edit-level-amount").val(data.lv.amount_question);
+                    $("#edit-level-time-answer").val(data.lv.time_answer);
+                    $("#edit-level-point").val(data.lv.point);
+                } else if (data.status == 404) {
+                    alert('Không tìm thấy chủ đề câu hỏi');
+                }
+            }
+        });
+    });
+
+    //* Cập nhật độ khó câu hỏi
+    $(document).ready(function () {
+        var editLevelQuestionForm = $('#edit-level-question');
+        editLevelQuestionForm.submit(function (e) {
             e.preventDefault();
-            // var formData = createAccountAdminForm.serialize();
-            var formData = new FormData($('#create-level-question')[0]);
+            // var formData = editAccountAdminForm.serialize();
+            var formData = new FormData($('#edit-level-question')[0]);
 
             console.log('formData', formData);
             $.ajaxSetup({
@@ -44,44 +130,39 @@ $(document).ready(function () {
                     'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                 }
             });
-
             $.ajax({
-                url: '/admin/games/level-questions/create-level-questions',
+                url: '/admin/games/level-questions/update-level-questions',
                 type: 'POST',
                 data: formData,
                 processData: false,
                 contentType: false,
+                // dataType: 'json',
                 beforeSend: function () {
                     $(document).find('span.error-message').text("");
                 },
                 success: function (data) {
-                    if (data.status === 400) {
+                    if (data.status == 400) {
                         console.log(data.message);
                         $.each(data.message, function (key, val) {
-                            $('#error-add-' + key).text(val[0]);
+                            $('#error-edit-' + key).text(val[0]);
                         });
                         if (data.error_password != null) {
-                            $('#error-add-error-password').text(data.error_password);
+                            $('#error-edit-error-password').text(data.error_password);
                         }
-                        // $('#createAccountAdmin').find('input').val('');
-                        $('#create-account-admin')[0].reset();
+
                     }
-                    else if (data.status == 200) {
+                    else if (data.status === 200) {
                         console.log(data);
-                        // $('#createAccountAdmin').modal('hide');
-                        // $('#createAccountAdmin').find('input').val('');
-
-                        $('#create-level-question')[0].reset();
-                        // $('#createAccountAdmin').modal('toggle');
-                        // Swal.fire({
-                        //     position: 'center',
-                        //     icon: 'success',
-                        //     title: 'Thêm tài khoản thành công!',
-                        //     showConfirmButton: true,
-                        //     confirmButtonText: 'Xác nhận',
-
-                        // });
                         fetchLevelQuestion();
+                        $('#editLevelQuestion').modal('hide');
+                        Swal.fire({
+                            position: 'center',
+                            icon: 'success',
+                            title: 'Cập nhật thành công!',
+                            showConfirmButton: true,
+                            confirmButtonText: 'Xác nhận',
+
+                        })
 
                     }
 
@@ -91,24 +172,41 @@ $(document).ready(function () {
         });
     });
 
-
-    //TODO : Chưa hoàn thành
-    $(document).on('click', '#btn-edit-level', function (e) {
+    //* Xóa độ khó câu hỏi
+    $(document).on('click', '#btn-delete-level', function (e) {
         e.preventDefault();
         var id_lv = $(this).val();
-        $.ajax({
-            type: 'GET',
-            url: '/admin/games/level-questions/edit-level-questions/id=' + id_lv,
-            dataType: 'json',
-            success: function (data) {
-                if (data.status == 200) {
-                    $("#edit-topic-question-id").val(data.lv.id);
-                    $("#edit-topic-question-name").val(data.lv.topic_question_name);
-                    $("#edit-topic-description").val(data.lv.description);
-                } else if (data.status == 404) {
-                    alert('Không tìm thấy chủ đề câu hỏi');
+        swal({
+            title: "Hệ thống",
+            text: "Bạn có chắc chắn muốn xóa độ khó câu hỏi này?",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((willDelete) => {
+
+                if (willDelete) {
+                    console.log(willDelete);
+                    $.ajax({
+                        type: "GET",
+                        url: "/admin/games/level-questions/delete-level-questions/id=" + id_lv,
+                        dataType: "json",
+                        success: function (data) {
+                            if (data.status == 400) {
+                                swal(data.message, {
+                                    icon: "error",
+                                });
+                            }
+                            else if (data.status == 200) {
+                                swal(data.message, {
+                                    icon: "success",
+                                });
+                                fetchLevelQuestion();
+                            }
+                        }
+                    });
+
                 }
-            }
-        });
+            });
     });
 });
