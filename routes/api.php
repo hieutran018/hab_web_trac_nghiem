@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\APIs\AuthController;
 use App\Http\Controllers\APIs\NewsCategoryController;
 use App\Http\Controllers\APIs\RankingController;
+use App\Http\Controllers\APIs\TopicQuestionController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -25,5 +26,6 @@ Route::get('/news/news-category',[NewsCategoryController::class,'getlstNewsCateg
 
 Route::get('/ranking-challenge',[RankingController::class,'getListRankingChallenge']);
 Route::get('/ranking-single',[RankingController::class,'getListRankingSingle']);
+Route::GET('/topic-quesiton',[TopicQuestionController::class,'getTopicQuestion']);
 
 Route::middleware('auth:sanctum')->get('/user', [AuthController::class,'getUser']);

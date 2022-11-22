@@ -26,7 +26,7 @@ class RankingController extends Controller
         $ranking_single = Ranking::orderBy('score_single', 'DESC')->get();
         foreach($ranking_single as $rank){
             $rank->user_id = $rank->user->id;
-            $rank->user->avatar = $rank->user->avatar == null ? asset('storage/assets/no_avatar.png') : asset('storage/account/71/avatar/1667882294.jpg');
+            $rank->user->avatar = $rank->user->avatar = asset('storage/account/'.$rank->user->id.'/avatar/'. $rank->user->avatar);
         }
         
         // dd($ranking_single);
