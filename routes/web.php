@@ -5,6 +5,7 @@ use App\Http\Controllers\Admin\AdminAuthController;
 use App\Http\Controllers\Admin\AdminAccountController;
 use App\Http\Controllers\Admin\AdminAccountUserController;
 use App\Http\Controllers\Admin\AdminNewsCategoryController;
+use App\Http\Controllers\Admin\AdminNewsController;
 use App\Http\Controllers\Admin\AdminTopicQuestionController;
 use App\Http\Controllers\Admin\AdminLevelController;
 use App\Http\Controllers\Admin\AdminQuestionController;
@@ -53,6 +54,11 @@ Route::POST('/admin/news/news-categories/create-news-category',[AdminNewsCategor
 Route::GET('/admin/news/news-categories/edit-news-category/id={id}',[AdminNewsCategoryController::class,'editNewsCategory'])->name('edit-news-category');
 Route::POST('/admin/news/news-categories/update-news-category',[AdminNewsCategoryController::class,'updateNewsCategory'])->name('update-news-category');
 Route::GET('/admin/news/news-categories/delete-news-category/id={id}',[AdminNewsCategoryController::class,'deleteNewsCategory'])->name('delete-news-category');
+
+//* News
+Route::GET('/admin/news/news',[AdminNewsController::class,'getPageNews'])->name('get-page-news');
+Route::GET('/admin/news/fetch-news',[AdminNewsController::Class,'getNews']);
+Route::POST('/admin/news/create-news',[AdminNewsController::class,'createNews']);
 
 //* Topic Question -------------------------------------------------------------------------------------------------------------------------------
 Route::GET('/admin/games/topic-questions',[AdminTopicQuestionController::class,'getPageTopicQuestion'])->name('get-page-topic-question');

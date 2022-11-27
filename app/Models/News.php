@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use App\Models\User;
+use App\Models\NewsCategories;
 
 class News extends Model
 {
@@ -13,7 +15,17 @@ class News extends Model
 
     public $timestamps = true;
 
-    protected $fillable = ['title','content','user_id','news_category_id','status'];
+    protected $fillable = ['title','content','image','user_id','news_category_id','status'];
     protected $primaryKey = 'id';
     protected $table = 'news';
+
+    public function user()
+    {
+    return $this->belongsTo(User::class)->select('first_name','last_name');
+    }
+
+    public function newscategory()
+    {
+        return  $this->belongsTo(NewsCategories::class,'news_category_id','id')->select('news_category_name');
+    }
 }

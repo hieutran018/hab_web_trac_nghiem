@@ -6,6 +6,7 @@ use App\Http\Controllers\APIs\AuthController;
 use App\Http\Controllers\APIs\NewsCategoryController;
 use App\Http\Controllers\APIs\RankingController;
 use App\Http\Controllers\APIs\TopicQuestionController;
+use App\Http\Controllers\APIs\NewsController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -23,6 +24,10 @@ Route::POST('/change-password',[AuthController::class,'changePassword'])->middle
 
 
 Route::get('/news/news-category',[NewsCategoryController::class,'getlstNewsCategory']);
+
+Route::get('/news/fetch-news',[NewsController::class,'getNews']);
+Route::GET('/news/fetch-news-by-category/id={id}',[NewsController::class,'getNewsById']);
+Route::GET('/news/detail-news/id={id}',[NewsController::class,'getDetailNews']);
 
 Route::get('/ranking-challenge',[RankingController::class,'getListRankingChallenge']);
 Route::get('/ranking-single',[RankingController::class,'getListRankingSingle']);
