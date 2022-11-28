@@ -59,6 +59,10 @@ Route::GET('/admin/news/news-categories/delete-news-category/id={id}',[AdminNews
 Route::GET('/admin/news/news',[AdminNewsController::class,'getPageNews'])->name('get-page-news');
 Route::GET('/admin/news/fetch-news',[AdminNewsController::Class,'getNews']);
 Route::POST('/admin/news/create-news',[AdminNewsController::class,'createNews']);
+Route::GET('/admin/news/news-detail/id={id}',[AdminNewsController::class,'getNewsDetail']);
+Route::GET('/admin/news/news-edit/id={id}',[AdminNewsController::class,'editNews']);
+Route::POST('/admin/news/update-news',[AdminNewsController::class,'updateNews']);
+Route::GET('/admin/news/delete-news/id={id}',[AdminNewsController::class,'deleteNews']);
 
 //* Topic Question -------------------------------------------------------------------------------------------------------------------------------
 Route::GET('/admin/games/topic-questions',[AdminTopicQuestionController::class,'getPageTopicQuestion'])->name('get-page-topic-question');

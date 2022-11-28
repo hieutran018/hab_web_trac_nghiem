@@ -10,7 +10,7 @@ $(document).ready(function () {
             url: "/admin/account-admin/list-account-admin",
             dataType: "json",
             success: function (response) {
-                // console.log(response.lst);
+                console.log(response.lst);
                 $("#tableAccountAdmin").html("");
                 $.each(response.lst, function (key, item) {
                     $("#tableAccountAdmin").append('<tr>\

@@ -15,7 +15,7 @@ class User extends Authenticatable
     use HasApiTokens, HasFactory, Notifiable;
     use SoftDeletes;
 
-    public $timestamps = true;
+    public $timestamps = false;
     
 
     protected $fillable = [

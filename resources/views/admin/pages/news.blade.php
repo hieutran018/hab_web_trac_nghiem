@@ -124,5 +124,7 @@
          </section>
          <script src="{{URL('admin/ajax/news.js')}}"></script>
          @include('admin.modal.create_news')
-         @include('admin.modal.edit_news_category')
+         @include('admin.modal.detail_news')
+         @include('admin.modal.edit_news')
+         
 @stop

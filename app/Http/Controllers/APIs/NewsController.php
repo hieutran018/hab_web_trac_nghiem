@@ -10,7 +10,7 @@ class NewsController extends Controller
 {
 
     public function getNews(){
-        $lstNews = News::all();
+        $lstNews = News::WHERE('status',1)->get();
         foreach($lstNews as $news){
             $news->user_id = $news->user->first_name.' '.$news->user->last_name;
             $news->news_category_id = $news->newscategory->news_category_name;
@@ -20,7 +20,7 @@ class NewsController extends Controller
     }
 
     public function getNewsById($id){
-        $lstNews = News::WHERE('news_category_id',$id)->get();
+        $lstNews = News::WHERE('news_category_id',$id)->WHERE('status',1)->get();
         return response( $lstNews, 200)
                   ->header('Content-Type', 'application/json');
     }

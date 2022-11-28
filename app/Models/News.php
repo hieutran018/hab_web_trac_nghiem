@@ -13,7 +13,8 @@ class News extends Model
     use HasFactory;
     use SoftDeletes;
 
-    public $timestamps = true;
+
+    public $timestamps = false;
 
     protected $fillable = ['title','content','image','user_id','news_category_id','status'];
     protected $primaryKey = 'id';
