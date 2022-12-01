@@ -15,8 +15,7 @@ $(document).ready(function () {
                 $.each(response.lst, function (key, item) {
                     $("#tableAccountAdmin").append('<tr>\
                         <td>' + item.id + '</td>\
-                        <td>' + item.first_name + '</td>\
-                        <td>' + item.last_name + '</td>\
+                        <td>' + item.display_name + '</td>\
                         <td>' + item.email + '</td>\
                         <td>' + item.phone_number + '</td>\
                         <td>' + (item.isAdmin == 1 && item.isSubAdmin == 0 ? 'Quản trị viên' : item.isAdmin == 0 && item.isSubAdmin == 1 ? 'Cộng tác viên' : 'Chưa cấp quyền') + '</td>\
@@ -73,7 +72,7 @@ $(document).ready(function () {
                     console.log(data);
                     $('#create-account-admin')[0].reset();
                     document.getElementById('create-avatar').src = 'http://127.0.0.1:8000/admin/assets/img/no_avatar.png';
-                    Swal.fire({
+                    swal({
                         position: 'center',
                         icon: 'success',
                         title: 'Thêm tài khoản quản trị viên thành công!',
@@ -129,7 +128,7 @@ $(document).ready(function () {
                         console.log(data);
                         fetchsAccountAdmin();
                         $('#editAccountAdmin').modal('hide');
-                        Swal.fire({
+                        swal({
                             position: 'center',
                             icon: 'success',
                             title: 'Cập nhật thành công!',
@@ -165,8 +164,7 @@ $(document).ready(function () {
                             if (response.status == 200) {
                                 console.log(response.account);
                                 document.getElementById("edit-id").value = response.account.id;
-                                $("#edit-fName").val(response.account.first_name);
-                                document.getElementById("edit-lName").value = response.account.last_name;
+                                $("#edit-display-name").val(response.account.display_name);
                                 document.getElementById("edit-email").value = response.account.email;
                                 document.getElementById("edit-phoneNumber").value = response.account.phone_number;
                                 document.getElementById("edit-address").value = response.account.address;
@@ -205,10 +203,7 @@ $(document).ready(function () {
             url: '/admin/account-admin/info-account-admin/id=' + id_account,
             success: function (response) {
                 if (response.status == 200) {
-                    console.log(response.account);
-                    // document.getElementById("id_account").textContent = response.account_admin.id;
-                    document.getElementById("info-fName").textContent = response.account.first_name;
-                    document.getElementById("info-lName").textContent = response.account.last_name;
+                    document.getElementById("info-display-name").textContent = response.account.display_name;
                     document.getElementById("info-email").textContent = response.account.email;
                     document.getElementById("info-phoneNumber").textContent = response.account.phone_number;
                     document.getElementById("info-address").textContent = response.account.address;
@@ -246,7 +241,7 @@ $(document).ready(function () {
     $(document).on('click', '#btn-delete-account-admin', function (e) {
         e.preventDefault();
         var id_acc = $(this).val();
-
+        console.log(id_acc);
         swal({
             title: "Hệ thống",
             text: "Bạn có chắc chắn muốn xóa tài khoản này?",

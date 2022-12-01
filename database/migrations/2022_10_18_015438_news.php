@@ -17,6 +17,7 @@ class News extends Migration
             $table->id();
             $table->text('title');
             $table->text('news_content');
+            $table->string('image');
             $table->foreignId('user_id');
             $table->foreignId('news_category_id');
             $table->timestamps();

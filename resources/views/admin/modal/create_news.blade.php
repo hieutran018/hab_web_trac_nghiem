@@ -37,11 +37,11 @@
                               <img class="info-avatar d-block rounded" height="720" width="1080" id="preview-image-create-news" src="{{URL('admin/assets/img/no_avatar.png')}}" alt="image-topic-question">
                         </div>
                         
-                     </div>
-                      <div class="mt-2">
+                    </div>
+                        <div class="mt-2">
                             <button type="submit" class="btn btn-primary me-2">Hoàn tất</button>
                             <span data-bs-dismiss="modal" aria-label="Close" class="btn btn-outline-secondary">Hủy</span>
-                          </div>
+                        </div>
                     </form>
                 </div>  
             </div>

@@ -16,15 +16,10 @@
                         <div class="card-body">
                           <div class="row">
                             <div class="mb-3 col-md-6">
-                              <label for="first-name" class="form-label">Họ:</label>
-                              <span class="span-info" id="info-fName"></span>
-                              
+                              <label for="first-name" class="form-label">Tên người dùng:</label>
+                              <span class="span-info" id="info-display-name"></span>
                             </div>
-                            <div class="mb-3 col-md-6">
-                              <label for="last-name" class="form-label">Tên:</label>
-                              <span class="span-info" id="info-lName"></span>
-                              
-                            </div>
+                            
                             <div class="mb-3 col-md-6">
                               <label for="email" class="form-label">E-mail:</label>
                               <span class="span-info" id="info-email"></span>

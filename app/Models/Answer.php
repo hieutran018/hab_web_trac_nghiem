@@ -11,7 +11,7 @@ class Answer extends Model
     use HasFactory;
     use SoftDeletes;
 
-    public $timestamps = true;
+    public $timestamps = false;
 
     protected $fillable = ['answer_content','question_id','isTrue'];
     protected $primaryKey = 'id';

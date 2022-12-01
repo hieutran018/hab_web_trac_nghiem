@@ -39,16 +39,14 @@
                         <div class="card-body">
                             {{-- <input type="hidden" id="edit-id" name="id"> --}}
                           <div class="row">
-                            <div class="mb-3 col-md-6">
-                              <label for="first-name" class="form-label">Họ:</label>
-                              <input class="form-control" type="text" id="create-fName" name="first_name">
-                              <span class="error-message" style="color: red;" id="error-add-first_name" value></span>
+                            <div class="row">
+                              <div class="mb-3 col-md-6">
+                                <label for="first-name" class="form-label">Tên người dùng:</label>
+                                <input class="form-control" type="text" id="display-name" name="display_name">
+                                <span class="error-message" style="color: red;" id="error-add-display_name" value></span>
+                              </div>
                             </div>
-                            <div class="mb-3 col-md-6">
-                              <label for="last-name" class="form-label">Tên:</label>
-                              <input class="form-control" type="text" name="last_name" id="create-lName">
-                              <span class="error-message" style="color: red;" id="error-add-last_name"></span>
-                            </div>
+                            
                             <div class="mb-3 col-md-6">
                               <label for="email" class="form-label">E-mail</label>
                               <input class="form-control" type="text" id="create-email" name="email">

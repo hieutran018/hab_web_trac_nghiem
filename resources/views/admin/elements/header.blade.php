@@ -76,7 +76,7 @@
                         <a href="#">
                            <img src="assets/img/messages_1.jpg" alt="" class="rounded-circle">
                            <div>
-                              <h4>{{Auth::user()->first_name}}</h4>
+                              <h4>{{Auth::user()->display_name}}</h4>
                               <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
                               <p>4 hrs. ago</p>
                            </div>
@@ -89,7 +89,7 @@
                         <a href="#">
                            <img src="assets/img/messages-2.jpg" alt="" class="rounded-circle">
                            <div>
-                              <h4>{{Auth::user()->first_name}}</h4>
+                              <h4>{{Auth::user()->display_name}}</h4>
                               <p>Velit asperiores et ducimus soluta repudiandae labore officia est ut...</p>
                               <p>6 hrs. ago</p>
                            </div>
@@ -115,10 +115,10 @@
                   </ul>
                </li>
                <li class="nav-item dropdown pe-3">
-                  <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown"> <img src="@if(Auth::user()->avatar != null) {{URL('storage/account/')}}/{{Auth::user()->id}}/avatar/{{Auth::user()->avatar}}" @else {{URL('admin/assets/img/no_avatar.png')}}" @endif alt="Profile" class="rounded-circle"> <span class="d-none d-md-block dropdown-toggle ps-2">{{Auth::user()->first_name}} {{Auth::user()->last_name}}</span> </a>
+                  <a class="nav-link nav-profile d-flex align-items-center pe-0" href="#" data-bs-toggle="dropdown"> <img src="@if(Auth::user()->avatar != null) {{URL('storage/account/')}}/{{Auth::user()->id}}/avatar/{{Auth::user()->avatar}}" @else {{URL('admin/assets/img/no_avatar.png')}}" @endif alt="Profile" class="rounded-circle"> <span class="d-none d-md-block dropdown-toggle ps-2">{{Auth::user()->display_name}}</span> </a>
                   <ul class="dropdown-menu dropdown-menu-end dropdown-menu-arrow profile">
                      <li class="dropdown-header">
-                        <h6>{{Auth::user()->first_name}} {{Auth::user()->last_name}}</h6>
+                        <h6>{{Auth::user()->display_name}}</h6>
                         <span>@if(Auth::user()->isAdmin == 1 &&Auth::user()->isSubAdmin == 0) 
                            Quản trị viên 
                            @elseif(Auth::user()->isAdmin == 0 &&Auth::user()->isSubAdmin == 1)  Cộng tác viên @endif</span>

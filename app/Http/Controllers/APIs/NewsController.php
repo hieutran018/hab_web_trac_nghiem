@@ -30,4 +30,5 @@ class NewsController extends Controller
         return response( $news, 200)
                   ->header('Content-Type', 'application/json');
     }
+    
 }

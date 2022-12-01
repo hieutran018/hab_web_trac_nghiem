@@ -20,15 +20,13 @@ class AuthController extends Controller
     public function register(Request $request){
         $validator = Validator::make($request->all(),
             [
-                'first_name'=>'required',
-                'last_name'=>'required',
+                'display_name'=>'required',
                 'email' => 'required|email|unique:users',
                 'password' => 'required',
                 
             ],
             [
-                'first_name.required' =>'Họ tên không được bỏ trống!',
-                'last_name.required' =>'Tên không được bỏ trống!',
+                'display_name.required' =>'Họ tên không được bỏ trống!',
                 'email.required' => 'Email không được bỏ trống!',
                 'email.email' => 'Email này không hợp lệ!',
                 'email.unique' => 'Email này đã được sử dụng ở một tài khoản khác!',
@@ -41,8 +39,7 @@ class AuthController extends Controller
         $data = $request->all();
         // dd($data);
         $acc = new User();
-        $acc->first_name = $data['first_name'];
-        $acc->last_name = $data['last_name'];
+        $acc->display_name = $data['display_name'];
         $acc->email = $data['email'];
         $acc->password =Hash::make($data['password']);
         $acc->status = 1;
@@ -126,8 +123,7 @@ class AuthController extends Controller
             }
         }
         return response()->json(['id'=>$request->user()->id,
-                                'first_name'=>$request->user()->first_name,
-                                'last_name'=>$request->user()->last_name,
+                                'first_name'=>$request->user()->display_name,
                                 'avatar'=>URL('storage/account/'.$request->user()->id.'/avatar/'.$request->user()->avatar),
                                 'email'=>$request->user()->email,
                                 'phone'=>$request->user()->phone_number,

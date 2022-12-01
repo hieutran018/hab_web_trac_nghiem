@@ -41,15 +41,13 @@ class AdminAccountController extends Controller
 
         $validator = Validator::make($request->all(),
             [
-                'first_name'=>'required',
-                'last_name'=>'required',
+                'display_name'=>'required',
                 'phone_number' => 'required',
                 'address'=>'required',
                 
             ],
             [
-                'first_name.required' =>'Họ tên không được bỏ trống!',
-                'last_name.required' =>'Tên không được bỏ trống!',
+                'display_name.required' =>'Họ tên không được bỏ trống!',
                 'phone_number.required' => 'Số điện thoại không được bỏ trống!',
                 'address.required' => 'Địa chỉ không được bỏ trống!'
                 
@@ -63,8 +61,7 @@ class AdminAccountController extends Controller
             $account = User::WHERE('id',$request->id)->first();
             // dd($account, !empty($account));
             if(!empty($account)){
-                $account->first_name = $data['first_name'];
-                $account->last_name = $data['last_name'];
+                $account->display_name = $data['display_name'];
                 $account->phone_number = $data['phone_number'];
                 $account->address = $data['address'];
                 $account->dateOfBirth = $data['date_of_birth'];
@@ -112,8 +109,7 @@ class AdminAccountController extends Controller
     public function createAccountAdmin(Request $request){
         $validator = Validator::make($request->all(),
             [
-                'first_name'=>'required',
-                'last_name'=>'required',
+                'display_name'=>'required',
                 'email' => 'required|email|unique:users',
                 'password' => 'required',
                 'confirm_password'=> 'required',
@@ -122,8 +118,7 @@ class AdminAccountController extends Controller
                 'avatar' => 'image|mimes:jpeg,png,jpg|max:2048',
             ],
             [
-                'first_name.required' =>'Họ tên không được bỏ trống!',
-                'last_name.required' =>'Tên không được bỏ trống!',
+                'display_name.required' =>'Tên người dùng không được bỏ trống!',
                 'email.required' => 'Email không được bỏ trống!',
                 'email.email' => 'Email này không hợp lệ!',
                 'email.unique' => 'Email này đã được sử dụng ở một tài khoản khác!',
@@ -142,11 +137,12 @@ class AdminAccountController extends Controller
                               
                     $acc = new User();
 
-                    $acc->first_name = $data['first_name'];
-                    $acc->last_name = $data['last_name'];
+                    
+                    $acc->display_name = $data['display_name'];
                     $acc->email = $data['email'];
                     $acc->phone_number = $data['phone_number'];
                     $acc->life_heart = 0;
+                    
                     if($data['password'] == $data['confirm_password']){
                         $acc->password =Hash::make($data['password']);
                     }
@@ -182,13 +178,8 @@ class AdminAccountController extends Controller
                         $acc->avatar = $fileName;
                         $acc->save();
                     }
-
-                    
                     
                     return response()->json(['status'=>200,'msg'=>$data]);
-
-                
-                
             }
         
     }

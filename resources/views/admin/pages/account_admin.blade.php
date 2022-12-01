@@ -101,8 +101,7 @@
                            <thead>
                               <tr>
                                  <th scope="col">ID</th>
-                                 <th scope="col">Họ</th>
-                                 <th scope="col">Tên</th>
+                                 <th scope="col">Tên người dùng</th>
                                  <th scope="col">Email</th>
                                  <th scope="col">Số điện thoại</th>
                                  <th scope="col">Vị trí</th>

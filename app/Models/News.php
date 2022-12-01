@@ -22,7 +22,7 @@ class News extends Model
 
     public function user()
     {
-    return $this->belongsTo(User::class)->select('first_name','last_name');
+    return $this->belongsTo(User::class)->select('display_name');
     }
 
     public function newscategory()

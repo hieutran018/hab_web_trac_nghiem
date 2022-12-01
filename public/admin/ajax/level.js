@@ -61,20 +61,13 @@ $(document).ready(function () {
                     $.each(data.message, function (key, val) {
                         $('#error-add-' + key).text(val[0]);
                     });
-                    if (data.error_password != null) {
-                        $('#error-add-error-password').text(data.error_password);
-                    }
-                    $('#create-account-admin')[0].reset();
+
                     $('#createLevelQuestion').modal('hide');
                 }
                 else if (data.status == 200) {
-                    console.log(data);
-                    // $('#createAccountAdmin').modal('hide');
-                    // $('#createAccountAdmin').find('input').val('');
-
                     $('#create-level-question')[0].reset();
                     $('#createLevelQuestion').modal('hide');
-                    Swal.fire({
+                    swal({
                         position: 'center',
                         icon: 'success',
                         title: 'Thêm độ khó thành công!',

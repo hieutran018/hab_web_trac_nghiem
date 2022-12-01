@@ -79,7 +79,7 @@ $(document).ready(function () {
                 else if (data.status == 200) {
                     console.log(data);
                     fetchNews();
-                    Swal.fire({
+                    swal({
                         position: 'center',
                         icon: 'success',
                         title: 'Thêm chủ đề bài viết thành công!',
@@ -186,7 +186,7 @@ $(document).ready(function () {
                 else if (data.status == 200) {
                     console.log(data);
                     fetchNews();
-                    Swal.fire({
+                    swal({
                         position: 'center',
                         icon: 'success',
                         title: 'Cập nhật bài viết thành công!',

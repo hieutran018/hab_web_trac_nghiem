@@ -1259,3 +1259,11 @@ textarea::-webkit-scrollbar-thumb {
 	background-color: rgb(53, 0, 247);
 	outline: 1px solid rgb(0, 128, 255);
 }
+
+.radio-button-top {
+	padding-top: 30px;
+}
+
+.radio-button-between {
+	padding-top: 50px;
+}

@@ -42,6 +42,6 @@
             </div>
          </section>
          @include('admin.modal.create_question')
-         @include('admin.modal.edit_level_question')
+         @include('admin.modal.edit_question')
          <script src="{{URL('admin/ajax/question.js')}}"></script>
 @stop

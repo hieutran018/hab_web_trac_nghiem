@@ -19,7 +19,7 @@ class AdminNewsController extends Controller
     public function getNews(){
         $lstNews = News::all();
         foreach($lstNews as $news){
-            $news->user_id = $news->user->first_name.' '.$news->user->last_name;
+            $news->user_id = $news->user->display_name;
             $news->news_category_id = $news->newscategory->news_category_name;
             $news->image = asset('storage/news/'.$news->image);
         }
@@ -74,7 +74,7 @@ class AdminNewsController extends Controller
             return response()->json(['status'=>400,'message'=>'Không tìm thấy thông tin bài viết!']);
         }else{
             $news->image = asset('storage/news/'.$news->image);
-            $news->user_id = $news->user->first_name.' '.$news->user->last_name;
+            $news->user_id = $news->user->display_name;
             $news->news_category_id = $news->newscategory->news_category_name;
             $news->created_at = Carbon::parse($news->created_at)->format('d/m/Y');
             return response()->json(['status'=>200,'news'=> $news]);

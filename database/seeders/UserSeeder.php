@@ -22,8 +22,7 @@ class UserSeeder extends Seeder
 
         for ($i = 0; $i < $limit; $i++){
             DB::table('users')->insert([
-                'first_name' => $fake->name,
-                'last_name' => $fake->name,
+                'display_name' => $fake->name,
                 'avatar' => null,
                 'email' => $fake->unique->email,
                 'phone_number' => $fake->phoneNumber,

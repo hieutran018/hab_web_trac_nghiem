@@ -82,6 +82,9 @@ Route::GET('/admin/games/level-questions/delete-level-questions/id={id}',[AdminL
 
 //* Question ----------------------------------------------------------------------------------------------------------------------------------------------------
 Route::GET('/admin/games/questions',[AdminQuestionController::class,'getPageQuestion'])->name('get-page-question');
+Route::GET('/admin/games/questions/fetch-question',[AdminQuestionController::class,'getQuestion']);
+Route::POST('/admin/games/questions/create-question',[AdminQuestionController::class,'createQuestion']);
+Route::GET('/admin/games/questions/edit-question/id={id}',[AdminQuestionController::class,'editQuestion']);
 // Route::GET('/admin/games/questions/fetch-questions',[AdminQuestionController::class,'getQuestion']);
 // Route::POST('/admin/games/questions/create-questions',[AdminQuestionController::class,'createQuestion']);
 // Route::GET('/admin/games/questions/edit-questions/id={id}',[AdminQuestionController::class,'editQuestion']);
