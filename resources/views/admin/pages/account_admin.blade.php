@@ -97,7 +97,8 @@
                               <button id="btn-create-account-admin" type="button" style="width: 80%" class="btn btn-outline-primary">Thêm tài khoản</button>
                            </div>
                         </div>
-                        <table class="table">
+                        <table class="table table-hover dt-responsive" summary="This table shows how to create responsive tables using Datatables' extended functionality"
+           >
                            <thead>
                               <tr>
                                  <th scope="col">ID</th>
@@ -109,10 +110,11 @@
                                  <th scope="col">Thao tác</th>
                               </tr>
                            </thead>
-                           <tbody id="tableAccountAdmin">
+                           <tbody>
                               
                            </tbody>
                         </table>
+                        
                      </div>
                   </div>
                 </div>
@@ -122,4 +124,5 @@
          @include('admin.modal.edit_account_admin')
          @include('admin.modal.create_account_admin')
          <script src="{{URL('admin/ajax/account_admin.js')}}"></script>
+         
 @stop

@@ -82,4 +82,54 @@ class AdminQuestionController extends Controller
             return response()->json(['status'=>200,'question'=>$question,'answer'=>$question->answer]);
         }
     }
+
+    public function updateQuestion(Request $request){
+
+        $validator_question_content = Validator::make($request->all(),
+            [
+                'question_content'=>'required',
+            ],
+            [
+                'question_content.required' =>'Nội dung câu hỏi không được bỏ trống!',
+            ]);
+        if($validator_question_content->fails()){
+            return response()->json(['status'=>400,'message'=>$validator_question_content->errors()->toArray()]);
+        }else{
+
+        $question = Question::Find($request->id);
+
+            DB::beginTransaction();
+            try{
+            $question->question_content = $request->question_content;
+            $question->topic_id = $request->topic_id;
+            $question->level_id = $request->level_id;
+            $question->status = 1;
+            $question->update();
+            for($i = 1 ; $i <= 4 ; $i++){
+                $data = $request->all();
+                if(empty($data['answer_content_'.$i])){
+                    return response()->json(['status'=>400,'message'=>'Nội dung câu trả lời số '.$i.' không được bỏ trống!']);
+                }else{
+                    $answer = Answer::Find($data['answer_id_'.$i]);
+                    $answer->answer_content = $data['answer_content_'.$i];
+                    $answer->question_id = $question->id;
+                    $answer->isTrue = 0;
+                    if($data['isTrue'] == $i){
+                       $answer->isTrue = 1;
+                    }
+                    $answer->update();
+                        
+                }
+            }
+            DB::commit();
+            return response()->json(['status'=>200,'Cập nhật câu hỏi thành công']);
+            }catch(Exception $e){
+                DB::rollBack();
+                throw new Exception($e->getMessage());
+            }
+
+        }
+
+
+    }
 }

@@ -23,7 +23,6 @@ class AdminAccountController extends Controller
 
     public function getListAccountAdmin(){
         $lst = User::WHERE('isAdmin',1)->orWHERE('isSubAdmin',1)->get();
-        // dd($lst);
         return response()->json(['status'=>200,'lst'=>$lst]);
     }
 

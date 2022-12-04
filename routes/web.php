@@ -85,10 +85,11 @@ Route::GET('/admin/games/questions',[AdminQuestionController::class,'getPageQues
 Route::GET('/admin/games/questions/fetch-question',[AdminQuestionController::class,'getQuestion']);
 Route::POST('/admin/games/questions/create-question',[AdminQuestionController::class,'createQuestion']);
 Route::GET('/admin/games/questions/edit-question/id={id}',[AdminQuestionController::class,'editQuestion']);
+Route::POST('/admin/games/questions/update-questions',[AdminQuestionController::class,'updateQuestion']);
 // Route::GET('/admin/games/questions/fetch-questions',[AdminQuestionController::class,'getQuestion']);
 // Route::POST('/admin/games/questions/create-questions',[AdminQuestionController::class,'createQuestion']);
 // Route::GET('/admin/games/questions/edit-questions/id={id}',[AdminQuestionController::class,'editQuestion']);
-// Route::POST('/admin/games/questions/update-questions',[AdminQuestionController::class,'updateQuestion']);
+
 // Route::GET('/admin/games/questions/delete-questions/id={id}',[AdminQuestionController::class,'deleteQuestion']);
 // Route::get('/layout',function(){
 //     return view('admin.pages.login');

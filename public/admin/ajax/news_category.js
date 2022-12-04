@@ -22,6 +22,9 @@ $(document).ready(function () {
                         <button id="btn-edit-news-category" type="button" value="'+ item.id + '" class="btn btn-success"><i class="bi bi-pencil-square"></i></button></td >\
                         \</tr > ');
                 });
+                $('table').DataTable({
+                    "pageLength": 10
+                });
             }
         });
     }

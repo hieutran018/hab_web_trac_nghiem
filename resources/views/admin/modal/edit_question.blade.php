@@ -13,6 +13,7 @@
                       <form id="edit-question" enctype="multipart/form-data">
                         @csrf
                         <br>
+                        <input type="text" hidden name="id" id="edit-question-id">
                         <div class="card-body">
                           <div class="row">   
                             <div class="mb col-md">
@@ -25,17 +26,14 @@
                           <div class="row">
                             <div class="mb-3 col-md-6">
                               <label for="edit-question-topic" class="form-label">Chủ đề:</label>
-                              <select class="form-select" name="topic_id" id="edit-topic-id">
-                                    
+                              <select class="form-select" name="topic_id" id="edit-topic-id">    
                               </select>
                               <span class="error-message" style="color: red;" id="error-edit-last_name"></span>
                             </div>
                             <div class="mb-3 col-md-6">
                               <label for="edit-question-level" class="form-label">Độ khó:</label>
-                              <select class="form-select" name="level_id" id="edit-level-id">
-                                    
+                              <select class="form-select" name="level_id" id="edit-level-id">                                    
                               </select>
-                              <span class="error-message" style="color: red;" id="error-edit-last_name"></span>
                             </div>
                           </div>
                           <br>
@@ -45,6 +43,7 @@
                                 <label for="edit-answer-content-1" class= "form-label"> Câu trả lời 1:</label>
                                 <div class="mb-6 col-md-10">
                                   <div class="mb-6 col-md">
+                                    <input type="text" hidden name="answer_id_1" id="edit-answer-id-1">
                                     <input class="form-control" type="text" id="edit-answer-content-1" name="answer_content_1">
                                     <span class="error-message" style="color: red;" id="error-edit-answer_content_2" value=""></span>
                                   </div>
@@ -59,6 +58,7 @@
                                 <label for="edit-answer-content-2" class= "form-label"> Câu trả lời 2:</label>
                                 <div class="mb-6 col-md-10">
                                   <div class="mb-6 col-md">
+                                    <input type="text" hidden name="answer_id_2" id="edit-answer-id-2">
                                     <input class="form-control" type="text" id="edit-answer-content-2" name="answer_content_2">
                                     <span class="error-message" style="color: red;" id="error-edit-answer_content_2" value=""></span>
                                   </div>
@@ -73,6 +73,7 @@
                                 <label for="edit-answer-content-3" class= "form-label"> Câu trả lời 3:</label>
                                 <div class="mb-6 col-md-10">
                                   <div class="mb-6 col-md">
+                                    <input type="text" hidden name="answer_id_3" id="edit-answer-id-3">
                                     <input class="form-control" type="text" id="edit-answer-content-3" name="answer_content_3">
                                     <span class="error-message" style="color: red;" id="error-edit-answer_content_4" value=""></span>
                                   </div>
@@ -87,6 +88,7 @@
                                 <label for="edit-answer-content-4" class= "form-label"> Câu trả lời 4:</label>
                                 <div class="mb-6 col-md-10">
                                   <div class="mb-6 col-md">
+                                    <input type="text" hidden name="answer_id_4" id="edit-answer-id-4">
                                     <input class="form-control" type="text" id="edit-answer-content-4" name="answer_content_4">
                                     <span class="error-message" style="color: red;" id="error-edit-answer_content_4" value=""></span>
                                   </div>
@@ -97,8 +99,7 @@
                                 </div>
                               </div>
                             </div>
-                            
-                            
+
                           </div>
                           <br>
                           

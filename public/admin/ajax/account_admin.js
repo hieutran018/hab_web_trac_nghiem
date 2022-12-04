@@ -11,23 +11,32 @@ $(document).ready(function () {
             dataType: "json",
             success: function (response) {
                 console.log(response.lst);
-                $("#tableAccountAdmin").html("");
+                $("tbody").html("");
                 $.each(response.lst, function (key, item) {
-                    $("#tableAccountAdmin").append('<tr>\
+                    $("tbody").append('<tr>\
                         <td>' + item.id + '</td>\
                         <td>' + item.display_name + '</td>\
                         <td>' + item.email + '</td>\
                         <td>' + item.phone_number + '</td>\
                         <td>' + (item.isAdmin == 1 && item.isSubAdmin == 0 ? 'Quản trị viên' : item.isAdmin == 0 && item.isSubAdmin == 1 ? 'Cộng tác viên' : 'Chưa cấp quyền') + '</td>\
                         <td>' + (item.status == 1 ? 'Hoạt động' : 'Bị khóa') + '</td>\
-                        <td><button id="btn-info-account-admin" value="'+ item.id + '" type="button" data-bs-toggle="modal" data-bs-target="#infoAccountAdmin" class="btn btn-info"><i style="color:white" class="bi bi-info-circle"></i></button>\
+                        <td>\
+                        <button id = "btn-info-account-admin" value = "'+ item.id + '" type = "button" data - bs - toggle="modal" data - bs - target="#infoAccountAdmin" class= "btn btn-info" > <i style="color:white" class="bi bi-info-circle"></i></button >\
                         <button id="btn-delete-account-admin" type ="button" value="'+ item.id + '" class= "btn btn-danger" > <i class="bi bi-person-x"></i></button >\
-                    <button id="btn-edit-account-admin" type="button" value="'+ item.id + '" class="btn btn-success"><i class="bi bi-pencil-square"></i></button></td >\
+                        <button id="btn-edit-account-admin" type="button" value="'+ item.id + '" class="btn btn-success"><i class="bi bi-pencil-square"></i></button></td>\
                         \</tr > ');
                 });
+                $('table').DataTable({
+                    "pageLength": 10
+                });
+
+
             }
         });
     }
+
+
+
 
 
     //Thêm tài khoản quản trị viên
@@ -276,6 +285,7 @@ $(document).ready(function () {
             });
 
     });
+
 });
 
 

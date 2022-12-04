@@ -22,6 +22,9 @@ $(document).ready(function () {
                         </td >\
                         \</tr > ');
                 });
+                $('table').DataTable({
+                    "pageLength": 10
+                });
             }
         });
     }

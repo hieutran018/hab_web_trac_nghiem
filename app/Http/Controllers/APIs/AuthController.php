@@ -123,7 +123,7 @@ class AuthController extends Controller
             }
         }
         return response()->json(['id'=>$request->user()->id,
-                                'first_name'=>$request->user()->display_name,
+                                'display_name'=>$request->user()->display_name,
                                 'avatar'=>URL('storage/account/'.$request->user()->id.'/avatar/'.$request->user()->avatar),
                                 'email'=>$request->user()->email,
                                 'phone'=>$request->user()->phone_number,

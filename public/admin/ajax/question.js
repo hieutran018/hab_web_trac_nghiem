@@ -24,10 +24,14 @@ $(document).ready(function () {
                         \</tr > ');
                     });
                 }
+                $('table').DataTable({
+                    "pageLength": 10
+                });
             }
         });
     }
 
+    //* lấy danh sách level cho thẻ select
     function fetchLevel(tagSelect) {
         $.ajax({
             url: '/admin/games/level-questions/fetch-level-questions',
@@ -44,6 +48,8 @@ $(document).ready(function () {
 
         });
     }
+
+    //* lấy danh sách topic cho thẻ select
     function fetchTopic(tagSelect) {
         $.ajax({
             url: '/admin/games/topic-questions/fetch-topic-questions',
@@ -142,16 +148,68 @@ $(document).ready(function () {
             dataType: "JSON",
             success: function (data) {
                 console.log(data);
+                document.getElementById("edit-question-id").value = data.question.id;
                 document.getElementById("edit-question-content").value = data.question.question_content;
                 document.getElementById("edit-topic-id").value = data.question.topic_id;
                 document.getElementById("edit-level-id").value = data.question.level_id;
                 for (var i = 1; i <= 4; i++) {
                     document.getElementById("edit-answer-content-" + i).value = data.answer[i - 1].answer_content;
+                    document.getElementById("edit-answer-id-" + i).value = data.answer[i - 1].id;
                     if (data.answer[i - 1].isTrue == 1) {
                         document.getElementById("edit-gridRadios" + i).checked = true;
                     }
                 }
             }
+        });
+    });
+
+    //* Submit form cập nhật câu hỏi
+    $('#edit-question').submit(function (e) {
+        e.preventDefault();
+        console.log(2);
+        var formData = new FormData($('#edit-question')[0]);
+        // formData.append('image', $('#create-topic-image')[0].files[0]);
+        console.log('formData', formData);
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            url: '/admin/games/questions/update-questions',
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            beforeSend: function () {
+                $(document).find('span.error-message').text("");
+            },
+            success: function (data) {
+                if (data.status === 400) {
+                    console.log(data.message);
+
+                    $.each(data.message, function (key, val) {
+                        $('#error-edit-' + key).text(val[0]);
+                    });
+
+                }
+                else if (data.status === 200) {
+
+                    swal({
+                        position: 'center',
+                        icon: 'success',
+                        title: 'Cập nhật câu hỏi thành công!',
+                        showConfirmButton: true,
+                        confirmButtonText: 'Xác nhận',
+
+                    });
+                    fetchQuestion();
+
+                    $('#editQuestion').modal('hide');
+                }
+
+            },
+
         });
     });
 });

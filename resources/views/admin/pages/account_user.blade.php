@@ -92,19 +92,18 @@
                     <div class="card" style="height: 220%">
                      <div class="card-body">
                         <h5 class="card-title">Danh sách tài khoản Quản trị viên</h5>
-                        <table class="table">
+                        <table class="table table-hover dt-responsive">
                            <thead>
                               <tr>
                                  <th scope="col">ID</th>
-                                 <th scope="col">Họ</th>
-                                 <th scope="col">Tên</th>
+                                 <th scope="col">Tên người dùng</th>
                                  <th scope="col">Email</th>
                                  <th scope="col">Số điện thoại</th>
                                  <th scope="col">Trạng thái</th>
                                  <th scope="col">Thao tác</th>
                               </tr>
                            </thead>
-                           <tbody id="tableAccountAdmin">
+                           <tbody id="tableAccountUser">
                               
                            </tbody>
                         </table>
@@ -112,5 +111,6 @@
                   </div>
                 </div>
             </div>
+            @include('admin.modal.info_account_user')
          <script src="{{URL('admin/ajax/account_user.js')}}"></script>
 @stop
