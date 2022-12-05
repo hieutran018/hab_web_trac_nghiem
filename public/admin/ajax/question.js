@@ -25,7 +25,8 @@ $(document).ready(function () {
                     });
                 }
                 $('table').DataTable({
-                    "pageLength": 10
+                    "pageLength": 10,
+                    info: true
                 });
             }
         });

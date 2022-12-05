@@ -1,6 +1,7 @@
 $(document).ready(function () {
     fetchLevelQuestion();
-
+    var isFirstLoad = true;
+    var dataTable = $('#table-level');
     //* Lấy danh sách độ khó câu hỏi
     function fetchLevelQuestion() {
         $.ajax({
@@ -24,9 +25,41 @@ $(document).ready(function () {
                         </td>\
                         \</tr > ');
                 });
-                $('table').DataTable({
-                    "pageLength": 10
-                });
+                if (isFirstLoad) {
+                    console.log(isFirstLoad);
+                    dataTable.DataTable({
+                        info: true,
+                        retrieve: true,
+                        "bDestroy": true,
+                        "pageLength": 10,
+                        "language": {
+                            "sProcessing": "Đang tải dữ liệu...",
+                            "sLengthMenu": "Hiển thị _MENU_ trong danh sách",
+                            "sZeroRecords": "Không có kết quả nào được tìm thấy",
+                            "sEmptyTable": "Không có dữ liệu trong bảng này",
+                            "sInfo": "Hiện đang ở vị trí _START_ đến _END_ trong tổng số _TOTAL_ của danh sách",
+                            "sInfoEmpty": "Hiển thị các bản ghi từ 0 đến 0 trong tổng số 0 bản ghi",
+                            "sInfoFiltered": "(lọc từ tổng số _MAX_ trong danh sách)",
+                            "sInfoPostFix": "",
+                            "sSearch": "Tìm kiếm:",
+                            "sUrl": "",
+                            "sInfoThousands": ",",
+                            "sLoadingRecords": "Đang sử lý...",
+                            "oPaginate": {
+                                "sFirst": "Trang đầu",
+                                "sLast": "Trang cuối",
+                                "sNext": "Tiến",
+                                "sPrevious": "Lùi"
+                            },
+                            "oAria": {
+                                "sSortAscending": ": Kích hoạt để sắp xếp cột theo thứ tự tăng dần",
+                                "sSortDescending": ": Kích hoạt để sắp xếp cột theo thứ tự giảm dần"
+                            }
+                        }
+                    });
+                    isFirstLoad = false;
+                }
+
             }
         });
     }
@@ -77,8 +110,14 @@ $(document).ready(function () {
                         showConfirmButton: true,
                         confirmButtonText: 'Xác nhận',
 
-                    })
-                    fetchLevelQuestion();
+                    }).then((confirm) => {
+
+                        if (confirm) {
+                            // fetchsAccountUser();
+                            location.reload();
+                        }
+                    });
+
 
                 }
 
@@ -151,14 +190,20 @@ $(document).ready(function () {
                         console.log(data);
                         fetchLevelQuestion();
                         $('#editLevelQuestion').modal('hide');
-                        Swal.fire({
+                        swal({
                             position: 'center',
                             icon: 'success',
                             title: 'Cập nhật thành công!',
                             showConfirmButton: true,
                             confirmButtonText: 'Xác nhận',
 
-                        })
+                        }).then((confirm) => {
+
+                            if (confirm) {
+                                // fetchsAccountUser();
+                                location.reload();
+                            }
+                        });
 
                     }
 
@@ -196,9 +241,16 @@ $(document).ready(function () {
                             else if (data.status == 200) {
                                 swal(data.message, {
                                     icon: "success",
+                                }).then((confirm) => {
+
+                                    if (confirm) {
+                                        // fetchsAccountUser();
+                                        location.reload();
+                                    }
                                 });
-                                fetchLevelQuestion();
+
                             }
+
                         }
                     });
 

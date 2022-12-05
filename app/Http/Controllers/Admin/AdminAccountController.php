@@ -95,14 +95,14 @@ class AdminAccountController extends Controller
     }
 
     public function getListAccountUser(){
-    $lst = User::WHERE('isAdmin',0)->WHERE('isSubAdmin',0)->get();
-    // dd($lst);
-    foreach($lst as $user){
-        if($user->phone_number == null){
-            $user->phone_number ='Chưa có thông tin';
+        $lst = User::WHERE('isAdmin',0)->WHERE('isSubAdmin',0)->get();
+        // dd($lst);
+        foreach($lst as $user){
+            if($user->phone_number == null){
+                $user->phone_number ='Chưa có thông tin';
+            }
         }
-    }
-    return response()->json(['status'=>200,'lst'=>$lst]);
+        return response()->json(['status'=>200,'lst'=>$lst]);
     }
 
     public function createAccountAdmin(Request $request){
@@ -201,6 +201,59 @@ class AdminAccountController extends Controller
             return response()->json(['status'=>400,'message'=>'Bạn không có quyền thực hiện thao tác này!']);
         }
         
+    }
+
+    public function updateAccountUser(Request $request){
+        $validator = Validator::make($request->all(),
+            [
+                'display_name'=>'required',
+                'email'=>'required',
+                'phone_number' => 'required',
+                'address'=>'required',
+                
+            ],
+            [
+                'display_name.required' =>'Tên người dùng không được bỏ trống!',
+                'email.required' =>'Email không được bỏ trống!',
+                'phone_number.required' => 'Số điện thoại không được bỏ trống!',
+                'address.required' => 'Địa chỉ không được bỏ trống!'
+                
+            ]);
+
+        if($validator->fails()){
+                return response()->json(['status'=>400,'message'=>$validator->errors()->toArray()]);
+            }else{
+            $data = $request->all();
+            
+            $account = User::WHERE('id',$request->id)->first();
+            // dd($account, !empty($account));
+            if(!empty($account)){
+                $account->display_name = $data['display_name'];
+                $account->phone_number = $data['phone_number'];
+                $account->address = $data['address'];
+                $account->dateOfBirth = $data['date_of_birth'];
+                
+                //Cập nhật ảnh đại diện
+            if ($request->hasFile('avatar')) {
+            $fileExtentsion = $request->file('avatar')->getClientOriginalExtension();
+            $fileName = time().'.'.$fileExtentsion;
+            $request->file('avatar')->storeAs('account/'.$account->id.'/avatar/', $fileName);
+            $file = Image::make(storage_path('app/public/account/'.$account->id.'/avatar/' . $fileName));
+            $file->resize(360, 360, function ($constraint) {
+                $constraint->aspectRatio();
+            });
+            $file->save(storage_path('app/public/account/'.$account->id.'/avatar/' . $fileName));
+                $account->avatar = $fileName;
+            }
+
+
+                $account->update();
+                return response()->json(['status'=>200,'message'=>'Cập nhật tài khoản thành công!','data'=>$data]);
+            }
+            else{
+                return response()->json(['status'=>400,'message'=>'Không tìm thấy tài khoản!']);
+            }
+        }
     }
 
     public function checkIsAdmin(){

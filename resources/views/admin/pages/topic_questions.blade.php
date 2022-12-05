@@ -22,6 +22,7 @@
                               <button id="btn-create-topic-question" type="button" style="width: 80%" class="btn btn-outline-primary">Thêm chủ đề</button>
                            </div>
                         </div>
+                        <br>
                         <table class="table">
                            <thead>
                               <tr>

@@ -22,7 +22,8 @@
                               <button id="btn-create-level-question" type="button" style="width: 80%" class="btn btn-outline-primary">Thêm độ khó</button>
                            </div>
                         </div>
-                        <table class="table">
+                        <br>
+                        <table class="table" id="table-level">
                            <thead>
                               <tr>
                                  <th scope="col">ID</th>

@@ -22,6 +22,7 @@
                               <button id="btn-create-question" type="button" style="width: 80%" class="btn btn-outline-primary">Thêm câu hỏi</button>
                            </div>
                         </div>
+                        <br>
                         <table class="table">
                            <thead>
                               <tr>

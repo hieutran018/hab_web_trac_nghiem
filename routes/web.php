@@ -46,6 +46,7 @@ Route::group(['middleware'=>'checklogin'],function(){
 
 //* Trang quản lý tài khoản user
 Route::GET('/admin/account-user',[AdminAccountUserController::class,'getPageAccountUser'])->name('page-account-user');
+Route::POST('/admin/account/account-user/update',[AdminAccountController::class,'updateAccountUser']);
 
 
 Route::GET('/admin/news/news-categories',[AdminNewsCategoryController::class,'getPageNewsCategories'])->name('get-page-news-category');

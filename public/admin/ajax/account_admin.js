@@ -1,16 +1,18 @@
 $(document).ready(function () {
 
     fetchsAccountAdmin();
+    var isFirstLoad = true;
+    var dataTable = $('#table-account-admin');
 
     //* Lấy danh sách tài khoản admin
     function fetchsAccountAdmin() {
-
         $.ajax({
             type: "GET",
             url: "/admin/account-admin/list-account-admin",
             dataType: "json",
             success: function (response) {
-                console.log(response.lst);
+                console.log(['load 1', response.lst]);
+
                 $("tbody").html("");
                 $.each(response.lst, function (key, item) {
                     $("tbody").append('<tr>\
@@ -21,23 +23,51 @@ $(document).ready(function () {
                         <td>' + (item.isAdmin == 1 && item.isSubAdmin == 0 ? 'Quản trị viên' : item.isAdmin == 0 && item.isSubAdmin == 1 ? 'Cộng tác viên' : 'Chưa cấp quyền') + '</td>\
                         <td>' + (item.status == 1 ? 'Hoạt động' : 'Bị khóa') + '</td>\
                         <td>\
-                        <button id = "btn-info-account-admin" value = "'+ item.id + '" type = "button" data - bs - toggle="modal" data - bs - target="#infoAccountAdmin" class= "btn btn-info" > <i style="color:white" class="bi bi-info-circle"></i></button >\
+                        <button id ="btn-info-account-admin" value = "'+ item.id + '" type = "button" data - bs - toggle="modal" data - bs - target="#infoAccountAdmin" class= "btn btn-info" > <i style="color:white" class="bi bi-info-circle"></i></button >\
                         <button id="btn-delete-account-admin" type ="button" value="'+ item.id + '" class= "btn btn-danger" > <i class="bi bi-person-x"></i></button >\
                         <button id="btn-edit-account-admin" type="button" value="'+ item.id + '" class="btn btn-success"><i class="bi bi-pencil-square"></i></button></td>\
                         \</tr > ');
                 });
-                $('table').DataTable({
-                    "pageLength": 10
-                });
-
+                if (isFirstLoad) {
+                    console.log(isFirstLoad);
+                    dataTable.DataTable({
+                        info: true,
+                        retrieve: true,
+                        "bDestroy": true,
+                        "pageLength": 10,
+                        "language": {
+                            "sProcessing": "Đang tải dữ liệu...",
+                            "sLengthMenu": "Hiển thị _MENU_ trong danh sách",
+                            "sZeroRecords": "Không có kết quả nào được tìm thấy",
+                            "sEmptyTable": "Không có dữ liệu trong bảng này",
+                            "sInfo": "Hiện đang ở vị trí _START_ đến _END_ trong tổng số _TOTAL_ của danh sách",
+                            "sInfoEmpty": "Hiển thị các bản ghi từ 0 đến 0 trong tổng số 0 bản ghi",
+                            "sInfoFiltered": "(lọc từ tổng số _MAX_ trong danh sách)",
+                            "sInfoPostFix": "",
+                            "sSearch": "Tìm kiếm:",
+                            "sUrl": "",
+                            "sInfoThousands": ",",
+                            "sLoadingRecords": "Đang sử lý...",
+                            "oPaginate": {
+                                "sFirst": "Trang đầu",
+                                "sLast": "Trang cuối",
+                                "sNext": "Tiến",
+                                "sPrevious": "Lùi"
+                            },
+                            "oAria": {
+                                "sSortAscending": ": Kích hoạt để sắp xếp cột theo thứ tự tăng dần",
+                                "sSortDescending": ": Kích hoạt để sắp xếp cột theo thứ tự giảm dần"
+                            }
+                        }
+                    });
+                    isFirstLoad = false;
+                }
 
             }
+
         });
+
     }
-
-
-
-
 
     //Thêm tài khoản quản trị viên
     $(document).on('click', '#btn-create-account-admin', function (e) {
@@ -88,6 +118,12 @@ $(document).ready(function () {
                         showConfirmButton: true,
                         confirmButtonText: 'Xác nhận',
 
+                    }).then((confirm) => {
+
+                        if (confirm) {
+                            fetchsAccountAdmin();
+                            location.reload();
+                        }
                     });
                     $('#createAccountAdmin').modal('hide');
                     fetchsAccountAdmin();
@@ -135,7 +171,7 @@ $(document).ready(function () {
                     }
                     else if (data.status === 200) {
                         console.log(data);
-                        fetchsAccountAdmin();
+
                         $('#editAccountAdmin').modal('hide');
                         swal({
                             position: 'center',
@@ -144,7 +180,16 @@ $(document).ready(function () {
                             showConfirmButton: true,
                             confirmButtonText: 'Xác nhận',
 
+                        }).then((confirm) => {
+
+                            if (confirm) {
+                                fetchsAccountAdmin();
+                                location.reload();
+                            }
                         });
+
+
+
 
                     }
 
@@ -206,7 +251,7 @@ $(document).ready(function () {
     $(document).on('click', '#btn-info-account-admin', function (e) {
         e.preventDefault();
         var id_account = $(this).val();
-        // console.log(id_account);
+        $('#infoAccountAdmin').modal('show');
         $.ajax({
             type: 'GET',
             url: '/admin/account-admin/info-account-admin/id=' + id_account,
@@ -228,7 +273,7 @@ $(document).ready(function () {
                     } else {
                         document.getElementById('info-avatar').src = 'http://127.0.0.1:8000/storage/account/' + response.account.id + '/avatar/' + response.account.avatar;
                     }
-                    // document.getElementById('edit-account-admin').value = response.account_admin.id;
+
                 }
                 else if (response.status == 400) {
                     console.log(response);
