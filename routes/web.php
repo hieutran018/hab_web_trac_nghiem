@@ -39,14 +39,16 @@ Route::group(['middleware'=>'checklogin'],function(){
     Route::GET('/admin/account-admin/list-account-user',[AdminAccountController::class,'getListAccountUser'])->name('get-list-account-admin');
     Route::POST('/admin/account-admin/create-account-admin',[AdminAccountController::class,'createAccountAdmin'])->name('create-account-admin');
     Route::GET('/admin/account-admin/info-account-admin/id={id}',[AdminAccountController::class,'infoAccountAdmin'])->name('info-account-admin');
-    Route::GET('/admin/account-admin/edit-account-admin/id={id}',[AdminAccountController::class,'editAccountAdmin'])->name('edit-account-admin')->middleware('checkadmin::class');
-    Route::PUT('/admin/account-admin/update-account-admin',[AdminAccountController::class,'updateAccountAdmin'])->name('update-account-admin')->middleware('checkadmin::class');
+    Route::GET('/admin/account-admin/edit-account-admin/id={id}',[AdminAccountController::class,'editAccountAdmin'])->name('edit-account-admin');
+    Route::PUT('/admin/account-admin/update-account-admin',[AdminAccountController::class,'updateAccountAdmin'])->name('update-account-admin');
     Route::GET('/admin/account-admin/delete-account-admin/id={id}',[AdminAccountController::class,'deleteAccountAdmin'])->name('delete-account-admin');
 });
 
 //* Trang quản lý tài khoản user
 Route::GET('/admin/account-user',[AdminAccountUserController::class,'getPageAccountUser'])->name('page-account-user');
 Route::POST('/admin/account/account-user/update',[AdminAccountController::class,'updateAccountUser']);
+Route::POST('/admin/account/account-user/change-password',[AdminAccountController::class,'changePassword']);
+Route::GET('/admin/account-admin/delete-account-user/id={id}',[AdminAccountController::class,'deleteAccountUser'])->name('delete-account-user');
 
 
 Route::GET('/admin/news/news-categories',[AdminNewsCategoryController::class,'getPageNewsCategories'])->name('get-page-news-category');

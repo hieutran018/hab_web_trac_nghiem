@@ -3,7 +3,7 @@
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="editAccountUserModalLabel">Cập nhật tài khoản quản trị viên</h5>
+                <h5 class="modal-title" id="editAccountUserModalLabel">Cập nhật tài khoản người dùng</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -61,7 +61,20 @@
                               <input type="date" class="form-control" id="edit-dateOfBirth-user" name="date_of_birth">
                               <span class="error-message" style="color: red;" id="error-edit-date-of-birth"></span>
                             </div>
-                            
+                            <div class="mb-3 col-md-6">
+                            <label class="form-label" for="edit-status">Trạng thái</label>
+                            <select name="status" id="edit-status" class="select2 form-select">
+                              <option value="1">Hoạt động</option>
+                              <option value="0">Bị khóa</option>
+                            </select>
+                            </div>
+                            @if(Auth::user()->isAdmin == 1)
+                            <div class="row">
+                              <div class="mb-3 col-md-6">
+                                <span id="btn-change-password-user" class="btn btn-outline-danger btn-sm">Tùy chọn mật khẩu</span>
+                              </div>
+                            </div>
+                            @endif
                           </div>
                           <div class="mt-2">
                             <button type="submit" id="submit-update-account-admin" class="btn btn-primary me-2">Hoàn tất</button>

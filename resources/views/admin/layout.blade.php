@@ -36,7 +36,7 @@
 
     
    </head>
-   <body style="margin: 0; height: 100%; overflow: hidden">
+   <body>
         @include('admin.elements.header')
         @include('admin.elements.sidebar')
       <main id="main" class="main">

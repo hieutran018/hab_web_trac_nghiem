@@ -67,7 +67,22 @@
                               <option value="1">Quản trị viên</option>
                               <option value="2">Cộng tác viên</option>
                             </select>
+                            </div>
+                            <div class="mb-3 col-md-6">
+                            <label class="form-label" for="edit-status">Trạng thái</label>
+                            <select name="status" id="edit-status" class="select2 form-select">
+                              <option value="1">Hoạt động</option>
+                              <option value="0">Bị khóa</option>
+                            </select>
+                            </div>
+                          
                           </div>
+                          <div class="row">
+                            @if(Auth::user()->isAdmin == 1)
+                            <div class="mb-3 col-md-6">
+                              <span id="btn-change-password-admin" class="btn btn-outline-danger btn-sm">Tùy chọn mật khẩu</span>
+                            </div>
+                            @endif
                           </div>
                           <div class="mt-2">
                             <button type="submit" id="submit-update-account-admin" class="btn btn-primary me-2">Hoàn tất</button>

@@ -1,15 +1,15 @@
-$(document).ready(function () {
+{{--TODO chưa có sự kiện Khóa/Mở Khóa tài khoản + Xóa User  --}}
+<script>
+    $(document).ready(function () {
     fetchsAccountUser();
     var isFirstLoad = true;
     var dataTable = $('#table-account-user');
     function fetchsAccountUser() {
-
         $.ajax({
             type: "GET",
             url: "/admin/account-admin/list-account-user",
             dataType: "json",
             success: function (response) {
-                // console.log(response.lst);
                 $("#tableAccountUser").html("");
                 $.each(response.lst, function (key, item) {
                     $("#tableAccountUser").append('<tr>\
@@ -20,18 +20,20 @@ $(document).ready(function () {
                         <td>' + (item.status == 1 ? 'Hoạt động' : 'Bị khóa') + '</td>\
                         <td>\
                         <button id="btn-info-account-user" value = "'+ item.id + '" type="button" class="btn btn-info" > <i style="color:white" class="bi bi-info-circle"></i></button>\
+                        @if(Auth::user()->isAdmin == 1)\
                         <button id="btn-delete-account-user" value = "'+ item.id + '" type="button" class="btn btn-danger" > <i class="bi bi-person-x"></i></button>\
                         <button id="btn-edit-account-user" value = "'+ item.id + '" type="button" class="btn btn-success"><i class="bi bi-pencil-square"></i></button>\
+                        @endif\
                         </td>\
                         \</tr > ');
                 });
+
                 if (isFirstLoad) {
-                    console.log(isFirstLoad);
                     dataTable.DataTable({
                         info: true,
                         retrieve: true,
                         "bDestroy": true,
-                        "pageLength": 10,
+                        "pageLength": 11,
                         "language": {
                             "sProcessing": "Đang tải dữ liệu...",
                             "sLengthMenu": "Hiển thị _MENU_ trong danh sách",
@@ -59,13 +61,9 @@ $(document).ready(function () {
                     });
                     isFirstLoad = false;
                 }
-
             }
-
         });
-
     }
-
 
     //* Chi tiết thông tin user
     $(document).on('click', '#btn-info-account-user', function (e) {
@@ -117,40 +115,27 @@ $(document).ready(function () {
         e.preventDefault();
 
         var id_account = $(this).val();
-        console.log('ID EDIT ACCOUNT', id_account);
+        $('#editAccountUser').modal('show');
         $.ajax({
             type: 'GET',
-            url: '/admin/checkisAdmin',
+            url: '/admin/account-admin/edit-account-admin/id=' + id_account,
             success: function (response) {
-                if (response.status != 400) {
-                    $('#editAccountUser').modal('show');
-                    $.ajax({
-                        type: 'GET',
-                        url: '/admin/account-admin/edit-account-admin/id=' + id_account,
-                        success: function (response) {
-                            if (response.status == 200) {
-                                console.log(response.account);
-                                document.getElementById("edit-id-user").value = response.account.id;
-                                $("#edit-display-name-user").val(response.account.display_name);
-                                document.getElementById("edit-email-user").value = response.account.email;
-                                document.getElementById("edit-phoneNumber-user").value = response.account.phone_number;
-                                document.getElementById("edit-address-user").value = response.account.address;
-                                document.getElementById("edit-dateOfBirth-user").value = response.account.dateOfBirth;
+                if (response.status == 200) {
+                    console.log(response.account);
+                    document.getElementById("edit-id-user").value = response.account.id;
+                    document.getElementById("btn-change-password-user").value = response.account.id;
+                    $("#edit-display-name-user").val(response.account.display_name);
+                    document.getElementById("edit-email-user").value = response.account.email;
+                    document.getElementById("edit-phoneNumber-user").value = response.account.phone_number;
+                    document.getElementById("edit-address-user").value = response.account.address;
+                    document.getElementById("edit-dateOfBirth-user").value = response.account.dateOfBirth;
+                    document.getElementById("edit-status").value = response.account.status;
 
-                                if (response.account.avatar == null) {
-                                    document.getElementById('edit-avatar-user').src = 'http://127.0.0.1:8000/admin/assets/img/no_avatar.png';
-
-                                } else {
-                                    document.getElementById('edit-avatar-user').src = 'http://127.0.0.1:8000/storage/account/' + response.account.id + '/avatar/' + response.account.avatar;
-                                }
-                                // document.getElementById('edit-account-admin').value = response.account_admin.id;
-                            }
-                        }
-                    });
-                }
-                else {
-                    alert(response.message);
-
+                    if (response.account.avatar == null) {
+                        document.getElementById('edit-avatar-user').src = 'http://127.0.0.1:8000/admin/assets/img/no_avatar.png';
+                    } else {
+                        document.getElementById('edit-avatar-user').src = 'http://127.0.0.1:8000/storage/account/' + response.account.id + '/avatar/' + response.account.avatar;
+                    }
                 }
             }
         });
@@ -218,5 +203,56 @@ $(document).ready(function () {
         });
     });
 
+    $(document).on('click', '#btn-delete-account-user', function (e) {
+        e.preventDefault();
+        var user_id = $(this).val();
+        console.log(user_id);
+        swal({
+            title: "Hệ thống",
+            text: "Bạn có chắc chắn muốn xóa tài khoản này?",
+            icon: "warning",
+            buttons: true,
+            dangerMode: true,
+        })
+            .then((willDelete) => {
 
+                if (willDelete) {
+                    console.log(willDelete);
+                    $.ajax({
+                        type: "GET",
+                        url: "/admin/account-admin/delete-account-user/id=" + user_id,
+                        dataType: "json",
+                        success: function (data) {
+                            if (data.status == 400) {
+                                swal(data.message, {
+                                    icon: "error",
+                                });
+                            }
+                            else if (data.status == 200) {
+                                swal(data.message, {
+                                    icon: "success",
+                                }).then((confirm) => {
+
+                                    if (confirm) {
+                                        // fetchsAccountAdmin();
+                                        location.reload();
+                                    }
+                                });
+                            }
+                        }
+                    });
+
+                }
+            });
+
+    });
+
+
+    $(document).on('click','#btn-change-password-user',function(e){
+        e.preventDefault();
+        var userId = $(this).val();
+        $('#changePasswordUser').modal('show');
+        document.getElementById('id-passowrd').value = userId;
+    });
 });
+</script>

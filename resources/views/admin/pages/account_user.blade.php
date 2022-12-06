@@ -11,7 +11,7 @@
                 <div class="col-lg">
                     <div class="card" style="height: 220%">
                      <div class="card-body">
-                        <h5 class="card-title">Danh sách tài khoản Quản trị viên</h5>
+                        <h5 class="card-title">Danh sách tài khoản người dùng</h5>
                         <table id="table-account-user" class="table table-hover dt-responsive">
                            <thead>
                               <tr>
@@ -31,7 +31,9 @@
                   </div>
                 </div>
             </div>
+            @include('admin.ajax.account_user')
             @include('admin.modal.info_account_user')
             @include('admin.modal.edit_account_user')
-         <script src="{{URL('admin/ajax/account_user.js')}}"></script>
+            @include('admin.modal.change_password_user')
+         
 @stop

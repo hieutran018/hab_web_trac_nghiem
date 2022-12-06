@@ -3,7 +3,7 @@
     <div class="modal-dialog modal-xl">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="infoAccountUserModalLabel">Thông tin chi tiết tài khoản Quản trị viên</h5>
+                <h5 class="modal-title" id="infoAccountUserModalLabel">Thông tin chi tiết tài khoản người dùng</h5>
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -39,6 +39,7 @@
                               <label for="date-of-birth" class="form-label">Ngày sinh:</label>
                               <span class="span-info" id="info-dateOfBirth-user"></span>
                             </div>
+                            
 
                           </div>
                           <div class="mt-2">

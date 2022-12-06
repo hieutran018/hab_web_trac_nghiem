@@ -21,6 +21,7 @@ Route::POST('/register-account',[AuthController::class,'register']);
 Route::POST('/login',[AuthController::class,'login']);
 Route::POST('/logout',[AuthController::class,'logout'])->middleware('auth:sanctum');
 Route::POST('/change-password',[AuthController::class,'changePassword'])->middleware('auth:sanctum');
+Route::POST('/user/update-info-user');
 
 
 Route::get('/news/news-category',[NewsCategoryController::class,'getlstNewsCategory']);

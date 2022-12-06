@@ -11,12 +11,14 @@
                     <div class="card" style="height: 220%">
                      <div class="card-body">
                         <h5 class="card-title">Danh sách tài khoản Quản trị viên</h5>
+                        @if(Auth::user()->isAdmin == 1)
                         <div class="row">
                            <div class="col-3">
                               <button id="btn-create-account-admin" type="button" style="width: 80%" class="btn btn-outline-primary">Thêm tài khoản</button>
                            </div>
                         </div>
                         <br>
+                        @endif
                         <table id="table-account-admin" class="table table-hover dt-responsive" summary="This table shows how to create responsive tables using Datatables' extended functionality">
                            <thead>
                               <tr>
@@ -38,9 +40,11 @@
                 </div>
             </div>
          </section>
+         @include('admin.ajax.account_admin')
          @include('admin.modal.info_account_admin')
          @include('admin.modal.edit_account_admin')
          @include('admin.modal.create_account_admin')
-         <script src="{{URL('admin/ajax/account_admin.js')}}"></script>
+         @include('admin.modal.change_password_user')
+         
          
 @stop

@@ -1,3 +1,5 @@
+{{--* DONE *--}}
+<script>
 $(document).ready(function () {
 
     fetchsAccountAdmin();
@@ -24,8 +26,10 @@ $(document).ready(function () {
                         <td>' + (item.status == 1 ? 'Hoạt động' : 'Bị khóa') + '</td>\
                         <td>\
                         <button id ="btn-info-account-admin" value = "'+ item.id + '" type = "button" data - bs - toggle="modal" data - bs - target="#infoAccountAdmin" class= "btn btn-info" > <i style="color:white" class="bi bi-info-circle"></i></button >\
+                        @if(Auth::user()->isAdmin == 1)\
                         <button id="btn-delete-account-admin" type ="button" value="'+ item.id + '" class= "btn btn-danger" > <i class="bi bi-person-x"></i></button >\
                         <button id="btn-edit-account-admin" type="button" value="'+ item.id + '" class="btn btn-success"><i class="bi bi-pencil-square"></i></button></td>\
+                        @endif\
                         \</tr > ');
                 });
                 if (isFirstLoad) {
@@ -34,7 +38,7 @@ $(document).ready(function () {
                         info: true,
                         retrieve: true,
                         "bDestroy": true,
-                        "pageLength": 10,
+                        "pageLength": 11,
                         "language": {
                             "sProcessing": "Đang tải dữ liệu...",
                             "sLengthMenu": "Hiển thị _MENU_ trong danh sách",
@@ -72,7 +76,6 @@ $(document).ready(function () {
     //Thêm tài khoản quản trị viên
     $(document).on('click', '#btn-create-account-admin', function (e) {
         e.preventDefault();
-
         $('#createAccountAdmin').modal('show');
     });
     //* Submit form thêm tài khoản quản trị viên
@@ -121,12 +124,12 @@ $(document).ready(function () {
                     }).then((confirm) => {
 
                         if (confirm) {
-                            fetchsAccountAdmin();
+                            // fetchsAccountAdmin();
                             location.reload();
                         }
                     });
-                    $('#createAccountAdmin').modal('hide');
-                    fetchsAccountAdmin();
+                    // $('#createAccountAdmin').modal('hide');
+                    // fetchsAccountAdmin();
 
                 }
 
@@ -135,7 +138,7 @@ $(document).ready(function () {
         });
     });
 
-    //* Cập nhật thông tin tài khoản admin
+    //*Submit form Cập nhật thông tin tài khoản admin
     $(document).ready(function () {
         var editAccountAdminForm = $('#edit-account-admin');
         editAccountAdminForm.submit(function (e) {
@@ -160,7 +163,6 @@ $(document).ready(function () {
                 },
                 success: function (data) {
                     if (data.status == 400) {
-                        console.log(data.message);
                         $.each(data.message, function (key, val) {
                             $('#error-edit-' + key).text(val[0]);
                         });
@@ -168,10 +170,25 @@ $(document).ready(function () {
                             $('#error-edit-error-password').text(data.error_password);
                         }
 
+                    } else if (data.status === 401) {
+                        swal({
+                            position: 'center',
+                            icon: 'error',
+                            title: data.message,
+                            showConfirmButton: true,
+                            confirmButtonText: 'Xác nhận',
+                        });
                     }
-                    else if (data.status === 200) {
-                        console.log(data);
+                    else if (data.status === 403) {
+                        swal({
+                            position: 'center',
+                            icon: 'error',
+                            title: data.message,
+                            showConfirmButton: true,
+                            confirmButtonText: 'Xác nhận',
 
+                        });
+                    } else if (data.status === 200) {
                         $('#editAccountAdmin').modal('hide');
                         swal({
                             position: 'center',
@@ -179,22 +196,15 @@ $(document).ready(function () {
                             title: 'Cập nhật thành công!',
                             showConfirmButton: true,
                             confirmButtonText: 'Xác nhận',
-
                         }).then((confirm) => {
 
                             if (confirm) {
-                                fetchsAccountAdmin();
+                                // fetchsAccountAdmin();
                                 location.reload();
                             }
                         });
-
-
-
-
                     }
-
                 },
-
             });
         });
     });
@@ -202,46 +212,38 @@ $(document).ready(function () {
     //* Cập nhật tài khoản quản trị viên
     $(document).on('click', '#btn-edit-account-admin', function (e) {
         e.preventDefault();
-
         var id_account = $(this).val();
-        console.log('ID EDIT ACCOUNT', id_account);
         $.ajax({
             type: 'GET',
-            url: '/admin/checkisAdmin',
+            url: '/admin/account-admin/edit-account-admin/id=' + id_account,
             success: function (response) {
-                if (response.status != 400) {
+                if (response.status === 200) {
                     $('#editAccountAdmin').modal('show');
-                    $.ajax({
-                        type: 'GET',
-                        url: '/admin/account-admin/edit-account-admin/id=' + id_account,
-                        success: function (response) {
-                            if (response.status == 200) {
-                                console.log(response.account);
-                                document.getElementById("edit-id").value = response.account.id;
-                                $("#edit-display-name").val(response.account.display_name);
-                                document.getElementById("edit-email").value = response.account.email;
-                                document.getElementById("edit-phoneNumber").value = response.account.phone_number;
-                                document.getElementById("edit-address").value = response.account.address;
-                                document.getElementById("edit-dateOfBirth").value = response.account.dateOfBirth;
-                                if (response.account.isAdmin == 1 && response.account.isSubAdmin == 0) {
-                                    document.getElementById("info-position").value = 1;
-                                } else if (response.account.isAdmin == 0 && response.account.isSubAdmin == 1) {
-                                    document.getElementById("edit-position").value = 1;
-                                }
-                                if (response.account.avatar == null) {
-                                    document.getElementById('edit-avatar').src = 'http://127.0.0.1:8000/admin/assets/img/no_avatar.png';
+                    console.log(response.account);
+                    document.getElementById("edit-id").value = response.account.id;
+                    document.getElementById("btn-change-password-admin").value = response.account.id;
+                    $("#edit-display-name").val(response.account.display_name);
+                    document.getElementById("edit-email").value = response.account.email;
+                    document.getElementById("edit-phoneNumber").value = response.account.phone_number;
+                    document.getElementById("edit-address").value = response.account.address;
+                    document.getElementById("edit-dateOfBirth").value = response.account.dateOfBirth;
+                    document.getElementById("edit-status").value = response.account.status;
+                    if (response.account.isAdmin == 1 && response.account.isSubAdmin == 0) {
+                        document.getElementById("info-position").value = 1;
+                    } else if (response.account.isAdmin == 0 && response.account.isSubAdmin == 1) {
+                        document.getElementById("edit-position").value = 1;
+                    }
+                    if (response.account.avatar == null) {
+                        document.getElementById('edit-avatar').src = 'http://127.0.0.1:8000/admin/assets/img/no_avatar.png';
 
-                                } else {
-                                    document.getElementById('edit-avatar').src = 'http://127.0.0.1:8000/storage/account/' + response.account.id + '/avatar/' + response.account.avatar;
-                                }
-                                // document.getElementById('edit-account-admin').value = response.account_admin.id;
-                            }
-                        }
+                    } else {
+                        document.getElementById('edit-avatar').src = 'http://127.0.0.1:8000/storage/account/' + response.account.id + '/avatar/' + response.account.avatar;
+                    }
+
+                } else if (response.status === 403) {
+                    swal(response.message, {
+                        icon: "error",
                     });
-                }
-                else {
-                    alert(response.message);
-
                 }
             }
         });
@@ -277,12 +279,9 @@ $(document).ready(function () {
                 }
                 else if (response.status == 400) {
                     console.log(response);
-                    $("#infoAccountAdmin").modal("hide");
-                    $('#infoAccountAdmin').on('shown.bs.modal', function () {
-                        $('#infoAccountAdmin').modal('hide');
-
+                    swal(response.message, {
+                        icon: "error",
                     });
-                    // $(".modal-backdrop").remove();
                     // $('body').removeClass('modal-open');
                     // $('body').css('padding-right', '');
                     // $("#infoAccountAdmin").hide();
@@ -320,8 +319,13 @@ $(document).ready(function () {
                             else if (data.status == 200) {
                                 swal(data.message, {
                                     icon: "success",
+                                }).then((confirm) => {
+
+                                    if (confirm) {
+                                        // fetchsAccountAdmin();
+                                        location.reload();
+                                    }
                                 });
-                                fetchsAccountAdmin();
                             }
                         }
                     });
@@ -331,8 +335,65 @@ $(document).ready(function () {
 
     });
 
-});
+    $(document).on('click','#btn-change-password-admin',function(e){
+        e.preventDefault();
+        var userId = $(this).val();
+        $('#changePassword').modal('show');
+        document.getElementById('id-passowrd').value = userId;
+    });
 
+    $('#change-password').submit(function (e) {
+        e.preventDefault();
+        var formData = new FormData($('#change-password')[0]);
+        $.ajaxSetup({
+            headers: {
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+            }
+        });
+
+        $.ajax({
+            url: '/admin/account/account-user/change-password',
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            beforeSend: function () {
+                $(document).find('span.error-message').text("");
+            },
+            success: function (data) {
+                if (data.status === 400) {
+                    console.log(data.message);
+                    $.each(data.message, function (key, val) {
+                        $('#error-change-' + key).text(val[0]);
+                    });
+                    if (data.error_password != null) {
+                        $('#error-add-error-password').text(data.error_password);
+                    }
+                }
+                else if(data.status === 409){
+                    $('#error-password-not-match').text(data.message);
+                } else if (data.status === 200) {
+                    $('#change-password')[0].reset();
+                    swal({
+                        position: 'center',
+                        icon: 'success',
+                        title: data.message,
+                        showConfirmButton: true,
+                        confirmButtonText: 'Xác nhận',
+
+                    }).then((confirm) => {
+
+                        if (confirm) {
+                            $('#changePasswordUser').modal('hide');
+                        }
+                    });
+                }
+            },
+        });
+    });
+
+});
+</script>
 
 
 
