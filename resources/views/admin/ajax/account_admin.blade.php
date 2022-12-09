@@ -7,14 +7,12 @@ $(document).ready(function () {
     var dataTable = $('#table-account-admin');
 
     //* Lấy danh sách tài khoản admin
-    function fetchsAccountAdmin() {
+    function fetchsAccountAdmin() { 
         $.ajax({
             type: "GET",
             url: "/admin/account-admin/list-account-admin",
             dataType: "json",
             success: function (response) {
-                console.log(['load 1', response.lst]);
-
                 $("tbody").html("");
                 $.each(response.lst, function (key, item) {
                     $("tbody").append('<tr>\
@@ -38,7 +36,7 @@ $(document).ready(function () {
                         info: true,
                         retrieve: true,
                         "bDestroy": true,
-                        "pageLength": 11,
+                        "pageLength": 10,
                         "language": {
                             "sProcessing": "Đang tải dữ liệu...",
                             "sLengthMenu": "Hiển thị _MENU_ trong danh sách",
@@ -82,13 +80,13 @@ $(document).ready(function () {
     $('#create-account-admin').submit(function (e) {
         e.preventDefault();
         var formData = new FormData($('#create-account-admin')[0]);
-        console.log(1);
+
         $.ajaxSetup({
             headers: {
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
             }
         });
-
+        
         $.ajax({
             url: '/admin/account-admin/create-account-admin',
             type: 'POST',
@@ -99,37 +97,28 @@ $(document).ready(function () {
                 $(document).find('span.error-message').text("");
             },
             success: function (data) {
+                debugger
                 if (data.status === 400) {
-                    console.log(data.message);
                     $.each(data.message, function (key, val) {
                         $('#error-add-' + key).text(val[0]);
                     });
-                    if (data.error_password != null) {
+                }else if(data.status === 417){
                         $('#error-add-error-password').text(data.error_password);
-                    }
-                    // $('#createAccountAdmin').find('input').val('');
-                    $('#create-account-admin')[0].reset();
-                }
-                else if (data.status === 200) {
+                }else if (data.status === 200) {
                     console.log(data);
                     $('#create-account-admin')[0].reset();
-                    document.getElementById('create-avatar').src = 'http://127.0.0.1:8000/admin/assets/img/no_avatar.png';
+                    document.getElementById('create-account-admin-avatar').src = 'http://127.0.0.1:8000/admin/assets/img/no_avatar.png';
                     swal({
                         position: 'center',
                         icon: 'success',
                         title: 'Thêm tài khoản quản trị viên thành công!',
                         showConfirmButton: true,
                         confirmButtonText: 'Xác nhận',
-
                     }).then((confirm) => {
-
                         if (confirm) {
-                            // fetchsAccountAdmin();
                             location.reload();
                         }
                     });
-                    // $('#createAccountAdmin').modal('hide');
-                    // fetchsAccountAdmin();
 
                 }
 
@@ -157,7 +146,7 @@ $(document).ready(function () {
                 data: formData,
                 processData: false,
                 contentType: false,
-                // dataType: 'json',
+                dataType: 'json',
                 beforeSend: function () {
                     $(document).find('span.error-message').text("");
                 },
@@ -166,10 +155,6 @@ $(document).ready(function () {
                         $.each(data.message, function (key, val) {
                             $('#error-edit-' + key).text(val[0]);
                         });
-                        if (data.error_password != null) {
-                            $('#error-edit-error-password').text(data.error_password);
-                        }
-
                     } else if (data.status === 401) {
                         swal({
                             position: 'center',
@@ -219,11 +204,10 @@ $(document).ready(function () {
             success: function (response) {
                 if (response.status === 200) {
                     $('#editAccountAdmin').modal('show');
-                    console.log(response.account);
                     document.getElementById("edit-id").value = response.account.id;
                     document.getElementById("btn-change-password-admin").value = response.account.id;
                     $("#edit-display-name").val(response.account.display_name);
-                    document.getElementById("edit-email").value = response.account.email;
+                    document.getElementById("edit-email").textContent = response.account.email;
                     document.getElementById("edit-phoneNumber").value = response.account.phone_number;
                     document.getElementById("edit-address").value = response.account.address;
                     document.getElementById("edit-dateOfBirth").value = response.account.dateOfBirth;
@@ -239,7 +223,6 @@ $(document).ready(function () {
                     } else {
                         document.getElementById('edit-avatar').src = 'http://127.0.0.1:8000/storage/account/' + response.account.id + '/avatar/' + response.account.avatar;
                     }
-
                 } else if (response.status === 403) {
                     swal(response.message, {
                         icon: "error",
@@ -275,17 +258,12 @@ $(document).ready(function () {
                     } else {
                         document.getElementById('info-avatar').src = 'http://127.0.0.1:8000/storage/account/' + response.account.id + '/avatar/' + response.account.avatar;
                     }
-
                 }
                 else if (response.status == 400) {
                     console.log(response);
                     swal(response.message, {
                         icon: "error",
                     });
-                    // $('body').removeClass('modal-open');
-                    // $('body').css('padding-right', '');
-                    // $("#infoAccountAdmin").hide();
-
                 }
             }
         });
@@ -340,56 +318,6 @@ $(document).ready(function () {
         var userId = $(this).val();
         $('#changePassword').modal('show');
         document.getElementById('id-passowrd').value = userId;
-    });
-
-    $('#change-password').submit(function (e) {
-        e.preventDefault();
-        var formData = new FormData($('#change-password')[0]);
-        $.ajaxSetup({
-            headers: {
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-        });
-
-        $.ajax({
-            url: '/admin/account/account-user/change-password',
-            type: 'POST',
-            data: formData,
-            processData: false,
-            contentType: false,
-            beforeSend: function () {
-                $(document).find('span.error-message').text("");
-            },
-            success: function (data) {
-                if (data.status === 400) {
-                    console.log(data.message);
-                    $.each(data.message, function (key, val) {
-                        $('#error-change-' + key).text(val[0]);
-                    });
-                    if (data.error_password != null) {
-                        $('#error-add-error-password').text(data.error_password);
-                    }
-                }
-                else if(data.status === 409){
-                    $('#error-password-not-match').text(data.message);
-                } else if (data.status === 200) {
-                    $('#change-password')[0].reset();
-                    swal({
-                        position: 'center',
-                        icon: 'success',
-                        title: data.message,
-                        showConfirmButton: true,
-                        confirmButtonText: 'Xác nhận',
-
-                    }).then((confirm) => {
-
-                        if (confirm) {
-                            $('#changePasswordUser').modal('hide');
-                        }
-                    });
-                }
-            },
-        });
     });
 
 });

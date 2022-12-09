@@ -7,6 +7,7 @@ use App\Http\Controllers\APIs\NewsCategoryController;
 use App\Http\Controllers\APIs\RankingController;
 use App\Http\Controllers\APIs\TopicQuestionController;
 use App\Http\Controllers\APIs\NewsController;
+use App\Http\Controllers\APIs\UserController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -21,7 +22,12 @@ Route::POST('/register-account',[AuthController::class,'register']);
 Route::POST('/login',[AuthController::class,'login']);
 Route::POST('/logout',[AuthController::class,'logout'])->middleware('auth:sanctum');
 Route::POST('/change-password',[AuthController::class,'changePassword'])->middleware('auth:sanctum');
-Route::POST('/user/update-info-user');
+
+Route::POST('/login-with-google',[AuthController::class,'loginWithGoogle']);
+
+Route::GET('/user/edit-info-user',[UserController::class,'editInfoUser'])->middleware('auth:sanctum');
+Route::POST('/user/update-info-user',[UserController::class,'updateInfoUser'])->middleware('auth:sanctum');
+Route::GET('/user/get-data-user/id={id}',[UserController::class,'getDataUser']);
 
 
 Route::get('/news/news-category',[NewsCategoryController::class,'getlstNewsCategory']);

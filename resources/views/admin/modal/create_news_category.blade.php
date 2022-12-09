@@ -7,7 +7,6 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-              <span class="error-message" style="color: red;" id="error-add-error-password"></span>
                 <div class="card mb-4">
                     
                     <div class="card-body">

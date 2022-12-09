@@ -2,8 +2,10 @@
 <script>
     $(document).ready(function () {
     fetchsAccountUser();
+
     var isFirstLoad = true;
     var dataTable = $('#table-account-user');
+
     function fetchsAccountUser() {
         $.ajax({
             type: "GET",
@@ -33,7 +35,7 @@
                         info: true,
                         retrieve: true,
                         "bDestroy": true,
-                        "pageLength": 11,
+                        "pageLength": 10,
                         "language": {
                             "sProcessing": "Đang tải dữ liệu...",
                             "sLengthMenu": "Hiển thị _MENU_ trong danh sách",
@@ -72,26 +74,22 @@
         $('#infoAccountUser').modal('show');
         $.ajax({
             type: 'GET',
-            url: '/admin/account-admin/info-account-admin/id=' + id_account,
+            url: '/admin/account-user/info-account-user/id=' + id_account,
             success: function (response) {
                 if (response.status == 200) {
-                    document.getElementById("info-display-name-user").textContent = response.account.display_name;
-                    document.getElementById("info-email-user").textContent = response.account.email;
-                    document.getElementById("info-phoneNumber-user").textContent = response.account.phone_number;
-                    document.getElementById("info-address-user").textContent = response.account.address;
-                    document.getElementById("info-dateOfBirth-user").textContent = response.account.dateOfBirth;
-                    if (response.account.isAdmin == 1 && response.account.isSubAdmin == 0) {
-                        document.getElementById("info-position").textContent = 'Quản trị viên';
-                    } else if (response.account.isAdmin == 0 && response.account.isSubAdmin == 1) {
-                        document.getElementById("info-position").textContent = 'Cộng tác viên';
-                    }
-                    if (response.account.avatar == null) {
+                    document.getElementById("info-display-name-user").textContent = response.user.display_name;
+                    document.getElementById("info-email-user").textContent = response.user.email;
+                    document.getElementById("info-phoneNumber-user").textContent = response.user.phone_number;
+                    document.getElementById("info-address-user").textContent = response.user.address;
+                    document.getElementById("info-dateOfBirth-user").textContent = response.user.dateOfBirth;
+
+                    if (response.user.avatar == null) {
                         document.getElementById('info-avatar-user').src = 'http://127.0.0.1:8000/admin/assets/img/no_avatar.png';
 
                     } else {
-                        document.getElementById('info-avatar-user').src = 'http://127.0.0.1:8000/storage/account/' + response.account.id + '/avatar/' + response.account.avatar;
+                        document.getElementById('info-avatar-user').src = 'http://127.0.0.1:8000/storage/account/' + response.user.id + '/avatar/' + response.user.avatar;
                     }
-                    // document.getElementById('edit-account-admin').value = response.account_admin.id;
+                    
                 }
                 else if (response.status == 400) {
                     console.log(response);
@@ -251,7 +249,7 @@
     $(document).on('click','#btn-change-password-user',function(e){
         e.preventDefault();
         var userId = $(this).val();
-        $('#changePasswordUser').modal('show');
+        $('#changePassword').modal('show');
         document.getElementById('id-passowrd').value = userId;
     });
 });

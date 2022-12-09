@@ -60,6 +60,7 @@ class AdminAccountController extends Controller
                 
             ],
             [
+                'email.required'=>'Email không được bỏ trống!',
                 'display_name.required' =>'Họ tên không được bỏ trống!',
                 'phone_number.required' => 'Số điện thoại không được bỏ trống!',
                 'address.required' => 'Địa chỉ không được bỏ trống!'
@@ -167,7 +168,7 @@ class AdminAccountController extends Controller
                         $acc->password =Hash::make($data['password']);
                     }
                     else{
-                        return response()->json(['status'=>400,'error_password'=>'Mật khẩu và xác nhận mật khẩu không giống nhau!']);
+                        return response()->json(['status'=>417,'error_password'=>'Mật khẩu và xác nhận mật khẩu không giống nhau!']);
                     }
                     if($data['position'] == 1){
                         $acc->isAdmin = 1;
@@ -225,63 +226,7 @@ class AdminAccountController extends Controller
     }
     //* USER
 
-    public function updateAccountUser(Request $request){
-        if(Auth::user()->isAdmin == 1){
-            $validator = Validator::make($request->all(),
-            [
-                'display_name'=>'required',
-                'email'=>'required',
-                'phone_number' => 'required',
-                'address'=>'required',
-                
-            ],
-            [
-                'display_name.required' =>'Tên người dùng không được bỏ trống!',
-                'email.required' =>'Email không được bỏ trống!',
-                'phone_number.required' => 'Số điện thoại không được bỏ trống!',
-                'address.required' => 'Địa chỉ không được bỏ trống!'
-                
-            ]);
-
-            if($validator->fails()){
-                return response()->json(['status'=>400,'message'=>$validator->errors()->toArray()]);
-            }else{
-            $data = $request->all();
-            
-            $account = User::WHERE('id',$request->id)->first();
-            // dd($account, !empty($account));
-            if(!empty($account)){
-                $account->display_name = $data['display_name'];
-                $account->phone_number = $data['phone_number'];
-                $account->address = $data['address'];
-                $account->dateOfBirth = $data['date_of_birth'];
-                $account->status = $data['status'];
-                
-                //Cập nhật ảnh đại diện
-            if ($request->hasFile('avatar')) {
-            $fileExtentsion = $request->file('avatar')->getClientOriginalExtension();
-            $fileName = time().'.'.$fileExtentsion;
-            $request->file('avatar')->storeAs('account/'.$account->id.'/avatar/', $fileName);
-            $file = Image::make(storage_path('app/public/account/'.$account->id.'/avatar/' . $fileName));
-            $file->resize(360, 360, function ($constraint) {
-                $constraint->aspectRatio();
-            });
-            $file->save(storage_path('app/public/account/'.$account->id.'/avatar/' . $fileName));
-                $account->avatar = $fileName;
-            }
-
-
-                $account->update();
-                return response()->json(['status'=>200,'message'=>'Cập nhật tài khoản thành công!','data'=>$data]);
-            }
-            else{
-                return response()->json(['status'=>401,'message'=>'Không tìm thấy tài khoản!']);
-            }
-        }
-        }else{
-            return response()->json(['status'=>403,'message'=>'Bạn không có quyền thực hiện thao tác này!']);
-        }
-    }
+    
     public function deleteAccountUser($id){
         if(Auth::user()->isAdmin == 1){
             $acc = User::find($id);

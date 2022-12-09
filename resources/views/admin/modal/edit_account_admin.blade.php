@@ -7,9 +7,7 @@
                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
-              <span class="error-message" style="color: red;" id="error-add-error-password"></span>
-                <div class="card mb-4">
-                    
+                <div class="card mb-4"> 
                     <div class="card-body">
                       <form id="edit-account-admin" method="POST" enctype="multipart/form-data">
                         @method('PUT')
@@ -43,7 +41,10 @@
                             </div>
                             <div class="mb-3 col-md-6">
                               <label for="email" class="form-label">E-mail</label>
-                              <input class="form-control" type="text" id="edit-email" name="email">
+                              <br>
+                              <div class="row">
+                                <span class="span-info" id="edit-email"></span>
+                              </div>
                               <span class="error-message" style="color: red;" id="error-edit-email"></span>
                             </div>
                             <div class="mb-3 col-md-6">

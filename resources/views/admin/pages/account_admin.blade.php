@@ -40,11 +40,13 @@
                 </div>
             </div>
          </section>
+         
          @include('admin.ajax.account_admin')
          @include('admin.modal.info_account_admin')
          @include('admin.modal.edit_account_admin')
          @include('admin.modal.create_account_admin')
-         @include('admin.modal.change_password_user')
+         @include('admin.modal.change_password_account')
+         @include('admin.ajax.public')
          
          
 @stop

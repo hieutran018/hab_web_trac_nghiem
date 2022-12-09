@@ -20,12 +20,12 @@
                         {{-- @method('PUT') --}}
                         @csrf
                         <div class="d-flex align-items-start align-items-sm-center gap-4">
-                          <img src="{{URL('admin/assets/img/no_avatar.png')}}" alt="user-avatar" class="info-avatar d-block rounded" height="100" width="100" id="create-avatar">
+                          <img src="{{URL('admin/assets/img/no_avatar.png')}}" alt="user-avatar" class="info-avatar d-block rounded" height="100" width="100" id="create-account-admin-avatar">
                           <div class="button-wrapper">
                             <label for="create-upload" class="btn btn-primary me-2 mb-4" tabindex="0">
                               <span class="d-none d-sm-block">Tải hình ảnh lên</span>
                               <i class="bx bx-upload d-block d-sm-none"></i>
-                              <input onchange="loadFile(event)" name="avatar" type="file" id="create-upload" class="account-file-input" hidden="">
+                              <input onchange="loadFileAcreateAvatar(event)" name="avatar" type="file" id="create-upload" class="account-file-input" hidden="">
                             </label>
                             <button type="reset" class="btn btn-outline-secondary account-image-reset mb-4">
                               <i class="bx bx-reset d-block d-sm-none"></i>
@@ -36,6 +36,7 @@
                         </div>
                         
                         <hr class="my-0">
+                        <br>
                         <div class="card-body">
                             {{-- <input type="hidden" id="edit-id" name="id"> --}}
                           <div class="row">
@@ -64,7 +65,7 @@
                             </div>
                             <div class="mb-3 col-md-6">
                               <label for="date-of-birth" class="form-label">Ngày sinh:</label>
-                              <input type="date" class="form-control" id="create-dateOfBirth" name="date_of_birth">
+                              <input type="date" data-date-format="mm/dd/yyyy" class="form-control" id="create-dateOfBirth" name="date_of_birth">
                               <span class="error-message" style="color: red;" id="error-add-date-of-birth"></span>
                             </div>
                             <div class="mb-3 col-md-6">
@@ -104,8 +105,8 @@
 </div>
 
 <script>
-var loadFile = function(event){
-  var crAvatar = document.getElementById('create-avatar');
+var loadFileAcreateAvatar = function(event){
+  var crAvatar = document.getElementById('create-account-admin-avatar');
   crAvatar.src = URL.createObjectURL(event.target.files[0]);
 }
 </script>

@@ -17,11 +17,11 @@ class RankingSeeder extends Seeder
     public function run()
     {
         $fake  = Factory::create();
-        $limit = 19;
+        $limit = 71;
 
-        for ($i = 0; $i < $limit; $i++){
+        for ($i = 32; $i <= $limit; $i++){
             DB::table('ranking')->insert([
-                'user_id' => $i+11,
+                'user_id' => $i,
                 'score_single' => $fake->numerify($string = '###'),
                 'score_challenge' => $fake->numerify($string = '###'),               
                 'created_at' => Carbon::now('Asia/Ho_Chi_Minh'),

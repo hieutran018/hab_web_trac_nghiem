@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Models\User;
+use App\Models\SocialAccount;
 use App\Models\Ranking;
 use Illuminate\Support\Facades\Hash;
 use Carbon\Carbon;
@@ -104,6 +105,49 @@ class AuthController extends Controller
                 
 
     }
+
+    
+    public function loginWithGoogle(Request $request){
+        
+        $check = SocialAccount::where('provider_id', '=', $request->provider_id)->first();
+        if(empty($check)){
+            $nUser = new User();
+            $nUser->email = $request->email;
+            $nUser->display_name = $request->display_name;
+            $nUser->save();
+
+            $files = Storage::files('app/public/assets/no_avatar.png');
+            Storage::copy('assets/no_avatar.png', 'account/'.$nUser->id.'/avatar/no_avatar.png' );
+            $file = Image::make(storage_path('app/public/assets/no_avatar.png'));
+            $file->resize(360, 360, function ($constraint) {
+                $constraint->aspectRatio();
+            });
+            $file->save(storage_path('app/public/account/'.$nUser->id.'/avatar/no_avatar.png' ));
+            $nUser->avatar = 'no_avatar.png';
+            $nUser->save();
+
+            $rank = new Ranking();
+            $rank->user_id = $acc->id;
+            $rank->score_single = 0;
+            $rank->score_challenge = 0;
+            $rank->save();
+
+            $scl = new SocialAccount();
+            $scl->provider = 'GOOGLE';
+            $scl->provider_id = $request->provider_id;
+            $scl->user_id = $nUser->id;
+            $scl->save();
+            
+            $token = $nUser->createToken('authToken')->plainTextToken;
+            return response()->json(['access_token' => $token,'token_type' => 'Bearer',],200);
+        }else{
+            //TODO đi vào đăng nhập
+            $user = User::find($check->user_id);
+            $token = $user->createToken('authToken')->plainTextToken;
+            return response()->json(['access_token' => $token,'token_type' => 'Bearer','message'=>'Co san trong he thong'],200);
+        }
+    }
+
     public function getUser(Request $request){
         $ranking_single = DB::select('SELECT *,  
         DENSE_RANK() OVER (ORDER BY score_single DESC) dens_rank  

@@ -9,6 +9,7 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use App\Models\Ranking;
+use App\Models\SocialAccount;
 
 class User extends Authenticatable
 {
@@ -35,6 +36,7 @@ class User extends Authenticatable
     ];
     protected $primaryKey = 'id';
     protected $table = 'users';
+    protected $hidden = array('password');
     // protected $hidden = array('phone_number',
     //     'email',
     //     'password',
@@ -51,5 +53,9 @@ class User extends Authenticatable
     public function ranking()
     {
         return $this->hasOne(Ranking::class, 'user_id','id');
+    }
+    public function social()
+    {
+        return $this->hasOne(SocialAccount::class, 'user_id','id');
     }
 }
