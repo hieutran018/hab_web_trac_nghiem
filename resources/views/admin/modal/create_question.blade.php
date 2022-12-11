@@ -8,7 +8,7 @@
             </div>
             <div class="modal-body">
                 <div class="card mb-4">
-                    
+                    <span class="error-message" style="color: red;" id="error-add-isTrue" value=""></span>
                     <div class="card-body">
                       <form id="create-question" enctype="multipart/form-data">
                         @csrf
@@ -18,7 +18,7 @@
                             <div class="mb col-md">
                               <label for="create-question-content" class="form-label">Nội dung câu hỏi:</label>
                               <textarea id="add-question-content" name="question_content" class="form-control" style="height: 100px"></textarea>
-                              <span class="error-message" style="color: red;" id="error-question-content" value></span>
+                              <span class="error-message" style="color: red;" id="error-add-question_content" value></span>
                             </div>
                           </div>
                           <br>
@@ -26,16 +26,12 @@
                             <div class="mb-3 col-md-6">
                               <label for="create-question-topic" class="form-label">Chủ đề:</label>
                               <select class="form-select" name="topic_id" id="add-topic-id">
-                                    
                               </select>
-                              <span class="error-message" style="color: red;" id="error-add-last_name"></span>
                             </div>
                             <div class="mb-3 col-md-6">
                               <label for="create-question-level" class="form-label">Độ khó:</label>
-                              <select class="form-select" name="level_id" id="add-level-id">
-                                    
+                              <select class="form-select" name="level_id" id="add-level-id">    
                               </select>
-                              <span class="error-message" style="color: red;" id="error-add-last_name"></span>
                             </div>
                           </div>
                           <br>
@@ -46,7 +42,7 @@
                                 <div class="mb-6 col-md-10">
                                   <div class="mb-6 col-md">
                                     <input class="form-control" type="text" id="add-answer-content-1" name="answer_content_1">
-                                    <span class="error-message" style="color: red;" id="error-add-answer_content_2" value=""></span>
+                                    <span class="error-message" style="color: red;" id="error-add-answer_content_1" value=""></span>
                                   </div>
                                 </div>
                                 <div class="mb-6 col-md-2">
@@ -65,7 +61,6 @@
                                 </div>
                                 <div class="mb-6 col-md-2">
                                     <input class="form-check-input" value="2" name="isTrue" type="radio" id="gridRadios2">
-                                    
                                     <label for="add-answer-content-3" class= "form-label">Đúng</label>
                                 </div>
                               </div>
@@ -75,7 +70,7 @@
                                 <div class="mb-6 col-md-10">
                                   <div class="mb-6 col-md">
                                     <input class="form-control" type="text" id="add-answer-content-3" name="answer_content_3">
-                                    <span class="error-message" style="color: red;" id="error-add-answer_content_4" value=""></span>
+                                    <span class="error-message" style="color: red;" id="error-add-answer_content_3" value=""></span>
                                   </div>
                                 </div>
                                 <div class="mb-6 col-md-2">

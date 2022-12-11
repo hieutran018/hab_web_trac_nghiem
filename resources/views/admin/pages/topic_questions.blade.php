@@ -23,15 +23,12 @@
                            </div>
                         </div>
                         <br>
-                        <table class="table">
+                        <table id="table-topic-question" class="table">
                            <thead>
                               <tr>
                                  <th scope="col">ID</th>
-                                 <th scope="col">Họ</th>
-                                 <th scope="col">Tên</th>
-                                 
-                                 
-                                 <th scope="col">Trạng thái</th>
+                                 <th scope="col">Tên chủ đề</th>
+                                 <th scope="col">Ghi chú</th>
                                  <th scope="col">Thao tác</th>
                               </tr>
                            </thead>
@@ -44,7 +41,7 @@
                 </div>
             </div>
          </section>
+         @include('admin.ajax.topic_question')
          @include('admin.modal.create_topic_question')
          @include('admin.modal.edit_topic_question')
-         <script src="{{URL('admin/ajax/topic_question.js')}}"></script>
 @stop

@@ -51,15 +51,15 @@ class AdminAuthController extends Controller
                             return response()->json(['status'=>200,'AUTH'=> Auth::user(),'message'=>'Đăng nhập thành công!','redirect_url'=>Route('page-account-admin')]);
                         }
                         else{
-                            return response()->json(['message'=>'Tài khoản đang bị khóa!','redirect_url'=>Route('page-account-admin')],400);
+                            return response()->json(['status'=>400,'message'=>'Tài khoản đang bị khóa!']);
                         }
                     }
                     else{
-                        return response()->json(['message'=>'Bạn không có quyền truy cập vào trang này!'],400);
+                        return response()->json(['status'=>419,'message'=>'Bạn không có quyền truy cập vào trang này!']);
                     }
                 }else
                 {
-                    return response()->json(['message'=>'Mật khẩu không chính xác!'],400);
+                    return response()->json(['status'=>401,'message'=>'Mật khẩu không chính xác!']);
                 }
 
             }

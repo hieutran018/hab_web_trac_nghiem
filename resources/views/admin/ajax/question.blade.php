@@ -1,4 +1,8 @@
-$(document).ready(function () {
+<script>
+    $(document).ready(function () {
+
+    var isFirstLoad = true;
+    var dataTable = $('#table-question');
 
     fetchQuestion();
 
@@ -24,10 +28,40 @@ $(document).ready(function () {
                         \</tr > ');
                     });
                 }
-                $('table').DataTable({
-                    "pageLength": 10,
-                    info: true
-                });
+                if(isFirstLoad) {
+                    console.log(isFirstLoad);
+                    dataTable.DataTable({
+                        info: true,
+                        retrieve: true,
+                        "bDestroy": true,
+                        "pageLength": 10,
+                        "language": {
+                            "sProcessing": "Đang tải dữ liệu...",
+                            "sLengthMenu": "Hiển thị _MENU_ trong danh sách",
+                            "sZeroRecords": "Không có kết quả nào được tìm thấy",
+                            "sEmptyTable": "Không có dữ liệu trong bảng này",
+                            "sInfo": "Hiện đang ở vị trí _START_ đến _END_ trong tổng số _TOTAL_ của danh sách",
+                            "sInfoEmpty": "Hiển thị các bản ghi từ 0 đến 0 trong tổng số 0 bản ghi",
+                            "sInfoFiltered": "(lọc từ tổng số _MAX_ trong danh sách)",
+                            "sInfoPostFix": "",
+                            "sSearch": "Tìm kiếm:",
+                            "sUrl": "",
+                            "sInfoThousands": ",",
+                            "sLoadingRecords": "Đang sử lý...",
+                            "oPaginate": {
+                                "sFirst": "Trang đầu",
+                                "sLast": "Trang cuối",
+                                "sNext": "Tiến",
+                                "sPrevious": "Lùi"
+                            },
+                            "oAria": {
+                                "sSortAscending": ": Kích hoạt để sắp xếp cột theo thứ tự tăng dần",
+                                "sSortDescending": ": Kích hoạt để sắp xếp cột theo thứ tự giảm dần"
+                            }
+                        }
+                    });
+                    isFirstLoad = false;
+                }
             }
         });
     }
@@ -83,9 +117,9 @@ $(document).ready(function () {
     //* Submit form thêm câu hỏi
     $('#create-question').submit(function (e) {
         e.preventDefault();
-        console.log(2);
+
         var formData = new FormData($('#create-question')[0]);
-        // formData.append('image', $('#create-topic-image')[0].files[0]);
+
         console.log('formData', formData);
         $.ajaxSetup({
             headers: {
@@ -103,14 +137,12 @@ $(document).ready(function () {
             },
             success: function (data) {
                 if (data.status === 400) {
-                    console.log(data.message);
-
                     $.each(data.message, function (key, val) {
                         $('#error-add-' + key).text(val[0]);
                     });
-                    $('#create-question')[0].reset();
                 }
                 else if (data.status === 200) {
+                    $('#createQuestion').modal('hide');
                     $('#create-question')[0].reset();
                     swal({
                         position: 'center',
@@ -118,13 +150,12 @@ $(document).ready(function () {
                         title: 'Thêm câu hỏi thành công!',
                         showConfirmButton: true,
                         confirmButtonText: 'Xác nhận',
-
+                    }).then((confirm) => {
+                        if (confirm) {
+                            location.reload();
+                        }
                     });
-                    fetchTopicQuestion();
-
-                    $('#createQuestion').modal('hide');
                 }
-
             },
 
         });
@@ -167,9 +198,9 @@ $(document).ready(function () {
     //* Submit form cập nhật câu hỏi
     $('#edit-question').submit(function (e) {
         e.preventDefault();
-        console.log(2);
+
         var formData = new FormData($('#edit-question')[0]);
-        // formData.append('image', $('#create-topic-image')[0].files[0]);
+
         console.log('formData', formData);
         $.ajaxSetup({
             headers: {
@@ -195,18 +226,22 @@ $(document).ready(function () {
 
                 }
                 else if (data.status === 200) {
+                    $('#editQuestion').modal('hide');
                     swal({
                         position: 'center',
                         icon: 'success',
                         title: 'Cập nhật câu hỏi thành công!',
                         showConfirmButton: true,
                         confirmButtonText: 'Xác nhận',
-
+                    }).then((confirm) => {
+                        if (confirm) {
+                            location.reload();
+                        }
                     });
-                    $('#editQuestion').modal('hide');
                 }
             },
 
         });
     });
 });
+</script>

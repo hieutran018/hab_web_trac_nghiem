@@ -15,7 +15,7 @@ class Question extends Model
 
     public $timestamps = false;
 
-    protected $fillable = ['question_content','topic_id','level_id','status'];
+    protected $fillable = ['question_content','topic_id','level_id'];
     protected $primaryKey = 'id';
     protected $table = 'questions';
 

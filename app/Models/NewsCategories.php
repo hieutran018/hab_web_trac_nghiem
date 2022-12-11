@@ -13,7 +13,7 @@ class NewsCategories extends Model
 
     public $timestamps = true;
 
-    protected $fillable = ['news_category_name','description','status'];
+    protected $fillable = ['news_category_name','description'];
     protected $primaryKey = 'id';
     protected $table = 'news_categories';
 

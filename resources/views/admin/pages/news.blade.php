@@ -103,7 +103,7 @@
                            </div>
                         </div>
                         <br>
-                        <table class="table">
+                        <table id="table-news" class="table">
                            <thead>
                               <tr>
                                  <th scope="col">ID</th>
@@ -123,7 +123,7 @@
                 </div>
             </div>
          </section>
-         <script src="{{URL('admin/ajax/news.js')}}"></script>
+         @include('admin.ajax.news')
          @include('admin.modal.create_news')
          @include('admin.modal.detail_news')
          @include('admin.modal.edit_news')

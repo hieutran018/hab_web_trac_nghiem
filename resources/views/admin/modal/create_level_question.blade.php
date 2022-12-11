@@ -17,7 +17,7 @@
                             <div class="mb-6 col-md">
                               <label for="create-level-name" class="form-label">Tên độ khó:</label>
                               <input class="form-control" type="text" id="create-level-name" name="level_name">
-                              <span class="error-message" style="color: red;" id="error-add-news_category_name" value></span>
+                              <span class="error-message" style="color: red;" id="error-add-level_name" value></span>
                             </div>
                             <br>
                             <div class="mb-6 col-md">
@@ -29,19 +29,19 @@
                             <div class="mb-6 col-md">
                               <label for="create-amount" class="form-label">Số lượng câu hỏi:</label>
                               <input class="form-control" type="number" min="0" id="create-amount" name="amount">
-                              <span class="error-message" style="color: red;" id="error-add-news_category_name" value></span>
+                              <span class="error-message" style="color: red;" id="error-add-amount" value></span>
                             </div>
                             <br>
                             <div class="mb-6 col-md">
                               <label for="create-time-answer" class="form-label">Thời gian trả lời:</label>
                               <input class="form-control" type="number" min="0" id="create-time-answer" name="time_answer">
-                              <span class="error-message" style="color: red;" id="error-add-news_category_name" value></span>
+                              <span class="error-message" style="color: red;" id="error-add-time_answer" value></span>
                             </div>
                             <br>
                             <div class="mb-6 col-md">
                               <label for="create-point" class="form-label">Điểm mỗi câu:</label>
                               <input class="form-control" type="number" min="0" id="create-point" name="point">
-                              <span class="error-message" style="color: red;" id="error-add-news_category_name" value></span>
+                              <span class="error-message" style="color: red;" id="error-add-point" value></span>
                             </div>
                             <br>
                           <div class="mt-2">

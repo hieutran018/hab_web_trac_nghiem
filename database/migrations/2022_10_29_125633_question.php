@@ -20,7 +20,6 @@ class Question extends Migration
             $table->foreignId('level_id');
             $table->timestamps();
             $table->softDeletes();
-            $table->boolean('status');
         });
     }
 

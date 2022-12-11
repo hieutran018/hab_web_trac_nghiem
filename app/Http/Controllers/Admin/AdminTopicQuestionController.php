@@ -34,7 +34,6 @@ class AdminTopicQuestionController extends Controller
                 'image.image' => 'Tệp phải là một ảnh!',
                 'image.mimes' => 'Phần mở rộng của tệp phải là jpeg, png, hoặc jpg',
                 'image.max' => 'Kích cỡ tệp quá giới hạn 2 MB!'
-                
             ]);
 
             if($validator->fails()){
@@ -47,9 +46,7 @@ class AdminTopicQuestionController extends Controller
                 $tpq->description = $data['description'];
                 $tpq->created_at = Carbon::now('Asia/Ho_Chi_Minh');
                 $tpq->updated_at = null;
-                $tpq->status = 1;
                 $tpq->save();
-                // dd($request->hasFile('image'));
                 if($request->hasFile('image')){
                     $fileExtentsion = $request->file('image')->getClientOriginalExtension();
                     $fileName = time().'.'.$fileExtentsion;
@@ -83,16 +80,10 @@ class AdminTopicQuestionController extends Controller
             [
                 'topic_question_name'=>'required',
                 'description'=>'required',
-                'image' => 'required|image|mimes:jpeg,png,jpg|max:2048',
             ],
             [
                 'topic_question_name.required' =>'Tên chủ đề không được bỏ trống!',
                 'description.required' => 'Ghi chú không được bỏ trống!',
-                'image.required' => 'Ảnh chủ đề câu hỏi bị thiếu!',
-                'image.image' => 'Tệp phải là một ảnh!',
-                'image.mimes' => 'Phần mở rộng của tệp phải là jpeg, png, hoặc jpg',
-                'image.max' => 'Kích cỡ tệp quá giới hạn 2 MB!'
-                
             ]);
             if($validator->fails()){
                 return response()->json(['status'=>400,'message'=>$validator->errors()->toArray()]);
@@ -103,7 +94,6 @@ class AdminTopicQuestionController extends Controller
                 if(empty($tpq)){
                     return response()->json(['status'=>404,'message'=>'Không tìm thấy chủ đề câu hỏi!']);
                 }else{
-                    // dd($tpq);
                     $tpq->topic_question_name = $data['topic_question_name'];
                     $tpq->description = $data['description'];
 

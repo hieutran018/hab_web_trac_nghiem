@@ -54,7 +54,6 @@ class AdminLevelController extends Controller
                 $lv->time_answer = $data['time_answer'];
                 $lv->point= $data['point'];
                 $lv->created_at = Carbon::now('Asia/Ho_Chi_Minh');
-                $lv->status = 1;
                 $lv->save();
                 return response()->json(['status'=>200,'message'=>'Thêm độ khó thành công!']);
             }
@@ -78,7 +77,6 @@ class AdminLevelController extends Controller
                 'amount'=>'required|numeric|gt:0',
                 'time_answer'=>'required|numeric|gt:0',
                 'point'=>'required|numeric|gt:0',
-                // 'image' => 'image|mimes:jpeg,png,jpg|max:2048',
             ],
             [
                 'level_name.required' =>'Tên độ khó không được bỏ trống!',

@@ -39,7 +39,6 @@ class AdminNewsCategoryController extends Controller
             $newsCategory->description = $data['description'];
             $newsCategory->created_at = Carbon::now('Asia/Ho_Chi_Minh');
             $newsCategory->updated_at = null;
-            $newsCategory->status = 1;
             $newsCategory->save();
             return response()->json(['status'=>200,'messages'=>'Thêm thể loại bài viết thành công!']);
         }
@@ -79,11 +78,6 @@ class AdminNewsCategoryController extends Controller
             else{
                 $newsCategory->news_category_name = $data['news_category_name'];
                 $newsCategory->description = $data['description'];
-                if($data['status'] == 1){
-                    $newsCategory->status =1;
-                }elseif($data['status'] == 0){
-                    $newsCategory->status = 0;
-                }
                 $newsCategory->update();
                 return response()->json(['status'=>200,'messages'=>'Cập nhật chủ đề bài viết thành công!']);
             }

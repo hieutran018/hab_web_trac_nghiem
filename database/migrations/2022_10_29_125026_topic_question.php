@@ -20,7 +20,6 @@ class TopicQuestion extends Migration
             $table->string('image');
             $table->timestamps();
             $table->softDeletes();
-            $table->boolean('status');
         });
     }
 

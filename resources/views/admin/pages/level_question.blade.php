@@ -44,7 +44,7 @@
                 </div>
             </div>
          </section>
+         @include('admin.ajax.level')
          @include('admin.modal.create_level_question')
          @include('admin.modal.edit_level_question')
-         <script src="{{URL('admin/ajax/level.js')}}"></script>
 @stop

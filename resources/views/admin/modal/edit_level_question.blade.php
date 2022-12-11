@@ -18,31 +18,31 @@
                             <div class="mb-6 col-md">
                               <label for="create-level-name" class="form-label">Tên độ khó:</label>
                               <input class="form-control" type="text" id="edit-level-question-name" name="level_name">
-                              <span class="error-message" style="color: red;" id="error-add-news_category_name" value></span>
+                              <span class="error-message" style="color: red;" id="error-edit-level_name" value></span>
                             </div>
                             <br>
                             <div class="mb-6 col-md">
                               <label for="description" class="form-label">Ghi chú:</label>
                               <input class="form-control" type="text" name="description" id="edit-level-description">
-                              <span class="error-message" style="color: red;" id="error-add-description"></span>
+                              <span class="error-message" style="color: red;" id="error-edit-description"></span>
                             </div>
                             <br>
                             <div class="mb-6 col-md">
                               <label for="create-amount" class="form-label">Số lượng câu hỏi:</label>
                               <input class="form-control" type="number" min="0" id="edit-level-amount" name="amount">
-                              <span class="error-message" style="color: red;" id="error-add-news_category_name" value></span>
+                              <span class="error-message" style="color: red;" id="error-edit-amount" value></span>
                             </div>
                             <br>
                             <div class="mb-6 col-md">
                               <label for="create-time-answer" class="form-label">Thời gian trả lời:</label>
                               <input class="form-control" type="number" min="0" id="edit-level-time-answer" name="time_answer">
-                              <span class="error-message" style="color: red;" id="error-add-news_category_name" value></span>
+                              <span class="error-message" style="color: red;" id="error-edit-time_answer" value></span>
                             </div>
                             <br>
                             <div class="mb-6 col-md">
                               <label for="create-point" class="form-label">Điểm mỗi câu:</label>
                               <input class="form-control" type="number" min="0" id="edit-level-point" name="point">
-                              <span class="error-message" style="color: red;" id="error-add-news_category_name" value></span>
+                              <span class="error-message" style="color: red;" id="error-edit-point" value></span>
                             </div>
                             <br>
                           <div class="mt-2">

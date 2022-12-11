@@ -25,13 +25,22 @@ class AdminQuestionController extends Controller
     }
 
     public function createQuestion(Request $request){
-        // dd($request->all());
         $validator_question_content = Validator::make($request->all(),
             [
                 'question_content'=>'required',
+                'answer_content_1'=>'required',
+                'answer_content_2'=>'required',
+                'answer_content_3'=>'required',
+                'answer_content_4'=>'required',
+                'isTrue'=>'required',
             ],
             [
                 'question_content.required' =>'Nội dung câu hỏi không được bỏ trống!',
+                'answer_content_1.required' =>'Nội dung câu trả lời không được bỏ trống!',
+                'answer_content_2.required' =>'Nội dung câu trả lời không được bỏ trống!',
+                'answer_content_3.required' =>'Nội dung câu trả lời không được bỏ trống!',
+                'answer_content_4.required' =>'Nội dung câu trả lời không được bỏ trống!',
+                'isTrue.required' =>'Bạn chưa chọn đáp án đúng!',
             ]);
 
         if($validator_question_content->fails()){
@@ -44,13 +53,9 @@ class AdminQuestionController extends Controller
             $question->topic_id = $request->topic_id;
             $question->level_id = $request->level_id;
             $question->created_at = Carbon::now('Asia/Ho_Chi_Minh');
-            $question->status = 1;
             $question->save();
             for($i = 1 ; $i <= 4 ; $i++){
-                $data = $request->all();
-                if(empty($data['answer_content_'.$i])){
-                    return response()->json(['status'=>400,'message'=>'Nội dung câu trả lời số '.$i.' không được bỏ trống!']);
-                }else{
+                    $data = $request->all();
                     $answer = New Answer();
                     $answer->answer_content = $data['answer_content_'.$i];
                     $answer->question_id = $question->id;
@@ -58,9 +63,7 @@ class AdminQuestionController extends Controller
                        $answer->isTrue = 1; 
                     }
                     $answer->created_at = Carbon::now('Asia/Ho_Chi_Minh');
-                    $answer->save();
-                    
-                }
+                    $answer->save();  
             }
             DB::commit();
             return response()->json(['status'=>200,'Thêm câu hỏi thành công']);
@@ -88,9 +91,19 @@ class AdminQuestionController extends Controller
         $validator_question_content = Validator::make($request->all(),
             [
                 'question_content'=>'required',
+                'answer_content_1'=>'required',
+                'answer_content_2'=>'required',
+                'answer_content_3'=>'required',
+                'answer_content_4'=>'required',
+                'isTrue'=>'required',
             ],
             [
                 'question_content.required' =>'Nội dung câu hỏi không được bỏ trống!',
+                'answer_content_1.required' =>'Nội dung câu trả lời không được bỏ trống!',
+                'answer_content_2.required' =>'Nội dung câu trả lời không được bỏ trống!',
+                'answer_content_3.required' =>'Nội dung câu trả lời không được bỏ trống!',
+                'answer_content_4.required' =>'Nội dung câu trả lời không được bỏ trống!',
+                'isTrue.required' =>'Bạn chưa chọn đáp án đúng!',
             ]);
         if($validator_question_content->fails()){
             return response()->json(['status'=>400,'message'=>$validator_question_content->errors()->toArray()]);
@@ -103,7 +116,6 @@ class AdminQuestionController extends Controller
             $question->question_content = $request->question_content;
             $question->topic_id = $request->topic_id;
             $question->level_id = $request->level_id;
-            $question->status = 1;
             $question->update();
             for($i = 1 ; $i <= 4 ; $i++){
                 $data = $request->all();

@@ -22,13 +22,12 @@
                            </div>
                         </div>
                         <br>
-                        <table class="table">
+                        <table id="table-news-category" class="table">
                            <thead>
                               <tr>
                                  <th scope="col">ID</th>
                                  <th scope="col">Thể loại</th>
                                  <th scope="col">Ghi chú</th>
-                                 <th scope="col">Trạng thái</th>
                                  <th scope="col">Thao tác</th>
                               </tr>
                            </thead>
@@ -41,7 +40,7 @@
                 </div>
             </div>
          </section>
-         <script src="{{URL('admin/ajax/news_category.js')}}"></script>
+         @include('admin.ajax.news_category')
          @include('admin.modal.create_news_category')
          @include('admin.modal.edit_news_category')
 @stop

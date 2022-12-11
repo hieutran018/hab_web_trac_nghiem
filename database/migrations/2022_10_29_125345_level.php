@@ -22,7 +22,6 @@ class Level extends Migration
             $table->integer('point');
             $table->timestamps();
             $table->softDeletes();
-            $table->boolean('status');
         });
     }
 

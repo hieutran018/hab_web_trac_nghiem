@@ -24,8 +24,8 @@
                         </div>
                         <div class="mb-3 col-md">
                               <label for="content" class="form-label">Nội dung chính:</label>
-                              <textarea class="form-control" name="content" rows="10" style="width: 100%;height: 100%;resize: none;" ></textarea>
-                              <span class="error-message" style="color: red;" id="error-add-content" value></span>
+                              <textarea class="form-control" name="news_content" rows="10" style="width: 100%;height: 100%;resize: none;" ></textarea>
+                              <span class="error-message" style="color: red;" id="error-add-news_content" value></span>
                         </div>
                         
                         <div class="mb-3 col-md">

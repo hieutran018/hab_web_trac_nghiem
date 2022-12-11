@@ -23,7 +23,7 @@
                            </div>
                         </div>
                         <br>
-                        <table class="table">
+                        <table id="table-question" class="table">
                            <thead>
                               <tr>
                                  <th scope="col">ID</th>
@@ -42,7 +42,7 @@
                 </div>
             </div>
          </section>
+         @include('admin.ajax.question')
          @include('admin.modal.create_question')
          @include('admin.modal.edit_question')
-         <script src="{{URL('admin/ajax/question.js')}}"></script>
 @stop

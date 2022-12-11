@@ -19,7 +19,7 @@
                             <div class="mb col-md">
                               <label for="edit-question-content" class="form-label">Nội dung câu hỏi:</label>
                               <textarea id="edit-question-content" name="question_content" class="form-control" style="height: 100px"></textarea>
-                              <span class="error-message" style="color: red;" id="error-question-content" value></span>
+                              <span class="error-message" style="color: red;" id="error-edit-question_content" value></span>
                             </div>
                           </div>
                           <br>
@@ -45,7 +45,7 @@
                                   <div class="mb-6 col-md">
                                     <input type="text" hidden name="answer_id_1" id="edit-answer-id-1">
                                     <input class="form-control" type="text" id="edit-answer-content-1" name="answer_content_1">
-                                    <span class="error-message" style="color: red;" id="error-edit-answer_content_2" value=""></span>
+                                    <span class="error-message" style="color: red;" id="error-edit-answer_content_1" value=""></span>
                                   </div>
                                 </div>
                                 <div class="mb-6 col-md-2">
@@ -75,7 +75,7 @@
                                   <div class="mb-6 col-md">
                                     <input type="text" hidden name="answer_id_3" id="edit-answer-id-3">
                                     <input class="form-control" type="text" id="edit-answer-content-3" name="answer_content_3">
-                                    <span class="error-message" style="color: red;" id="error-edit-answer_content_4" value=""></span>
+                                    <span class="error-message" style="color: red;" id="error-edit-answer_content_3" value=""></span>
                                   </div>
                                 </div>
                                 <div class="mb-6 col-md-2">

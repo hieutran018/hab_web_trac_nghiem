@@ -18,14 +18,14 @@ class Users_adminSeeder extends Seeder
     public function run()
     {
         $fake  = Factory::create();
-        $limit = 10;
+        $limit = 2;
 
-        for ($i = 0; $i < $limit; $i++){
+        for ($i = 1; $i < $limit; $i++){
             DB::table('users')->insert([
-                'display_name' => $fake->name,
-                'avatar' => null,
-                'email' => $fake->unique->email,
-                'phone_number' => $fake->phoneNumber,
+                'display_name' => 'Trần Dương Chí Hiếu',
+                'avatar' => 'no_avatar.png',
+                'email' => 'tranduongchihieu@gmail.com',
+                'phone_number' => '0934904497',
                 'password'=>Hash::make('1'),
                 'address'=> 'Thành phố Hồ Chí Minh',
                 'dateOfBirth' => Carbon::now('Asia/Ho_Chi_Minh'),
@@ -35,7 +35,7 @@ class Users_adminSeeder extends Seeder
                 'life_heart'=>0,
                 'token'=>null,
                 'created_at' => Carbon::now('Asia/Ho_Chi_Minh'),
-                'updated_at' => Carbon::now('Asia/Ho_Chi_Minh'),
+                'updated_at' => null,
                 'status' => 1,
             ]);
         }

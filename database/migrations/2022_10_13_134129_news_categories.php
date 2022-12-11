@@ -19,7 +19,6 @@ class NewsCategories extends Migration
             $table->string('description');
             $table->timestamps();
             $table->softDeletes();
-            $table->boolean('status');
         });
     }
 

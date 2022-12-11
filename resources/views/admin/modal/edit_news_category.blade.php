@@ -26,13 +26,7 @@
                               <input class="form-control" type="text" name="description" id="edit-description">
                               <span class="error-message" style="color: red;" id="error-edit-description"></span>
                             </div>
-                            <div class="mb-6 col-md">
-                              <label for="edit-status" class="form-label">Trạng thái:</label>
-                              <select name="status" id="edit-status" class="select2 form-select">
-                              <option value="1">Hiện</option>
-                              <option value="0">Ẩn</option>
-                            </select>
-                            </div>
+                            
                           <div class="mt-2">
                             <button type="submit" id="submit-edit-news-category" class="btn btn-primary me-2">Hoàn tất</button>
                             <span data-bs-dismiss="modal" aria-label="Close" class="btn btn-outline-secondary">Hủy</span>

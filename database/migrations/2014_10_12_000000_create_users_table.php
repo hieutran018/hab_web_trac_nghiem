@@ -24,8 +24,8 @@ class CreateUsersTable extends Migration
             $table->date('dateOfBirth')->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->string('token')->nullable();
-            $table->boolean('isAdmin');
-            $table->boolean('isSubAdmin');
+            $table->boolean('isAdmin')->default(0);
+            $table->boolean('isSubAdmin')->default(0);
             $table->integer('life_heart');
             $table->timestamps();
             $table->softDeletes();
