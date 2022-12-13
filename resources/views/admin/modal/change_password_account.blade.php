@@ -9,7 +9,7 @@
             <div class="modal-body">
                 <div class="card mb-4">
                     <div class="card-body">
-                      <form id="change-password" method="POST" enctype="multipart/form-data">
+                      <form id="form-change-password" method="POST" enctype="multipart/form-data">
                         @csrf
                         <span class="error-message" style="color: red;" id="error-password-not-match"></span>
                         <div class="card-body">
@@ -43,9 +43,3 @@
               
 </div>
 
-<script>
-var loadFile = function(event){
-  var crAvatar = document.getElementById('preview-image-edit');
-  crAvatar.src = URL.createObjectURL(event.target.files[0]);
-}
-</script>

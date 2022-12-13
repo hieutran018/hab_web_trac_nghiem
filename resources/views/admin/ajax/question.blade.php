@@ -34,7 +34,7 @@
                         info: true,
                         retrieve: true,
                         "bDestroy": true,
-                        "pageLength": 10,
+                        "pageLength": 9,
                         "language": {
                             "sProcessing": "Đang tải dữ liệu...",
                             "sLengthMenu": "Hiển thị _MENU_ trong danh sách",

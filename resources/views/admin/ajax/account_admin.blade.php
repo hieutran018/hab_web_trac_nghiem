@@ -66,9 +66,7 @@ $(document).ready(function () {
                 }
 
             }
-
         });
-
     }
 
     //Thêm tài khoản quản trị viên
@@ -219,7 +217,6 @@ $(document).ready(function () {
                     }
                     if (response.account.avatar == null) {
                         document.getElementById('edit-avatar').src = 'http://127.0.0.1:8000/admin/assets/img/no_avatar.png';
-
                     } else {
                         document.getElementById('edit-avatar').src = 'http://127.0.0.1:8000/storage/account/' + response.account.id + '/avatar/' + response.account.avatar;
                     }
@@ -272,16 +269,13 @@ $(document).ready(function () {
     $(document).on('click', '#btn-delete-account-admin', function (e) {
         e.preventDefault();
         var id_acc = $(this).val();
-        console.log(id_acc);
         swal({
             title: "Hệ thống",
             text: "Bạn có chắc chắn muốn xóa tài khoản này?",
             icon: "warning",
             buttons: true,
             dangerMode: true,
-        })
-            .then((willDelete) => {
-
+        }).then((willDelete) => {
                 if (willDelete) {
                     console.log(willDelete);
                     $.ajax({
@@ -298,9 +292,7 @@ $(document).ready(function () {
                                 swal(data.message, {
                                     icon: "success",
                                 }).then((confirm) => {
-
                                     if (confirm) {
-                                        // fetchsAccountAdmin();
                                         location.reload();
                                     }
                                 });

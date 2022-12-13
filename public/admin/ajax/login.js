@@ -14,8 +14,8 @@ $(document).ready(function () {
                 if (data.status === 200) {
                     window.location.href = data.redirect_url;
                 } else if (data.status === 400) {
-                    console.log(data.message);
-                    swal(data.message, {
+                    console.log(data.message.email[0]);
+                    swal(data.message.email[0], {
                         icon: "error",
                     });
                 } else if (data.status === 419) {

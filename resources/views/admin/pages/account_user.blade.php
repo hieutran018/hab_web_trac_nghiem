@@ -36,6 +36,5 @@
             @include('admin.modal.info_account_user')
             @include('admin.modal.edit_account_user')
             @include('admin.modal.change_password_account')
-            @include('admin.ajax.public')
          
 @stop

@@ -69,13 +69,13 @@
                               <option value="2">Cộng tác viên</option>
                             </select>
                             </div>
-                            <div class="mb-3 col-md-6">
-                            <label class="form-label" for="edit-status">Trạng thái</label>
-                            <select name="status" id="edit-status" class="select2 form-select">
-                              <option value="1">Hoạt động</option>
-                              <option value="0">Bị khóa</option>
-                            </select>
-                            </div>
+                              <div class="mb-3 col-md-6">
+                              <label class="form-label" for="edit-status">Trạng thái</label>
+                              <select name="status" id="edit-status" class="select2 form-select">
+                                <option value="1">Hoạt động</option>
+                                <option value="0">Bị khóa</option>
+                              </select>
+                              </div>
                           
                           </div>
                           <div class="row">

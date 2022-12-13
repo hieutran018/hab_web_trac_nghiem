@@ -71,7 +71,7 @@
                             <div class="mb-3 col-md-6">
                               <label class="form-label" for="country">Vị trí</label>
                               <select name="position" id="create-position" class="select2 form-select">
-                                <option value="1">Quản trị viên</option>
+                                {{-- <option value="1">Quản trị viên</option> --}}
                                 <option value="2">Cộng tác viên</option>
                               </select>
                             </div>

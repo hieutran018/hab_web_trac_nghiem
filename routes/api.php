@@ -8,6 +8,7 @@ use App\Http\Controllers\APIs\RankingController;
 use App\Http\Controllers\APIs\TopicQuestionController;
 use App\Http\Controllers\APIs\NewsController;
 use App\Http\Controllers\APIs\UserController;
+use App\Http\Controllers\APIs\QuestionController;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -39,5 +40,7 @@ Route::GET('/news/detail-news/id={id}',[NewsController::class,'getDetailNews']);
 Route::get('/ranking-challenge',[RankingController::class,'getListRankingChallenge']);
 Route::get('/ranking-single',[RankingController::class,'getListRankingSingle']);
 Route::GET('/topic-quesiton',[TopicQuestionController::class,'getTopicQuestion']);
+
+Route::GET('/fetch-questions/idtp={idTopic}/idlv={idLevel}',[QuestionController::class,'randQuestion']);
 
 Route::middleware('auth:sanctum')->get('/user', [AuthController::class,'getUser']);

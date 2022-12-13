@@ -52,6 +52,6 @@
         <script src="{{URL('admin/assets/js/tinymce.min.js')}}"></script>
         <script src="{{URL('admin/assets/js/validate.js')}}"></script>
         <script src="{{URL('admin/assets/js/main.js')}}"></script> 
-             
+        @include('admin.ajax.public')
    </body>
 </html>

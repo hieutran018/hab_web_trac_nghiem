@@ -57,14 +57,11 @@ class AdminAccountController extends Controller
                 'display_name'=>'required',
                 'phone_number' => 'required',
                 'address'=>'required',
-                
             ],
             [
-                'email.required'=>'Email không được bỏ trống!',
                 'display_name.required' =>'Họ tên không được bỏ trống!',
                 'phone_number.required' => 'Số điện thoại không được bỏ trống!',
                 'address.required' => 'Địa chỉ không được bỏ trống!'
-                
             ]);
 
         if($validator->fails()){
@@ -73,13 +70,19 @@ class AdminAccountController extends Controller
             $data = $request->all();
             
             $account = User::WHERE('id',$request->id)->first();
-            // dd($account, !empty($account));
             if(!empty($account)){
                 $account->display_name = $data['display_name'];
                 $account->phone_number = $data['phone_number'];
                 $account->address = $data['address'];
                 $account->dateOfBirth = $data['date_of_birth'];
-                $account->status = $data['status'];
+                if($data['status'] != $account->status){
+                    if(Auth::user()->id == $account->id){
+                        return response()->json(['status'=>401,'message'=> 'Bạn không thể cập nhật trạng thái tài khoản đang đăng nhập hiện tại! ']);
+                    }else{
+                        $account->status = $data['status'];
+                    }
+                }
+               
                 if($data['position'] != $account->isAdmin && $data['position'] != $account->isSubAdmin){
                     if(Auth::user()->id == $account->id){
                         return response()->json(['status'=>401,'message'=> 'Bạn không thể cập nhật vị trí tài khoản đang đăng nhập hiện tại! ']);

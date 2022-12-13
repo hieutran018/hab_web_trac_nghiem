@@ -19,9 +19,12 @@ class Question extends Model
     protected $primaryKey = 'id';
     protected $table = 'questions';
 
+    protected $hidden = array(
+        'created_at', 'updated_at','deleted_at');
+
     public function answer()
     {
-        return $this->hasMany(Answer::class);
+        return $this->hasMany(Answer::class,'question_id','id')->select('id','answer_content','isTrue','question_id');
     }
     public function topic_question(){
         return  $this->belongsTo(TopicQuestion::class,'topic_id','id')->select('topic_question_name');
