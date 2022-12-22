@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class TopicQuestion extends Migration
+class Notify extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,14 @@ class TopicQuestion extends Migration
      */
     public function up()
     {
-        Schema::create('topic_questions', function (Blueprint $table) {
+         Schema::create('notifications', function (Blueprint $table) {
             $table->id();
-            $table->string('topic_question_name');
-            $table->string('description');
-            $table->string('image')->nullable();
+            $table->foreignId('user_id_request');
+            $table->foreignId('notification_id');
+            $table->foreignId('user_id_confirm');
+            $table->foreignId('match_id')->nullable();
             $table->timestamps();
-            $table->softDeletes();
+            $table->integer('status');
         });
     }
 
@@ -30,6 +31,6 @@ class TopicQuestion extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('topic_questions');
+        Schema::dropIfExists('notifications');
     }
 }

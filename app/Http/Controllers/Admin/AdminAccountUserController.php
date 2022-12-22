@@ -72,8 +72,6 @@ class AdminAccountUserController extends Controller
             $file->save(storage_path('app/public/account/'.$account->id.'/avatar/' . $fileName));
                 $account->avatar = $fileName;
             }
-
-
                 $account->update();
                 return response()->json(['status'=>200,'message'=>'Cập nhật tài khoản thành công!','data'=>$data]);
             }

@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class TopicQuestion extends Migration
+class HistoryAnswer extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,12 @@ class TopicQuestion extends Migration
      */
     public function up()
     {
-        Schema::create('topic_questions', function (Blueprint $table) {
+        Schema::create('history_answers', function (Blueprint $table) {
             $table->id();
-            $table->string('topic_question_name');
-            $table->string('description');
-            $table->string('image')->nullable();
-            $table->timestamps();
-            $table->softDeletes();
+            $table->foreignId('user_id');
+            $table->foreignId('match_id');
+            $table->foreignId('question_id');
+            $table->foreignId('answer_id');
         });
     }
 
@@ -30,6 +29,6 @@ class TopicQuestion extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('topic_questions');
+        Schema::dropIfExists('history_answers');
     }
 }

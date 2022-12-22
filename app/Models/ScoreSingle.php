@@ -4,20 +4,14 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\SoftDeletes;
 
-class Level extends Model
+class ScoreSingle extends Model
 {
     use HasFactory;
-    use SoftDeletes;
 
-    public $timestamps = true;
-
-    protected $fillable = ['level_name','description','amoutn_question','time_answer','point'];
+    protected $fillable = ['match_id','score'];
     protected $primaryKey = 'id';
-    protected $table = 'levels';
+    protected $table = 'match_detail_single';
     protected $hidden = array(
         'created_at', 'updated_at','deleted_at');
-
-
 }

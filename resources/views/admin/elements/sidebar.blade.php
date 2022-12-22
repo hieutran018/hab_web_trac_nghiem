@@ -1,6 +1,6 @@
       <aside id="sidebar" class="sidebar">
          <ul class="sidebar-nav" id="sidebar-nav">
-            <li class="nav-item"> <a class="nav-link " href="index.html"> <i class="bi bi-grid"></i> <span>Dashboard</span> </a></li>
+            <li class="nav-item"> <a class="nav-link " href="{{Route('get-page-dashboard')}}"> <i class="bi bi-grid"></i> <span>Trag chủ</span> </a></li>
             <li class="nav-item">
                <a class="nav-link collapsed" data-bs-target="#tables-nav-account" data-bs-toggle="collapse" href="#"> <i class="bi bi-menu-button-wide"></i><span>Tài khoản</span><i class="bi bi-chevron-down ms-auto"></i> </a>
                <ul id="tables-nav-account" class="nav-content collapse " data-bs-parent="#sidebar-nav">

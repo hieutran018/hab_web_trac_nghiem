@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Hash;
 use DB;
 use Faker\Factory;
 
-class NewsCategoriesSeeder extends Seeder
+class TopicQuestionSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -18,13 +18,15 @@ class NewsCategoriesSeeder extends Seeder
     public function run()
     {
         $fake  = Factory::create();
-        $limit = 5;
-        $listCate = ['Xã Hội','Văn Hóa','Chính Trị','Khoa Học','Ẩm Thực','Y Tế','Giáo Dục'];
+        $limit = 2;
+        $lstTopic = ['PHP','Python'];
+        $lstImage = ['1670764589.png','1670764566.png'];
 
         for ($i = 0; $i < $limit; $i++){
-            DB::table('news_categories')->insert([
-                'news_category_name' => $listCate[$i],
-                'description' => 'Tin tức liên quan đến '.$listCate[$i],
+            DB::table('topic_questions')->insert([
+                'topic_question_name' => $lstTopic[$i],
+                'description' => 'Các câu hỏi liên quan đến chu đề '.$lstTopic[$i],
+                'image'=>$lstImage[$i],
                 'created_at' => Carbon::now('Asia/Ho_Chi_Minh'),
                 'updated_at' => null,
             ]);

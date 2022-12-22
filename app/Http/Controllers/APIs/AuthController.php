@@ -35,14 +35,19 @@ class AuthController extends Controller
                 
             ]);
         if($validator->fails()){
-                return response()->json(['message'=>$validator->errors()->toArray()],400);
+                return response()->json(['error'=>$validator->errors()->toArray()],400);
             }else{
         $data = $request->all();
         // dd($data);
         $acc = new User();
         $acc->display_name = $data['display_name'];
         $acc->email = $data['email'];
-        $acc->password =Hash::make($data['password']);
+        if($data['password'] == $data['confirm_password']){
+            $acc->password =Hash::make($data['password']);
+        }else{
+            return response()->json(['error'=>'Mật khẩu và xác nhận mật khẩu không khớp!'],400);
+        }
+        
         $acc->status = 1;
         $acc->isAdmin = 0;
         $acc->isSubAdmin = 0;

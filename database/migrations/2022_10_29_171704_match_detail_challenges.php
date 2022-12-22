@@ -16,6 +16,7 @@ class MatchDetailChallenges extends Migration
         Schema::create('match_detail_challenges', function (Blueprint $table) {
             $table->id();
             $table->foreignId('match_id');
+            $table->foreignId('sub_match_id')->nullable();
             $table->foreignId('user_id_from');
             $table->foreignId('user_id_to');
             $table->integer('potin_user_id_from');

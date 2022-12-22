@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\AdminAuthController;
 use App\Http\Controllers\Admin\AdminAccountController;
 use App\Http\Controllers\Admin\AdminAccountUserController;
@@ -32,6 +33,8 @@ Route::GET('/admin/logout',[AdminAuthController::class,'logout'])->name('logout-
 
 
 Route::group(['middleware'=>'checklogin'],function(){
+    Route::get('/admin/dashboard',[DashboardController::class,'getDashboad'])->name('get-page-dashboard');
+    Route::get('/admin/dashboard/ranking',[DashboardController::class,'getListRankingChallengeDashBoard']);
     Route::GET('/admin/info-account-current',[AdminAuthController::class,'showInfoAccountCurrent']);
     Route::PUT('/admin/update-account-current',[AdminAuthController::class,'updateAccountCurrent']);
     Route::POST('/admin/change-password-account-current',[AdminAuthController::class,'changePasswordAccountCurrent']);

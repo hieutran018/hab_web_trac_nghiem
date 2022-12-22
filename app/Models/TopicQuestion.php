@@ -16,4 +16,9 @@ class TopicQuestion extends Model
     protected $fillable = ['topic_question_name','description','image'];
     protected $primaryKey = 'id';
     protected $table = 'topic_questions';
+
+    public function matchhistory()
+    {
+        return $this->belongsTo(MatchHistory::class);
+    }
 }
